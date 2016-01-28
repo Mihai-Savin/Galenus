@@ -17,10 +17,10 @@ public class AppointmentService {
 	@RequestMapping(method = RequestMethod.POST)
 	public void saveAppointment(Appointment appointment) throws ValidationException {
 //		LOGGER.debug("Saving: " + appointment);
-		validate(appointment);
+//		validate(appointment);
 
-		dao.update(appointment);
-
+//		dao.update(appointment);
+//
 	}
 	
 	public Collection<Appointment> getAllAppointments(Doctor doctor){

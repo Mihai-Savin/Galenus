@@ -17,8 +17,14 @@
 <body>
 
 	<div class="container">
-		<a href="/"> <img src="http://www.3quarksdaily.com/.a/6a00d8341c562c53ef0120a896d16a970b-250wi" width="100"/>
-		<!--	th:src="@{images/logo.png}" / -->
+		<div style="float: right; clear: both;">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" />
+			</form>
+		</div>
+		<a href="/"> <img
+			src="http://www.3quarksdaily.com/.a/6a00d8341c562c53ef0120a896d16a970b-250wi"
+			width="100" /> <!--	th:src="@{images/logo.png}" / -->
 		</a>
 
 		<ol class="breadcrumb">
@@ -107,11 +113,11 @@
 						following content <code>web: java -Dserver.port=$PORT -jar
 							target/&lt;your project name&gt;-0.0.1-SNAPSHOT.jar</code>
 					</li>
-					<li>
-						Now you should be able to access your web application on heroku, like: <a href="https://sci-ems.herokuapp.com/">https://&lt;your-app-name&gt;.herokuapp.com/</a>
+					<li>Now you should be able to access your web application on
+						heroku, like: <a href="https://sci-ems.herokuapp.com/">https://&lt;your-app-name&gt;.herokuapp.com/</a>
 					</li>
-					<li>
-						Get logs from heroku: <a href="https://devcenter.heroku.com/articles/logging">Read here</a>
+					<li>Get logs from heroku: <a
+						href="https://devcenter.heroku.com/articles/logging">Read here</a>
 					</li>
 				</ol>
 

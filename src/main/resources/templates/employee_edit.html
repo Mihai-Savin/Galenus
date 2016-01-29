@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
 
 <title>Add Employee</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
 <link
 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
@@ -186,8 +188,9 @@ function save() {
 				style="display: none;"></div>
 
 			<div class="panel-body">
-				<form method="POST" action="/rest/employees" id="createForm">
-
+				<form method="POST" action="/rest/employees" th:action="|/rest/employees?${_csrf.parameterName}='${_csrf.token}'|" id="createForm">
+					<input type="hidden" th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}" />
 
 					<div class="form-group">
 						<label for="firstName">First name</label> <input type="text"

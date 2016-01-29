@@ -183,6 +183,14 @@ body {
   text-align: right;
 }
 
+.login-message {
+  margin: 20px 0;
+  font-size: 15px;
+  color: #FF0101;
+  text-align: center;
+  text-shadow: 0 1px #FF9C9C;
+}
+
 .login-help {
   margin: 20px 0;
   font-size: 11px;

@@ -14,8 +14,8 @@
 </head>
 <body>
 	<section class="container">
-		<div th:if="${param.error}">Invalid username and password.</div>
-		<div th:if="${param.logout}">You have been logged out.</div>
+		<div class="login-message"><span th:if="${param.error}">Invalid username and password.</span></div>
+		<div class="login-message"><span th:if="${param.logout}">You have been logged out.</span></div>
 		<div class="login">
 			<h1>Login to Web App</h1>
 			<form method="post" th:action="@{login}">

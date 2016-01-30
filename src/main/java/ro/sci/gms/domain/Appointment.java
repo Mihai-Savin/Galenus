@@ -10,7 +10,7 @@ public class Appointment extends AbstractModel {
 	Date time;
 	String details;
 
-	public Appointment(Patient patient, Doctor doctor) {
+	public void createAppointment(Patient patient, Doctor doctor) {
 		this.patient = patient;
 		this.doctor = doctor;
 		patientName = patient.getName(); //TEMP
@@ -18,18 +18,35 @@ public class Appointment extends AbstractModel {
 		details = "default details"; //TEMP
 	}
 
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+		this.patientName = patient.getName();
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+		this.doctorName = doctor.getName();
+	}
+
 	public Date getTime() {
 		return time;
+	}
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 
 	public String getPatientName() { //Migh need removal. For testing purposes with thymeleaf
 		return patientName;
 	}
-	
-	public String getDoctorname() { //Migh need removal. For testing purposes with thymeleaf
-		return doctorName;
-	}
-	
 
 	public Patient getPatient() {
 		return patient;

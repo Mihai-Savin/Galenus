@@ -40,7 +40,10 @@ public class AppointmentController {
 
 	
 	
-	
+	@RequestMapping(method = RequestMethod.POST)  //by me
+	public String save() {
+		return "appointment_list";
+	}
 	
 	
 	@RequestMapping(method = RequestMethod.GET, params = "action=add")

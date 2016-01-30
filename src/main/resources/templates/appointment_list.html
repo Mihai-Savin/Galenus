@@ -118,7 +118,7 @@
 			<tbody id="employeeList">
 				<tr th:each="appointment : ${allAppointments}">
 					<td th:text="${{appointment.patientName}}"></td>
-					<td th:text="${{appointment.doctorname}}"></td>
+					<td th:text="${{appointment.doctorName}}"></td>
 					<td th:text="${{#dates.format(appointment.time, 'dd/MM/yyyy')}}"></td>	
 					<td th:text="${{#dates.format(appointment.time, 'HH:mm')}}"></td>
 					<td th:text="${{appointment.details}}"></td>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-<title>Appointments</title>
+<title>Edit appointment</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <link
@@ -34,36 +34,30 @@
 
 <script src="../static/js/jquery.validate.min"
 	th:src="@{js/jquery.validate.min.js}"></script>
-<!--
+
+
 <script>
 	$().ready(
 			function() {
-				$("#birthDate").datepicker({
-					dateFormat : "mm/dd/yy"
-				});
-
-				$("#employmentDate").datepicker({
-					dateFormat : "mm/dd/yy"
+				$("#time").datepicker({
+					dateFormat : "dd/mm/yy"
 				});
 
 				$("#createForm").validate({
 					rules : {
-						firstName : {
+						patientName : {
 							required : true,
 							minlength : 2
 						},
-						lastName : {
+						doctorName : {
 							required : true,
 							minlength : 2
 						},
-						jobTitle : {
+						details : {
 							required : true,
 							minlength : 5
 						},
-						birthDate : {
-							required : true
-						},
-						employmentDate : {
+						time : {
 							required : true
 						}
 					},
@@ -82,33 +76,14 @@
 								type : "GET",
 								success : function(data) {
 									console.log("Data: " + data);
-									$("#firstName").val(data.firstName);
-									$("#lastName").val(data.lastName);
-									$("#birthDate").val(data.birthDate);
-									$("#employmentDate").val(
-											data.employmentDate);
-									$("#jobTitle").val(data.jobTitle);
+									$("#patientName").val(data.patientName);
+									$("#doctorName").val(data.doctorName);
+									$("#time").val(data.time);
+									$("#details").val(data.details);
 									$("#id").val(data.id);
 
-									if (data.gender == 'MALE') {
-										$('input:radio[name="gender"]').filter(
-												'[value="MALE"]').attr(
-												'checked', true);
-									}
 
-									if (data.gender == 'FEMALE') {
-										$('input:radio[name="gender"]').filter(
-												'[value="FEMALE"]').attr(
-												'checked', true);
-									}
-
-									if (data.gender == 'UNSPECIFIED') {
-										$('input:radio[name="gender"]').filter(
-												'[value="UNSPECIFIED"]').attr(
-												'checked', true);
-									}
-
-									$(".panel-title").html("Edit Employee");
+									$(".panel-title").html("Edit Appointment");
 
 								},
 								error : function(xhr, desc, err) {
@@ -131,27 +106,23 @@
 
 		$("#error").html('');
 		$("#error").hide();
-		var birthDate = $("#birthDate").datepicker().val();
-		var employmentDate = $("#employmentDate").datepicker().val();
+		var time = $("#time").datepicker().val();
 
 		$
 				.ajax({
-					url : "/rest/employees",
+					url : "/rest/appointments",
 					type : "POST",
 
 					data : {
-						'firstName' : $("#firstName").val(),
-						'lastName' : $("#lastName").val(),
-						'gender' : $('input[name=gender]:checked',
-								'#createForm').val(),
-						'jobTitle' : $("#jobTitle").val(),
-						'birthDate' : birthDate,
-						'employmentDate' : employmentDate,
+						'patientName' : $("#patientName").val(),
+						'doctorName' : $("#doctorName").val(),
+						'details' : $("#details").val(),
+						'time' : time,
 						'id' : $("#id").val(),
 					},
 					success : function(data) {
 						console.log("Data: " + data);
-						window.location.href = '/employee';
+						window.location.href = '/appointment';
 					},
 					error : function(xhr, desc, err) {
 						console.log("Error: " + err);
@@ -167,7 +138,6 @@
 				});
 	}
 </script>
- -->
 
 
 
@@ -199,39 +169,39 @@
 				style="display: none;"></div>
 
 			<div class="panel-body">
-				<form method="POST" action="/rest/employees" id="createForm">
+				<form method="POST" action="/rest/appointments" id="createForm">
 
 
 					<div class="form-group">
-						<label for="lastName">Patient's name</label>
+						<label for="patientName">Patient's name</label>
 						<input type="text"
-							class="form-control" id="lastName" name="lastName"
-							placeHolder="Enter your first and last name e.g. Natalie Portman"/>
+							class="form-control" id="patientName" name="patientName"
+							placeHolder="Enter your last name e.g. Natalie Portman"/>
 					</div>
 
 					<div class="form-group">
-						<label for="firstName">Doctor's name</label> <input type="text"
-							class="form-control" id="firstName" name="firstName"
-							placeHolder="Enter your doctor's first and last name e.g. Sigmund Freud" />
+						<label for="doctorName">Doctor's name</label> <input type="text"
+							class="form-control" id="doctorName" name="doctorName"
+							placeHolder="Enter your doctor's last name e.g. Sigmund Freud" />
 					</div>
 
 					<div class="form-group">
-						<label for="birthDate">Appointment date</label>
+						<label for="time">Appointment date</label>
 						<div class="form-group">
-							<input type="text" id="birthDate" name="birthDate"
+							<input type="text" id="time" name="time"
 								placeHolder="Select a date" />
 						</div>
 					</div>
 
-					<div class="form-group">
-						<label for="jobTitle">Appointment time</label> <input type="text"
-							class="form-control" id="jobTitle" name="jobTitle"
-							placeHolder="Select a time" />
-					</div>
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="jobTitle">Appointment time</label> <input type="text" -->
+<!-- 							class="form-control" id="jobTitle" name="jobTitle" -->
+<!-- 							placeHolder="Select a time" /> -->
+<!-- 					</div> -->
 
 					<div class="form-group">
-						<label for="jobTitle">Other relevant details</label> <input
-							type="text" class="form-control" id="jobTitle" name="jobTitle"
+						<label for="details">Other relevant details</label> <input
+							type="text" class="form-control" id="details" name="details"
 							placeHolder="Other relevant details specific to this appointment" />
 					</div>
 

@@ -44,6 +44,7 @@ public class AppointmentService {
 
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Appointment get(@PathVariable("id") Long id) {
 
 		LOGGER.debug("Getting employee for id: " + id);
@@ -58,6 +59,7 @@ public class AppointmentService {
 		return appointmentsList;
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
 	public Collection<Appointment> getAll() {
 
 		Collection appointmentsList = dao.getAll();
@@ -86,7 +88,7 @@ public class AppointmentService {
 		}
 	}
 
-	public void generateSome() throws ValidationException {
+	public void generateSome() throws ValidationException { // MOCK method for App testing purposes only
 		Patient patient1 = new Patient();
 		Patient patient2 = new Patient();
 		Doctor doctor1 = new Doctor();

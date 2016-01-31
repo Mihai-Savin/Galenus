@@ -4,6 +4,9 @@
 
 <title>Doctors List</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf_parameter" content="_csrf" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
 <link
 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
@@ -20,9 +23,14 @@
 <script>
     function deleteEmployee(id) {
 		 var url = "/rest/employees/" + id;
+		 var header = $("meta[name='_csrf_header']").attr("content");
+		 var token = $("meta[name='_csrf']").attr("content");
 		 $.ajax({
 		 	 url:url,
 	         type:"DELETE",
+	         beforeSend: function(xhr){
+	             xhr.setRequestHeader(header, token);
+	         },
 	         success: function(data) {
 	             console.log("Data: " + data);
 	         	 window.location.href = '/employee';

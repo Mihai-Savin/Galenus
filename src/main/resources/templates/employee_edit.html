@@ -4,6 +4,7 @@
 
 <title>Add Employee</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf_parameter" content="_csrf" />
 <meta name="_csrf" th:content="${_csrf.token}" />
 <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
@@ -76,11 +77,16 @@
 		});
 
 		var id = query_param('id');
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var token = $("meta[name='_csrf']").attr("content");
 		if (id) {
 		  //it's edit
 		  $.ajax({
          	url:"/rest/employees/"+id,
          	type:"GET",
+         	beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
          	success: function(data) {
          		console.log("Data: " + data);
          		$("#firstName").val(data.firstName);
@@ -130,11 +136,15 @@ function save() {
 	$("#error").hide();
 	var birthDate = $("#birthDate").datepicker().val();
 	var employmentDate = $("#employmentDate").datepicker().val();
+	var header = $("meta[name='_csrf_header']").attr("content");
+	var token = $("meta[name='_csrf']").attr("content");
                    	
 	$.ajax({
          url:"/rest/employees",
          type:"POST",
-         
+         beforeSend: function(xhr){
+             xhr.setRequestHeader(header, token);
+         },
          data: {'firstName': $("#firstName").val(),
          	   'lastName': $("#lastName").val(),
                'gender': $('input[name=gender]:checked', '#createForm').val(),
@@ -144,7 +154,7 @@ function save() {
                'id': $("#id").val(),
          },
          success: function(data) {
-         	console.log("Data: " + data);
+         	console.log("Data: " + data + $("#id").val());
          	window.location.href = '/employee';
          },
          error: function(xhr, desc, err){
@@ -248,7 +258,7 @@ function save() {
 							</ul>
 						</div>
 					</div>
-					<br /> <input type="hidden" class="form-control" id="id" value="0" />
+					<br /><input type="hidden" class="form-control" id="id" value="0" />
 				</form>
 			</div>
 		</div>

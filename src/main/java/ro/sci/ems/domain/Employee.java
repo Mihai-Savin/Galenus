@@ -70,7 +70,7 @@ public class Employee extends AbstractModel {
 
 	@Override
 	public String toString() {
-		return "Employee [firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", gender="
+		return "Employee [id=" + this.getId() + ", firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", gender="
 				+ gender + ", employmentDate=" + employmentDate + ", jobTitle=" + jobTitle + "]";
 	}
 

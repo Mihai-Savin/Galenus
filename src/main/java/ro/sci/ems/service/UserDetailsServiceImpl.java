@@ -1,0 +1,63 @@
+package ro.sci.ems.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+
+import ro.sci.ems.dao.UserDAO;
+import ro.sci.ems.domain.GrantedAuthorityImpl;
+import ro.sci.ems.domain.User;
+
+//@Configurable
+//@Transactional
+@Component("UserDetailsServiceImpl")
+public class UserDetailsServiceImpl implements UserDetailsService {
+//	@Autowired
+//	@Qualifier("securityDao")
+//	private SecurityDAO securityDAO;
+	@Autowired
+	private UserDAO userDAO;
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		throw new UsernameNotFoundException("The username was not found");
+		User user = userDAO.findByUsername(username);
+		if (user != null) {
+			System.out.println("Fetching login details for " + user.toString());
+			String role = "ROLE_"+user.getRole();
+			List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
+			gas.add(new GrantedAuthorityImpl(role));
+			UserDetails userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(), true, true,
+					true, true, gas);
+			return userDetails;
+		}
+		else {
+			throw new UsernameNotFoundException("The username was not found");
+		}
+	}
+
+	// public static List<GrantedAuthority> getGrantedAuthorities(Set<Role>
+	// roles) {
+	// List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+	//
+	// for (Role role : roles) {
+	// authorities.add(new SimpleGrantedAuthority(role.getName()));
+	// }
+	// return authorities;
+	// }
+
+//	public SecurityDAO getSecurityDAO() {
+//		return securityDAO;
+//	}
+//
+//	public void setSecurityDAO(SecurityDAO securityDAO) {
+//		this.securityDAO = securityDAO;
+//	}
+
+}

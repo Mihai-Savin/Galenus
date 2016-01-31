@@ -1,15 +1,40 @@
 package ro.sci.ems.domain;
 
-public class User extends AbstractModel {
+import java.util.Collection;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
+@Entity
+public class User extends AbstractModel implements UserDetails {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5040400280633114530L;
+	@Id
+	private String username;
 	private String userName;
 	private String hasedPassword;
+	private String password;
 	private String firstName;
 	private String lastName;
-	private String adress;
+	private String address;
 	private String phone;
 	private String email;
 	private Role role;
+
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -34,11 +59,11 @@ public class User extends AbstractModel {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getPhone() {
 		return phone;
@@ -92,6 +117,47 @@ public class User extends AbstractModel {
 		} else if (!userName.equals(other.userName))
 			return false;
 		return true;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return password;
+	}
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return username;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", userName=" + userName + ", hasedPassword=" + hasedPassword
+				+ ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + ", adress="
+				+ address + ", phone=" + phone + ", email=" + email + ", role=" + role + "]";
 	}
 	
 	

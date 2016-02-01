@@ -3,11 +3,14 @@ package ro.sci.gms.service;
 import java.util.Collection;
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import ro.sci.gms.domain.Agenda;
 import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.Doctor;
+import ro.sci.gms.domain.Patient;
+import ro.sci.gms.domain.User;
 
 public class RandomTest {
 
@@ -93,5 +96,46 @@ public class RandomTest {
 		System.out.println(aptService.getAvailableHours(doctor, day));
 	}
 	
+	@Test
+	public void checkUserFunctionality() {
+		UserService userService = new UserService();
+		
+		User myPatient = new Patient();
+		User myDoctor = new Doctor();
+		
+		myPatient.setFirstName("Mihai");
+		myPatient.setLastName("Savin");
+		
+		myDoctor.setFirstName("Celia");
+		myDoctor.setLastName("Cruz");
+		
+		
+		try {
+			userService.save(myPatient);
+			userService.save(myDoctor);
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		StringBuilder output = new StringBuilder();
+		
+		Collection<User> all = userService.getAll();
+		
+		output.append(all);
+		Assert.assertEquals(2, all.size());
 
+		
+		System.out.println(output);
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 }

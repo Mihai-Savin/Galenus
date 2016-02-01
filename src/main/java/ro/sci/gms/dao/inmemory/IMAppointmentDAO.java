@@ -1,17 +1,14 @@
 package ro.sci.gms.dao.inmemory;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import ro.sci.gms.dao.AppointmentDAO;
 import ro.sci.gms.domain.Appointment;
-import ro.sci.gms.domain.Employee;
 import ro.sci.gms.domain.User;
 
 @Repository

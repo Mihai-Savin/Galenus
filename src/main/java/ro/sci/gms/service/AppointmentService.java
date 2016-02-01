@@ -2,7 +2,6 @@ package ro.sci.gms.service;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.LinkedList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import ro.sci.gms.dao.inmemory.IMAppointmentDAO;
 import ro.sci.gms.domain.Agenda;
 import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.Doctor;
-import ro.sci.gms.domain.Employee;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.User;
 

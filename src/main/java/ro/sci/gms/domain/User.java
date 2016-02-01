@@ -22,7 +22,7 @@ public class User extends AbstractModel {
 	public void setHasedPassword(String hasedPassword) {
 		this.hasedPassword = hasedPassword;
 	}
-	public String getName() {
+	public String getFullName() {
 		return firstName + " " + lastName;
 	}
 	

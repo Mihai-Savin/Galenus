@@ -1,6 +1,7 @@
 package ro.sci.gms.domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class Doctor extends User {
 	private String title;
@@ -8,7 +9,9 @@ public class Doctor extends User {
 	private int yearsOfExperience;
 	private int numberOfPatients;
 	private String picture;
-	private Collection agenda;
+	private Agenda agenda;
+	
+	
 	public String getTitle() {
 		return title;
 	}
@@ -39,10 +42,10 @@ public class Doctor extends User {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	public Collection getAgenda() {
+	public Agenda getAgenda() {
 		return agenda;
 	}
-	public void setAgenda(Collection agenda) {
+	public void setAgenda(Agenda agenda) {
 		this.agenda = agenda;
 	}
 	

@@ -7,25 +7,34 @@ public class Appointment extends AbstractModel {
 	Doctor doctor;
 	String patientName;
 	String doctorName;
+	Date date;
 	Date time;
 	String details;
 
 	public void createAppointment(Patient patient, Doctor doctor) {
 		this.patient = patient;
 		this.doctor = doctor;
-		patientName = patient.getName(); //TEMP
-		doctorName = doctor.getName(); //TEMP
-		details = "default details"; //TEMP
+		patientName = patient.getFullName(); // TEMP
+		doctorName = doctor.getFullName(); // TEMP
+		details = "default details"; // TEMP
+	}
+
+	
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setPatient(Patient patient) {
 		this.patient = patient;
-		this.patientName = patient.getName();
 	}
 
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
-		this.doctorName = doctor.getName();
 	}
 
 	public Date getTime() {
@@ -38,13 +47,16 @@ public class Appointment extends AbstractModel {
 
 	public void setDoctorName(String doctorName) {
 		this.doctorName = doctorName;
+		this.doctor.setLastName(patientName);
 	}
 
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
+		this.patient.setLastName(patientName);
 	}
 
-	public String getPatientName() { //Migh need removal. For testing purposes with thymeleaf
+	public String getPatientName() { // Migh need removal. For testing purposes
+										// with thymeleaf
 		return patientName;
 	}
 
@@ -60,7 +72,6 @@ public class Appointment extends AbstractModel {
 		this.time = time;
 	}
 
-	
 	public String getDetails() {
 		return details;
 	}
@@ -69,14 +80,19 @@ public class Appointment extends AbstractModel {
 		this.details = details;
 	}
 
+	public String list() {
+		return "Appointment [patient=" + patient + ", doctor=" + doctor + ", patientName=" + patientName
+				+ ", doctorName=" + doctorName + ", time=" + time + ", details=" + details + "]";
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder appointment = new StringBuilder();
 
-		appointment.append("Appointment ID : " + this.getId() + "\n");
-		appointment.append("Patient : " + patient.getName() + "\n");
-		appointment.append("Doctor : " + doctor.getName() + "\n");
-		appointment.append("Time : " + this.getTime() + "\n");
+//		 appointment.append("Appointment ID : " + this.getId() + "\n");
+//		 appointment.append("Patient : " + patient.getFullName() + "\n");
+//		 appointment.append("Doctor : " + doctor.getFullName() + "\n");
+//		 appointment.append("Time : " + this.getTime() + "\n");
 
 		return appointment.toString();
 	}

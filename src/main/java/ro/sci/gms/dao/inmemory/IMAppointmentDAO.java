@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import ro.sci.gms.dao.AppointmentDAO;
 import ro.sci.gms.domain.Appointment;
+import ro.sci.gms.domain.Employee;
 import ro.sci.gms.domain.User;
 
 @Repository
@@ -41,4 +42,22 @@ public class IMAppointmentDAO extends IMBaseDAO<Appointment> implements Appointm
 
 		return usersAppointments;
 	}
+	
+	public Collection<Appointment> search(String query) {
+		if (StringUtils.isEmpty(query)) {
+			return getAll();
+		}
+		
+		Collection<Appointment> all = new LinkedList<>(getAll());
+		for (Iterator<Appointment> it = all.iterator(); it.hasNext();) {
+			Appointment apt = it.next();
+			String bulkData = apt.getDoctorName() + " " + apt.getPatientName() + //
+					" " + apt.getDate() + " " + apt.getTime() + " " + apt.getDetails();
+			if (!bulkData.toLowerCase().contains(query.toLowerCase())) {
+				it.remove();
+			}
+		}
+		return all;
+	}
+	
 }

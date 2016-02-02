@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import ro.sci.gms.domain.User;
 
-public interface UserDAO extends BaseDAO<User>{
+public interface UserDAO<T extends User> extends BaseDAO<User> {
 
-	Collection<User> searchById(String query);
+	Collection<T> searchById(String query);
 }

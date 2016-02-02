@@ -1,8 +1,5 @@
 package ro.sci.gms.domain;
 
-import java.util.Collection;
-import java.util.Date;
-
 public class Doctor extends User {
 	private String title;
 	private String specialty;
@@ -12,6 +9,9 @@ public class Doctor extends User {
 	private Agenda agenda;
 	
 	
+	public Doctor() {
+		agenda = new Agenda();
+	}
 	public String getTitle() {
 		return title;
 	}

@@ -12,24 +12,24 @@ import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.User;
 
 @Repository
-public class IMUserDAO extends IMBaseDAO<User> implements UserDAO {
+public class IMUserDAO<T extends User> extends IMBaseDAO implements UserDAO {
 
-	public Collection<User> searchById(String query) {
+	public Collection<T> searchById(String query) {
 		if (StringUtils.isEmpty(query)) {
 			return getAll();
 		}
 
-		Collection<User> all = new LinkedList<>(getAll());
-		for (Iterator<User> it = all.iterator(); it.hasNext();) {
+		Collection<T> all = new LinkedList<>(getAll());
+		for (Iterator<T> it = all.iterator(); it.hasNext();) {
 			User user = it.next();
 		}
 		return all;
 	}
 
-	public Collection<User> getAll(User user) {
+	public Collection<T> getAll(T user) {
 
-		Collection<User> all = new LinkedList<>(getAll());
-		Collection<User> usersAppointments = new LinkedList<>();
+		Collection<T> all = new LinkedList<>(getAll());
+		Collection<T> usersAppointments = new LinkedList<>();
 
 //		for (User user : all) {
 //			if ((appointment.getDoctor().equals(user)) || (appointment.getPatient().equals(user))) {

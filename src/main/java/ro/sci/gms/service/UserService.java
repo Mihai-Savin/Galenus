@@ -1,7 +1,6 @@
 package ro.sci.gms.service;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ro.sci.gms.dao.inmemory.IMUserDAO;
-import ro.sci.gms.domain.Agenda;
-import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.User;
@@ -50,20 +47,34 @@ public class UserService {
 		// return appointment;
 
 	}
-
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public User get(@PathVariable("id") Long id) {
 
-		LOGGER.debug("Getting appointment for id: " + id);
-		return dao.findById(id);
+		LOGGER.debug("Getting user for id: " + id);
+		return (User) dao.findById(id);
 
 	}
+	
+	public Patient getPatient(@PathVariable("id") Long id) {
+
+		LOGGER.debug("Getting patient for id: " + id);
+		return (Patient) dao.findById(id);
+
+	}
+
+	public Doctor getDoctor(@PathVariable("id") Long id) {
+
+		LOGGER.debug("Getting doctor for id: " + id);
+		return (Doctor) dao.findById(id);
+
+	}
+
 
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Collection<User> getAll() {
 
-		Collection usersList = dao.getAll();
+		Collection<User> usersList = dao.getAll();
 
 		return usersList;
 	}

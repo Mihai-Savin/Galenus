@@ -6,9 +6,18 @@ import java.util.Date;
 public class Patient extends User {
 	private Date dateOfBirth;
 	private Gender gender;
-	private Collection medicalBackground;
+	private Collection<String> medicalBackground;
 	private Blood bloodType;
+	private Doctor doctor;
 	
+	
+	
+	public Doctor getDoctor() {
+		return doctor;
+	}
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -21,10 +30,10 @@ public class Patient extends User {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	public Collection getMedicalBackground() {
+	public Collection<String> getMedicalBackground() {
 		return medicalBackground;
 	}
-	public void setMedicalBackground(Collection medicalBackground) {
+	public void setMedicalBackground(Collection<String> medicalBackground) {
 		this.medicalBackground = medicalBackground;
 	}
 	public Blood getBloodType() {

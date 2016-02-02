@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ro.sci.gms.dao.inmemory.IMAppointmentDAO;
+import ro.sci.gms.dao.inmemory.IMUserDAO;
 import ro.sci.gms.domain.Agenda;
 import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.Doctor;
@@ -28,7 +29,8 @@ public class AppointmentService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentService.class);
 
 	@Autowired
-	private IMAppointmentDAO dao = new IMAppointmentDAO();
+	private IMAppointmentDAO aptDAO = new IMAppointmentDAO();
+	private IMUserDAO userDAO = new IMUserDAO();
 
 	// @RequestMapping(value = "/{doctor}&{day}", method = RequestMethod.GET)
 	public Collection<Integer> getAvailableHours(Doctor doctor, Date date) {
@@ -38,21 +40,29 @@ public class AppointmentService {
 
 		return availableHours;
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public void save(Appointment appointment) throws ValidationException {
 		LOGGER.debug("Saving: " + appointment);
 		validate(appointment);
 
+		
+		
 //		BEGIN --- This goes to the userDAO code ---
 		Doctor doctor = appointment.getDoctor();
 		Agenda agenda = doctor.getAgenda();
+//		if (null == doctor.getAgenda()) {
+//			agenda = new Agenda();
+//		} else {
+//			agenda = doctor.getAgenda();
+//		}
+		
 		Date date = appointment.getDate();
 		Integer time = appointment.getTime().getHours();
 		agenda.book(date, time);
 //		 END --- This goes to the userDAO code ---
 
-		dao.update(appointment);
+		aptDAO.update(appointment);
 
 		// return appointment;
 
@@ -62,13 +72,13 @@ public class AppointmentService {
 	public Appointment get(@PathVariable("id") Long id) {
 
 		LOGGER.debug("Getting appointment for id: " + id);
-		return dao.findById(id);
+		return aptDAO.findById(id);
 
 	}
 
 	public Collection<Appointment> getAll(User user) {
 
-		Collection appointmentsList = dao.getAll(user);
+		Collection<Appointment> appointmentsList = aptDAO.getAll(user);
 
 		return appointmentsList;
 	}
@@ -76,7 +86,7 @@ public class AppointmentService {
 	@RequestMapping(method = RequestMethod.GET)
 	public Collection<Appointment> getAll() {
 
-		Collection appointmentsList = dao.getAll();
+		Collection<Appointment> appointmentsList = aptDAO.getAll();
 
 		return appointmentsList;
 	}
@@ -84,7 +94,7 @@ public class AppointmentService {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean delete(@PathVariable("id") Long id) {
 		LOGGER.debug("Deleting appointment for id: " + id);
-		Appointment apt = dao.findById(id);
+		Appointment apt = aptDAO.findById(id);
 
 		// BEGIN --- This goes to the userDAO code ---
 		Doctor doctor = apt.getDoctor();
@@ -95,7 +105,7 @@ public class AppointmentService {
 		// END --- This goes to the userDAO code ---
 
 		if (apt != null) {
-			dao.delete(apt);
+			aptDAO.delete(apt);
 			return true;
 		}
 
@@ -105,7 +115,7 @@ public class AppointmentService {
 	@RequestMapping(method = RequestMethod.GET, params = "query")
 	Collection<Appointment> search(@RequestParam(value = "query") String query) {
 		LOGGER.debug("Searching for " + query);
-		return dao.search(query);
+		return aptDAO.search(query);
 	}
 	
 

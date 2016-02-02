@@ -10,6 +10,7 @@ public class User extends AbstractModel {
 	private String phone;
 	private String email;
 	private Role role;
+	
 	public String getUserName() {
 		return userName;
 	}

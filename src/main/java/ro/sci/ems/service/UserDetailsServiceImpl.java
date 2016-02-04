@@ -1,5 +1,8 @@
 package ro.sci.ems.service;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		throw new UsernameNotFoundException("The username was not found");
 		User user = userDAO.findByUsername(username);
 		if (user != null) {
 			System.out.println("Fetching login details for " + user.toString());
@@ -40,6 +42,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		else {
 			throw new UsernameNotFoundException("The username was not found");
 		}
+	}
+	
+	private String hashPassword(String password) {
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		byte[] digest = md.digest();
+		String hashedPassword = String.format("%064x", new java.math.BigInteger(1, digest));
+		return hashedPassword;
 	}
 
 	// public static List<GrantedAuthority> getGrantedAuthorities(Set<Role>

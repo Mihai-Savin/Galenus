@@ -7,32 +7,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import ro.sci.gms.dao.inmemory.IMAppointmentDAO;
-import ro.sci.gms.dao.inmemory.IMUserDAO;
+import ro.sci.gms.dao.AppointmentDAO;
 import ro.sci.gms.domain.Agenda;
 import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.User;
+import ro.sci.gms.temp.Li;
 
 @Service
-@RestController
-@RequestMapping("/rest/appointments")
 public class AppointmentService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentService.class);
 
 	@Autowired
-	private IMAppointmentDAO aptDAO = new IMAppointmentDAO();
-	private IMUserDAO userDAO = new IMUserDAO();
+	private AppointmentDAO aptDAO;
 
-	// @RequestMapping(value = "/{doctor}&{day}", method = RequestMethod.GET)
 	public Collection<Integer> getAvailableHours(Doctor doctor, Date date) {
 
 		Collection<Integer> availableHours //
@@ -40,42 +34,58 @@ public class AppointmentService {
 
 		return availableHours;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
 	public void save(Appointment appointment) throws ValidationException {
 		LOGGER.debug("Saving: " + appointment);
 		validate(appointment);
 
-		
-		
-//		BEGIN --- This goes to the userDAO code ---
+		// BEGIN --- This goes to userDAO code??? ---
 		Doctor doctor = appointment.getDoctor();
-		Agenda agenda = doctor.getAgenda();
-//		if (null == doctor.getAgenda()) {
-//			agenda = new Agenda();
-//		} else {
-//			agenda = doctor.getAgenda();
-//		}
-		
 		Date date = appointment.getDate();
 		Integer time = appointment.getTime().getHours();
+		Agenda agenda = doctor.getAgenda();
 		agenda.book(date, time);
-//		 END --- This goes to the userDAO code ---
+		// END --- This goes to userDAO code???---
 
 		aptDAO.update(appointment);
-
-		// return appointment;
-
+		System.out.println(appointment.getId() + " saved.");
+		Li.st(appointment.list());
+	}
+	
+	
+	@RequestMapping(method = RequestMethod.DELETE)
+	public boolean delete(@RequestParam("id") Long id) {
+		LOGGER.debug("Deleting appointment for id: " + id);
+		Appointment apt = aptDAO.findById(id);
+		Li.st("Deleting " + apt.getId());
+		// BEGIN --- This goes to the userDAO code ---
+		Doctor doctor = apt.getDoctor();
+		Agenda agenda = doctor.getAgenda();
+		Date date = apt.getDate();
+		Integer time = apt.getTime().getHours();
+		agenda.cancelBooking(date, time);
+		// END --- This goes to the userDAO code ---
+	
+		Li.st("Cancelled.");
+		if (apt != null) {
+			aptDAO.delete(apt);
+			Li.st("Deleted.");
+			return true;
+		}
+	
+		return false;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Appointment get(@PathVariable("id") Long id) {
+	@RequestMapping(method = RequestMethod.GET)
+	public Appointment get(@RequestParam("id") Long id) {
 
 		LOGGER.debug("Getting appointment for id: " + id);
 		return aptDAO.findById(id);
 
 	}
 
+	
 	public Collection<Appointment> getAll(User user) {
 
 		Collection<Appointment> appointmentsList = aptDAO.getAll(user);
@@ -87,62 +97,50 @@ public class AppointmentService {
 	public Collection<Appointment> getAll() {
 
 		Collection<Appointment> appointmentsList = aptDAO.getAll();
+		Li.st(appointmentsList);
 
 		return appointmentsList;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public boolean delete(@PathVariable("id") Long id) {
-		LOGGER.debug("Deleting appointment for id: " + id);
-		Appointment apt = aptDAO.findById(id);
-
-		// BEGIN --- This goes to the userDAO code ---
-		Doctor doctor = apt.getDoctor();
-		Agenda agenda = doctor.getAgenda();
-		Date date = apt.getDate();
-		Integer time = apt.getTime().getHours();
-		agenda.cancelBooking(date, time);
-		// END --- This goes to the userDAO code ---
-
-		if (apt != null) {
-			aptDAO.delete(apt);
-			return true;
-		}
-
-		return false;
-	}
-	
 	@RequestMapping(method = RequestMethod.GET, params = "query")
 	Collection<Appointment> search(@RequestParam(value = "query") String query) {
 		LOGGER.debug("Searching for " + query);
 		return aptDAO.search(query);
 	}
-	
 
 	private void validate(Appointment appointment) throws ValidationException {
-		if (appointment == null) {
-			throw new ValidationException("Invalid data. [BETA version err: Not enough data.]");
+		if (appointment == null //
+				|| appointment.getPatient() == null //
+				|| appointment.getDoctor() == null //
+				|| appointment.getDate() == null //
+				|| appointment.getTime() == null ){
+			throw new ValidationException("Not enough data for a valid appointment. (91) ");
 		} else {
 			System.out.println("Valid data.");
 		}
 	}
 
+	
+	@RequestMapping("/generate")
 	public void generateSome() throws ValidationException { // MOCK method for
 															// App testing
 															// purposes only
+		
+		Li.st("Generating some Appointments...");
 		Patient patient1 = new Patient();
-		// Patient patient2 = new Patient();
+		Patient patient2 = new Patient();
 		Doctor doctor1 = new Doctor();
-		// Doctor doctor2 = new Doctor();
+		Doctor doctor2 = new Doctor();
+		
 		patient1.setLastName("Lopez");
 		patient1.setFirstName("Jennifer");
-		// patient2.setLastName("Salma");
-		// patient2.setFirstName("Hayek");
+		patient2.setLastName("Salma");
+		patient2.setFirstName("Hayek");
 		doctor1.setLastName("Sigmund");
 		doctor1.setFirstName("Freud");
 		doctor1.setAgenda(new Agenda());
-		// doctor2.setLastName("Albert");
-		// doctor2.setFirstName("Adler");
+		doctor2.setLastName("Albert");
+		doctor2.setFirstName("Adler");
 
 		Date date = new Date();
 
@@ -152,7 +150,7 @@ public class AppointmentService {
 		date.setDate(22);
 		date.setHours(0);
 
-		time1.setHours(8);
+		time1.setHours(9);
 		time2.setHours(13);
 
 		Appointment appointment1 = new Appointment();
@@ -161,7 +159,7 @@ public class AppointmentService {
 		// Appointment appointment3 = new Appointment(patient2, doctor1);
 		// Appointment appointment4 = new Appointment(patient2, doctor2);
 		appointment1.createAppointment(patient1, doctor1);
-		appointment2.createAppointment(patient1, doctor1);
+		appointment2.createAppointment(patient2, doctor2);
 
 		appointment1.setDate(date);
 		appointment1.setTime(time1);

@@ -18,8 +18,6 @@ import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.User;
 
 @Service
-@RestController
-@RequestMapping("/rest/users")
 public class UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);

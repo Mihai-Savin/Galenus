@@ -8,6 +8,11 @@ import ro.sci.gms.service.ValidationException;
 
 public class Agenda {
 
+	@Override
+	public String toString() {
+		return "Agenda [agenda=" + agenda + "]";
+	}
+
 	HashMap<Date, LinkedList<Integer>> agenda = new HashMap<>();
 
 	public LinkedList<Integer> getAvailableHours(Date date) {
@@ -43,17 +48,14 @@ public class Agenda {
 		return agenda.get(day);
 	}
 
-	public void book(Date date, Integer hour) {
-		try {
-			validate(date);
-			validate(hour);
-		} catch (ValidationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void book(Date date, Integer hour) throws ValidationException {
+		validate(date);
+		validate(hour);
+		checkNoBooking(date, hour);
+		
 		date.setHours(0);
 		date.setMinutes(0);
-		
+
 		LinkedList<Integer> hours;
 
 		if (agenda.containsKey(date)) {
@@ -73,7 +75,7 @@ public class Agenda {
 		try {
 			validate(date);
 			validate(hour);
-			validateBooking(date, hour);
+			checkBooking(date, hour);
 		} catch (ValidationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,7 +92,7 @@ public class Agenda {
 
 	}
 
-	private void validateBooking(Date date, Integer hour) throws ValidationException {
+	private void checkBooking(Date date, Integer hour) throws ValidationException {
 		LinkedList<Integer> hours;
 
 		if (agenda.containsKey(date)) {
@@ -103,16 +105,27 @@ public class Agenda {
 		}
 	}
 
+	private void checkNoBooking(Date date, Integer hour) throws ValidationException {
+		LinkedList<Integer> hours;
+	
+		if (agenda.containsKey(date)) {
+			hours = agenda.get(date);
+			if (hours.contains(hour)) {
+				throw new ValidationException("Boking already exists at " + hour);
+			}
+		}
+	}
+
 	private void validate(Date date) throws ValidationException {
 		if ((date.getDay() == 0 || date.getDay() == 6)) {
-			throw new ValidationException("Valid operations on week-days only.");
+			throw new ValidationException("Out of working days range. Valid operations on working week-days only.");
 		}
 
 	}
 
 	private void validate(Integer hour) throws ValidationException {
 		if (hour < 8 || hour > 17) {
-			throw new ValidationException("Valid operations between 8-17 only.");
+			throw new ValidationException("Out of working hours range. Valid operations between 8-17 only.");
 		}
 	}
 

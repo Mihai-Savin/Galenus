@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-<title>Add Appointment</title>
+<title>Edit Appointment</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <link
 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
 	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
 	rel="stylesheet" media="screen" />
+
+<!-- 
+
 <link
 	href="http://cdn.jsdelivr.net/webjars/jquery-ui/1.11.4/jquery-ui.min.css"
 	th:href="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.css}"
@@ -35,120 +38,28 @@
 <script src="../static/js/jquery.validate.min"
 	th:src="@{js/jquery.validate.min.js}"></script>
 
+ -->
+
+
 <script>
 
     $().ready(function() {
     	$( "#date" ).datepicker({
   			dateFormat: "dd/mm/yy"
-		});
-
 		
-				
-		$("#createForm").validate({
-			rules: {
-    			patientName: {
-      				required: true,
-      				minlength: 2
-    			},
-    			doctorName: {
-      				required: true,
-      				minlength: 2
-    			},
-    			details: {
-      				required: true,
-      				minlength: 5
-    			},
-    			date: {
-      				required: true
-      			}
-  			},
-  			submitHandler: function(form) {
-    			save();
-    			return false;
- 	 		}
-		});
-
-		var id = query_param('id');
-		if (id) {
-		  //it's edit
-		  $.ajax({
-         	url:"/rest/appointment/"+id,
-         	type:"GET",
-         	success: function(data) {
-         		console.log("Data: " + data);
-         		$("#patientName").val(data.patientName);
-         		$("#doctorName").val(data.doctorName);
-         		$("#date").val(data.date);
-         		$("#details").val(data.details);
-         		$("#id").val(data.id);
-         		
-         		$(".panel-title").html("Edit Appointment");
-         		
-         	},
-         	error: function(xhr, desc, err){
-         		console.log("Error: " + err);
-         		var error = err;
-	         	if(xhr.responseJSON) {
-	         		if(xhr.responseJSON.message) {
-	         			error = xhr.responseJSON.message;
-	         		}
-	         	}
-	         	$("#error").html(error);
-         		
-            	$("#error").show();
-	     	}
-		});
-		}
-	});
-	
-	
-	
-	
-function save() {
-
-	$("#error").html('');
-	$("#error").hide();
-	var date = $("#date").datepicker().val();
-                   	
-	$.ajax({
-         url:"/rest/appointment",
-         type:"POST",
-         
-         data: {'patientName': $("#patientName").val(),
-         	   'doctorName': $("#doctorName").val(),
-               'details': $("#details").val(),
-               'date': date,
-               'id': $("#id").val(),
-         },
-         success: function(data) {
-         	console.log("Data: " + data);
-         	window.location.href = '/employee';
-         },
-         error: function(xhr, desc, err){
-         	console.log("Error: " + err);
-         	var error = err;
-         	if(xhr.responseJSON) {
-         		if(xhr.responseJSON.message) {
-         			error = xhr.responseJSON.message;
-         		}
-         	}
-         	$("#error").html(error);
-            $("#error").show();
-	     }
-		});
-}
-
-
+    })
     
 </script>
 
+
 </head>
+
+
 <body>
-
-
 	<div class="container">
-		<a href="/"> <img src="../static/images/logo.png" width="100"
-			th:src="@{images/logo.png}" />
+		<a href="/"> <img
+			src="http://www.3quarksdaily.com/.a/6a00d8341c562c53ef0120a896d16a970b-250wi"
+			width="100" />
 		</a>
 
 		<ol class="breadcrumb">
@@ -158,55 +69,68 @@ function save() {
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Add Appointment</h3>
+				<h3 class="panel-title">Edit Appointment</h3>
 			</div>
 
 			<div class="alert alert-danger" role="alert" id="error" name="error"
 				style="display: none;"></div>
 
 			<div class="panel-body">
-				<form method="POST" action="/rest/appointment" id="createForm">
+				<form method="POST" action="/appointment" id="createForm">
 
 
 					<div class="form-group">
 						<label for="patientName">Patient name</label> <input type="text"
-							class="form-control" id="patientName" name="patientName"
-							placeHolder="Patient Name" />
+							class="form-control" id="patientName" name="patientName" 
+							th:value="${{appointment.patientName}}" readonly="true"/>
 					</div>
 					<div class="form-group">
 						<label for="doctorName">Doctor name</label> <input type="text"
-							class="form-control" id="doctorName" name="doctorName"
-							placeHolder="Doctor Name" />
+							class="form-control" id="doctorName" name="doctorName" 
+							th:value="${appointment.doctorName}" readonly="true"/>
 					</div>
 
 					<div class="form-group">
 						<label for="date">Appointment Date</label>
 						<div class="form-group">
 							<input type="text" id="date" name="date"
-								placeHolder="dd/mm/yyyy" />
+								th:value="${appointment.date}" placeHolder="dd/mm/yyyy" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="time">Appointment Time</label>
+						<div class="form-group">
+							<input type="text" id="time" name="time"
+								th:value="${appointment.time}" placeHolder="hh:mm" />
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="details">Details</label> <input type="text"
 							class="form-control" id="details" name="details"
-							placeHolder="Other relevand details" />
+							th:value="${appointment.details}"
+							placeHolder="Other relevant details" />
 					</div>
-
-
+					<input type="hidden" class="form-control" id="id" th:value="${appointment.id}" />
 
 
 					<div class="container-fluid">
 						<div class="collapse navbar-collapse">
 							<ul class="nav navbar-nav navbar-right">
-								<li><button type="submit" class="btn btn-default"
-										onclick="javascript:goToAppointmentList();return false">Cancel</button></li>
+								<li><button class="btn btn-default"
+										onclick="/appointment_list">Cancel</button></li>
 								<li>&nbsp;&nbsp;&nbsp;</li>
-								<li><button type="submit" class="btn btn-default">Save appointment</button></li>
+								<li><button type="submit" class="btn btn-default">Save
+										appointment</button></li>
+										
+										
+										
+										
+										
 							</ul>
 						</div>
 					</div>
-					<br /> <input type="hidden" class="form-control" id="id" value="0" />
 				</form>
 			</div>
 		</div>

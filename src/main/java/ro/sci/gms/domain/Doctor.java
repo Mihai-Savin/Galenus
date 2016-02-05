@@ -9,6 +9,11 @@ public class Doctor extends User {
 	private Agenda agenda;
 	
 	
+	@Override
+	public String toString() {
+		return "Doctor [title=" + title + ", specialty=" + specialty + ", yearsOfExperience=" + yearsOfExperience
+				+ ", numberOfPatients=" + numberOfPatients + ", picture=" + picture + ", agenda=" + agenda + "]";
+	}
 	public Doctor() {
 		agenda = new Agenda();
 	}

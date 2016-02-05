@@ -41,24 +41,30 @@ public class Appointment extends AbstractModel {
 		return time;
 	}
 
+
+	public String getPatientName() {
+		return patientName;
+	}
+
+
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+
+
+
 	public String getDoctorName() {
 		return doctorName;
 	}
 
+
+
 	public void setDoctorName(String doctorName) {
 		this.doctorName = doctorName;
-		this.doctor.setLastName(patientName);
 	}
 
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
-		this.patient.setLastName(patientName);
-	}
 
-	public String getPatientName() { // Migh need removal. For testing purposes
-										// with thymeleaf
-		return patientName;
-	}
 
 	public Patient getPatient() {
 		return patient;
@@ -85,16 +91,16 @@ public class Appointment extends AbstractModel {
 				+ ", doctorName=" + doctorName + ", time=" + time + ", details=" + details + "]";
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder appointment = new StringBuilder();
-
-//		 appointment.append("Appointment ID : " + this.getId() + "\n");
-//		 appointment.append("Patient : " + patient.getFullName() + "\n");
-//		 appointment.append("Doctor : " + doctor.getFullName() + "\n");
-//		 appointment.append("Time : " + this.getTime() + "\n");
-
-		return appointment.toString();
-	}
+//	@Override
+//	public String toString() {
+//		StringBuilder appointment = new StringBuilder();
+//
+////		 appointment.append("Appointment ID : " + this.getId() + "\n");
+////		 appointment.append("Patient : " + patient.getFullName() + "\n");
+////		 appointment.append("Doctor : " + doctor.getFullName() + "\n");
+////		 appointment.append("Time : " + this.getTime() + "\n");
+//
+//		return appointment.toString();
+//	}
 
 }

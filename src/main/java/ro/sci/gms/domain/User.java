@@ -3,7 +3,7 @@ package ro.sci.gms.domain;
 public class User extends AbstractModel {
 
 	private String userName;
-	private String hasedPassword;
+	private String hashedPassword;
 	private String firstName;
 	private String lastName;
 	private String adress;
@@ -17,11 +17,11 @@ public class User extends AbstractModel {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getHasedPassword() {
-		return hasedPassword;
+	public String getHashedPassword() {
+		return hashedPassword;
 	}
-	public void setHasedPassword(String hasedPassword) {
-		this.hasedPassword = hasedPassword;
+	public void setHashedPassword(String hashedPassword) {
+		this.hashedPassword = hashedPassword;
 	}
 	public String getFullName() {
 		return firstName + " " + lastName;

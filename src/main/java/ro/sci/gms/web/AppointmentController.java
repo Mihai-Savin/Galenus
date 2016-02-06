@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ro.sci.gms.domain.Appointment;
-import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.service.AppointmentService;
 import ro.sci.gms.service.ValidationException;
@@ -27,7 +26,6 @@ public class AppointmentController {
 	@Autowired
 	private Patient loggedPatient;
 	
-
 	@RequestMapping("")
 	public ModelAndView index() {
 
@@ -47,6 +45,7 @@ public class AppointmentController {
 		return modelAndView;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@RequestMapping(method=RequestMethod.POST)
     public String appointmentSubmit(@ModelAttribute Appointment appointment) throws ValidationException {
 

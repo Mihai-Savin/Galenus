@@ -7,8 +7,14 @@ public class Doctor extends User {
 	private int numberOfPatients;
 	private String picture;
 	private Agenda agenda;
+	private Patient patient;
 	
-	
+	public Patient getPatient() {
+		return patient;
+	}
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
 	@Override
 	public String toString() {
 		return "Doctor [title=" + title + ", specialty=" + specialty + ", yearsOfExperience=" + yearsOfExperience

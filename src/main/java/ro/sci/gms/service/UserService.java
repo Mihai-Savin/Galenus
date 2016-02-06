@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
+import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.dao.inmemory.IMUserDAO;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
@@ -23,16 +23,7 @@ public class UserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
-	private IMUserDAO dao = new IMUserDAO();
-
-//	// @RequestMapping(value = "/{doctor}&{day}", method = RequestMethod.GET)
-//	public Collection<Integer> getAvailableHours(Doctor doctor, Date date) {
-//
-//		Collection<Integer> availableHours //
-//		= doctor.getAgenda().getAvailableHours(date);
-//
-//		return availableHours;
-//	}
+	private UserDAO dao = new IMUserDAO();
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void save(User user) throws ValidationException {
@@ -101,7 +92,8 @@ public class UserService {
 	@RequestMapping(method = RequestMethod.GET, params = "query")
 	Collection<User> search(@RequestParam(value = "query") String query) {
 		LOGGER.debug("Searching for " + query);
-		return dao.search(query);
+//		return dao.search(query);
+		return null;
 	}
 	
 

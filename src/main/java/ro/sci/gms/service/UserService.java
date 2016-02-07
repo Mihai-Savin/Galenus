@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ro.sci.gms.dao.UserDAO;
-import ro.sci.gms.dao.inmemory.IMUserDAO;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.User;
@@ -23,7 +22,7 @@ public class UserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
-	private UserDAO dao = new IMUserDAO();
+	private UserDAO userDAO;// = new IMUserDAO(); //sems to worked in auto-wired mode
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void save(User user) throws ValidationException {
@@ -31,7 +30,7 @@ public class UserService {
 		validate(user);
 
 
-		dao.update(user);
+		userDAO.update(user);
 
 		// return appointment;
 
@@ -40,21 +39,21 @@ public class UserService {
 	public User get(@PathVariable("id") Long id) {
 
 		LOGGER.debug("Getting user for id: " + id);
-		return (User) dao.findById(id);
+		return (User) userDAO.findById(id);
 
 	}
 	
 	public Patient getPatient(@PathVariable("id") Long id) {
 
 		LOGGER.debug("Getting patient for id: " + id);
-		return (Patient) dao.findById(id);
+		return (Patient) userDAO.findById(id);
 
 	}
 
 	public Doctor getDoctor(@PathVariable("id") Long id) {
 
 		LOGGER.debug("Getting doctor for id: " + id);
-		return (Doctor) dao.findById(id);
+		return (Doctor) userDAO.findById(id);
 
 	}
 
@@ -63,7 +62,7 @@ public class UserService {
 	@RequestMapping(method = RequestMethod.GET)
 	public Collection<User> getAll() {
 
-		Collection<User> usersList = dao.getAll();
+		Collection<User> usersList = userDAO.getAll();
 
 		return usersList;
 	}

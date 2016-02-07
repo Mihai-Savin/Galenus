@@ -2,9 +2,10 @@ package ro.sci.gms.service;
 
 import java.util.Collection;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,8 @@ public class UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
-	@Autowired
+//	@Autowired
+	@Resource(name="userDAO")
 	private UserDAO userDAO;// = new IMUserDAO(); //sems to worked in auto-wired mode
 
 	@RequestMapping(method = RequestMethod.POST)

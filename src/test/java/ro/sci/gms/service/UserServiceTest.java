@@ -1,6 +1,6 @@
 package ro.sci.gms.service;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
 
@@ -15,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ro.sci.ApplicationTests;
 import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
+import ro.sci.gms.temp.Li;
 
 
 
@@ -40,11 +41,11 @@ public class UserServiceTest {
 
 	@Before
 	public void setup() {
-		user.setUserName("lidia.buble");
+		user.setUserName("roxana.erdei");
 		user.setPassword("cantFrumos2016");
 		user.setFirstName("Lidia");
 		user.setLastName("Buble");
-		user.setAdress("Houston");
+		user.setAddress("Stockholm");
 		user.setPhone("+40 744 555 777");
 		user.setEmail("lidia.buble@fantasyWorld.org");
 		user.setRole(Role.user);
@@ -59,15 +60,17 @@ public class UserServiceTest {
 		System.out.println(user.getId());
 	}
 
-	
-	 
-/*	@Test(expected = ValidationException.class)
+/*	 
+	@Test(expected = ValidationException.class)
 	public void checkSaveUser_double_save() throws ValidationException {
 		userService.save(user);
+		Li.st(user.getId());
 		userService.save(user);
+		Li.st(user.getId());
 	}
-*/
-/*	@Test
+*/	
+	
+	@Test
 	public void checkGetUser_valid() {
 		User saved = null;
 		try {
@@ -82,11 +85,11 @@ public class UserServiceTest {
 
 		User retrieved = userService.get(id);
 
-		assertEquals(saved, retrieved);
+		assertEquals(saved.getId(), retrieved.getId());
 
-		System.out.println(retrieved);
+		System.out.println(retrieved.getFullName());
 	}
-*/
+
 /*	@Test
 	public void checkGetAppointment_noAppointments() {
 
@@ -149,12 +152,12 @@ public class UserServiceTest {
 
 	}
 */
-/*	@Test
-	public void checkDeleteAppointment_valid() {
-		Appointment saved = null;
+	@Test
+	public void checkDeleteUser_valid() {
+		User saved = null;
 		try {
-			aptService.save(appointment1);
-			saved = appointment1;
+			userService.save(user);
+			saved = user;
 		} catch (ValidationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -162,15 +165,15 @@ public class UserServiceTest {
 
 		Long id = saved.getId();
 
-		aptService.delete(id);
+		userService.delete(id);
 
-		assertNull(aptService.get(id));
+		assertNull(userService.get(id));
 
-		if (null == aptService.get(id)) {
-			System.out.println("Appointment was deleted.");
+		if (null == userService.get(id)) {
+			System.out.println("User was deleted.");
 		}
 	}
-*/
+
 /*	@Test
 	public void checkSaveAppointment_saveTwoApts() throws ValidationException {
 

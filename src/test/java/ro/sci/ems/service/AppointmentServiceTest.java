@@ -4,8 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ro.sci.ems.domain.Doctor;
-import ro.sci.ems.domain.Patient;
+import ro.sci.gms.domain.Doctor;
+import ro.sci.gms.domain.Patient;
+import ro.sci.gms.service.AppointmentService;
 
 public class AppointmentServiceTest {
 

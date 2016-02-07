@@ -9,9 +9,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ro.sci.ems.domain.User;
-import ro.sci.ems.service.UserService;
-import ro.sci.ems.service.ValidationException;
+import ro.sci.gms.domain.User;
+import ro.sci.gms.service.UserService;
+import ro.sci.gms.service.ValidationException;
 
 @Controller
 @RequestMapping("/register")

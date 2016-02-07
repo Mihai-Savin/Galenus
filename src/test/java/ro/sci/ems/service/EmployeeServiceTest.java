@@ -15,9 +15,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import ro.sci.ems.Application;
-import ro.sci.ems.domain.Employee;
-import ro.sci.ems.domain.Gender;
+import ro.sci.gms.Application;
+import ro.sci.gms.domain.Employee;
+import ro.sci.gms.domain.Gender;
+import ro.sci.gms.service.EmployeeService;
+import ro.sci.gms.service.ValidationException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)

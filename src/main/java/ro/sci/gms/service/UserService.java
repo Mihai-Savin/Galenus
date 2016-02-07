@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.domain.User;
+import ro.sci.gms.temp.Li;
 
 @Service
 public class UserService {
@@ -34,6 +35,7 @@ public class UserService {
 
 		validate(user);
 		userDAO.update(user);
+		Li.st(user.getId() + "$" + user.getUserName());
 	}
 
 	public User get(Long id) {

@@ -48,7 +48,7 @@ public class PatientServiceTest {
 		patient.setPassword("cantFrumos2016");
 		patient.setFirstName("Lidia");
 		patient.setLastName("Buble");
-		patient.setAdress("Toronto");
+		patient.setAddress("Toronto");
 		patient.setPhone("+40 744 555 777");
 		patient.setEmail("lidia.buble@fantasyWorld.org");
 		patient.setRole(Role.user);

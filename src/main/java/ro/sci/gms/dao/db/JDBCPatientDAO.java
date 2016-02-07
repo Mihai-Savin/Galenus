@@ -35,8 +35,10 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 	private String userName;
 	private String pass;
 
-	public JDBCPatientDAO() {
-	} // seems not to be working without this default constructor
+	/*
+	 * This seems to be required. Doesn't work without it.
+	 */
+	public JDBCPatientDAO(){}
 
 	public JDBCPatientDAO(String host, String port, String dbName, String userName, String pass) {
 		this.host = host;
@@ -51,8 +53,7 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 		Li.st("Saving Patient (user data) to DB.");
 
 		Connection connection = newConnection();
-        connection.setAutoCommit(false);
-
+		connection.setAutoCommit(false);
 
 		// First write User data from Patient .to DB
 		update(connection, patient);
@@ -78,7 +79,8 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 			// View data on console
 			patient.see();
 		} catch (Exception ex) {
-//			throw new RuntimeException("Error building prepared statement. (91)", ex);
+			// throw new RuntimeException("Error building prepared statement.
+			// (91)", ex);
 			ex.printStackTrace();
 		}
 		// Finished writing specific Patient data to DB. Ready to commit

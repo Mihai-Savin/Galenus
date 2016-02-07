@@ -56,7 +56,7 @@ public class Patient extends User {
 				+ medicalBackground + ", bloodType=" + bloodType + ", doctor=" + doctor + ", getPassword()="
 				+ getPassword() + ", getUserName()=" + getUserName() + ", getFullName()=" + getFullName()
 				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getAdress()="
-				+ getAdress() + ", getPhone()=" + getPhone() + ", getEmail()=" + getEmail() + ", getRole()=" + getRole()
+				+ getAddress() + ", getPhone()=" + getPhone() + ", getEmail()=" + getEmail() + ", getRole()=" + getRole()
 				+ ", hashCode()=" + hashCode() + ", getId()=" + getId() + ", getClass()=" + getClass() + ", toString()="
 				+ super.toString() + "]";
 

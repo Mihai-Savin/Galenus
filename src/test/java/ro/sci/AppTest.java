@@ -117,7 +117,7 @@ public class AppTest {
 	 * @Worked for IM context and Agenda object based on HashMap IM
 	 *         implementation.
 	 */
-	@Test
+	/*@Test
 	public void runAppTest() {
 
 		StringBuilder output = new StringBuilder();
@@ -200,6 +200,6 @@ public class AppTest {
 		System.out.println(thePatient.getDoctor());
 		System.out.println(theDoctor.getAgenda().getBookedHours(selectedDate));
 
-	}
+	}*/
 
 }

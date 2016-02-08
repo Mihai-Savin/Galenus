@@ -1,5 +1,7 @@
 package ro.sci.gms.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
@@ -20,8 +22,7 @@ import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Gender;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.Role;
-
-
+import ro.sci.gms.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ApplicationTests.class)
@@ -32,14 +33,15 @@ public class PatientServiceTest {
 	PatientService patientService;
 
 	private Patient patient = new Patient();
-	
+
 	@After
 	public void tearDown() {
-//		Collection<Appointment> appointments = new LinkedList<>(aptService.getAll());
-//
-//		for (Appointment apt : appointments) {
-//			aptService.delete(apt.getId());
-//		}
+		// Collection<Appointment> appointments = new
+		// LinkedList<>(aptService.getAll());
+		//
+		// for (Appointment apt : appointments) {
+		// aptService.delete(apt.getId());
+		// }
 	}
 
 	@Before
@@ -52,13 +54,20 @@ public class PatientServiceTest {
 		patient.setPhone("+40 744 555 777");
 		patient.setEmail("lidia.buble@fantasyWorld.org");
 		patient.setRole(Role.user);
-		
+
 		patient.setDateOfBirth(new Date());
 		patient.setGender(Gender.FEMALE);
 		patient.setMedicalBackground("I www to sing sing. Uuu...");
 		patient.setBloodType(Blood.A);
 		patient.setDoctor(new Doctor());
 	}
+
+	/*
+	 * @Test(expected = ValidationException.class) public void
+	 * checkSaveUser_double_save() throws ValidationException {
+	 * userService.save(user); Li.st(user.getId()); userService.save(user);
+	 * Li.st(user.getId()); }
+	 */
 
 	@Test
 	public void checkSavePatient_valid() throws ValidationException, SQLException {
@@ -69,20 +78,12 @@ public class PatientServiceTest {
 		System.out.println(patient.getId());
 	}
 
-	
-	 
-/*	@Test(expected = ValidationException.class)
-	public void checkSaveUser_double_save() throws ValidationException {
-		userService.save(user);
-		userService.save(user);
-	}
-*/
-/*	@Test
-	public void checkGetUser_valid() {
-		User saved = null;
+	@Test
+	public void checkGetPatient_valid() throws SQLException {
+		Patient saved = null;
 		try {
-			userService.save(user);
-			saved = user;
+			patientService.save(patient);
+			saved = patient;
 		} catch (ValidationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -90,81 +91,19 @@ public class PatientServiceTest {
 
 		Long id = saved.getId();
 
-		User retrieved = userService.get(id);
+		Patient retrieved = patientService.getPatient(id);
 
-		assertEquals(saved, retrieved);
+		assertEquals(saved.getId(), retrieved.getId());
 
-		System.out.println(retrieved);
+		System.out.println(retrieved.getFullName());
 	}
-*/
-/*	@Test
-	public void checkGetAppointment_noAppointments() {
 
-		Collection<Appointment> all = aptService.getAll(patient1);
-
-		assertEquals(0, all.size());
-
-		System.out.println(all);
-	}
-*/
-/*	@Test
-	public void checkGetAllAppointments_patient_valid() {
-
+	@Test
+	public void checkDeletePatient_valid() throws SQLException {
+		Patient saved = null;
 		try {
-			aptService.save(appointment1);
-			aptService.save(appointment2);
-			aptService.save(appointment3);
-			aptService.save(appointment4);
-
-		} catch (ValidationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Collection<Appointment> all = aptService.getAll(patient1);
-
-		for (Appointment ap : all) {
-			System.out.println(ap);
-		}
-
-		System.out.println(all);
-
-		assertEquals(2, all.size());
-
-	}
-*/
-/*	@Test
-	public void checkGetAllAppointments_doctor_valid() {
-
-		try {
-			aptService.save(appointment1);
-			aptService.save(appointment2);
-			aptService.save(appointment3);
-			aptService.save(appointment4);
-
-		} catch (ValidationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Collection<Appointment> all = aptService.getAll(doctor1);
-
-		for (Appointment ap : all) {
-			System.out.println(ap.list());
-		}
-
-		System.out.println(all);
-
-		assertEquals(2, all.size());
-
-	}
-*/
-/*	@Test
-	public void checkDeleteAppointment_valid() {
-		Appointment saved = null;
-		try {
-			aptService.save(appointment1);
-			saved = appointment1;
+			patientService.save(patient);
+			saved = patient;
 		} catch (ValidationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -172,24 +111,13 @@ public class PatientServiceTest {
 
 		Long id = saved.getId();
 
-		aptService.delete(id);
+		patientService.delete(id);
 
-		assertNull(aptService.get(id));
+		assertNull(patientService.get(id));
 
-		if (null == aptService.get(id)) {
-			System.out.println("Appointment was deleted.");
+		if (null == patientService.get(id)) {
+			System.out.println("Patient was deleted.");
 		}
 	}
-*/
-/*	@Test
-	public void checkSaveAppointment_saveTwoApts() throws ValidationException {
 
-		aptService.save(appointment1);
-		aptService.save(appointment3);
-
-		assertTrue(appointment1.getId() > 0);
-		assertTrue(appointment3.getId() > 0);
-
-	}
-*/
 }

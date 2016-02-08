@@ -74,6 +74,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 	
 			return result;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException("Error getting DB connection. (91)", ex);
 		}
 	
@@ -121,7 +122,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 			ps.setString(5, user.getAddress());
 			ps.setString(6, user.getPhone());
 			ps.setString(7, user.getEmail());
-			ps.setString(8, user.getRole().toString());
+			ps.setString(8, user.getRole().name());
 
 			if (user.getId() > 0) {
 				ps.setLong(9, user.getId());
@@ -208,7 +209,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 	private User extractUser(ResultSet rs) throws SQLException {
 		User user = new User();
 		
-		user.setUserName(rs.getString("first_name"));
+		user.setUserName(rs.getString("user_name"));
 		user.setFirstName(rs.getString("first_name"));
 		user.setLastName(rs.getString("last_name"));
 		user.setPassword(rs.getString("password"));

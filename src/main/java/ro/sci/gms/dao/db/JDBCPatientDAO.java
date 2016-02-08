@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,8 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import ro.sci.gms.domain.Appointment;
+import ro.sci.gms.domain.Blood;
+import ro.sci.gms.domain.Doctor;
+import ro.sci.gms.domain.Gender;
 import ro.sci.gms.domain.Patient;
+import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
 import ro.sci.gms.temp.Li;
 
@@ -38,7 +43,8 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 	/*
 	 * This seems to be required. Doesn't work without it.
 	 */
-	public JDBCPatientDAO(){}
+	public JDBCPatientDAO() {
+	}
 
 	public JDBCPatientDAO(String host, String port, String dbName, String userName, String pass) {
 		this.host = host;
@@ -46,7 +52,34 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 		this.pass = pass;
 		this.port = port;
 		this.dbName = dbName;
+	}
 
+	protected Connection newConnection() {
+		try {
+			Class.forName("org.postgresql.Driver").newInstance();
+	
+			String url = new StringBuilder()//
+					.append("jdbc:")//
+					.append("postgresql")//
+					.append("://")//
+					.append(host)//
+					.append(":")//
+					.append(port)//
+					.append("/")//
+					.append(dbName)//
+					.append("?user=")//
+					.append(userName)//
+					.append("&password=")//
+					.append(pass).toString();
+			Connection result = DriverManager.getConnection(url);
+			result.setAutoCommit(false);
+	
+			return result;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException("Error getting DB connection. (91)", ex);
+		}
+	
 	}
 
 	public Patient savePatient(Patient patient) throws SQLException {
@@ -69,9 +102,9 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 
 			ps.setLong(1, patient.getId());
 			ps.setTimestamp(2, new Timestamp(patient.getDateOfBirth().getTime()));
-			ps.setString(3, patient.getGender().toString());
+			ps.setString(3, patient.getGender().name());
 			ps.setString(4, patient.getMedicalBackground());
-			ps.setString(5, patient.getBloodType().toString());
+			ps.setString(5, patient.getBloodType().name());
 			ps.setLong(6, patient.getDoctor().getId());
 
 			ps.executeQuery();
@@ -99,150 +132,74 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 	}
 
 	@Override
-	public Collection<User> getAll() {
-		Connection connection = newConnection();
+	public Patient findById(Long id) {
 
-		Collection<User> result = new LinkedList<>();
+		List<Patient> result = new LinkedList<>();
 
-		// try (ResultSet rs = connection.createStatement().executeQuery("select
-		// * from employee")) {
-		//
-		// while (rs.next()) {
-		// result.add(extractAppointment(rs));
-		// }
-		// connection.commit();
-		// } catch (SQLException ex) {
-		//
-		// throw new RuntimeException("Error getting employees.", ex);
-		// } finally {
-		// try {
-		// connection.close();
-		// } catch (Exception ex) {
-		//
-		// }
-		// }
-
-		return result;
-	}
-
-	@Override
-	public User findById(Long id) {
-		Connection connection = newConnection();
-
-		List<Appointment> result = new LinkedList<>();
-
-		try (ResultSet rs = connection.createStatement().executeQuery("select * from employee where id = " + id)) {
+		try (Connection connection = newConnection();
+				ResultSet rs = connection.createStatement()
+						.executeQuery("select * from users, patient where id=user_id and id= " + id)) {
 
 			while (rs.next()) {
-				result.add(extractAppointment(rs));
+				result.add(extractPatient(rs));
 			}
 			connection.commit();
 		} catch (SQLException ex) {
-
-			throw new RuntimeException("Error getting employees.", ex);
-		} finally {
-			try {
-				connection.close();
-			} catch (Exception ex) {
-
-			}
+			throw new RuntimeException("(091) Error getting Patient from DB.", ex);
 		}
 
 		if (result.size() > 1) {
-			throw new IllegalStateException("Multiple Employees for id: " + id);
+			throw new IllegalStateException("(091) Multiple Patients/Users for id: " + id);
 		}
-		// return result.isEmpty() ? null : result.get(0);
-		return null;
+		return result.isEmpty() ? null : result.get(0);
 	}
 
-	public boolean delete(User user) {
+	// ? is it ok to pass the user as param or would it be better to only pass
+	// the id
+	public boolean delete(Patient patient) {
 		boolean result = false;
-		// Connection connection = newConnection();
-		// try {
-		// Statement statement = connection.createStatement();
-		// result = statement.execute("delete from employee where id = " +
-		// user.getId());
-		// connection.commit();
-		// } catch (SQLException ex) {
-		//
-		// throw new RuntimeException("Error updating employees.", ex);
-		// } finally {
-		// try {
-		// connection.close();
-		// } catch (Exception ex) {
-		//
-		// }
-		// }
-		return result;
-
-	}
-
-	/*
-	 * @Override public Collection<Appointment> searchByName(String query) { if
-	 * (query == null) { query = ""; } else { query = query.trim(); }
-	 * 
-	 * Connection connection = newConnection();
-	 * 
-	 * Collection<Employee> result = new LinkedList<>();
-	 * 
-	 * try (ResultSet rs = connection.createStatement() .executeQuery(
-	 * "select * from employee where lower(first_name || ' ' || last_name) like '%"
-	 * + query.toLowerCase() + "%'")) {
-	 * 
-	 * while (rs.next()) { result.add(extractAppointment(rs)); }
-	 * connection.commit(); } catch (SQLException ex) {
-	 * 
-	 * throw new RuntimeException("Error getting employees.", ex); }
-	 * 
-	 * return result; }
-	 */
-
-	protected Connection newConnection() {
-		try {
-			Class.forName("org.postgresql.Driver").newInstance();
-
-			String url = new StringBuilder()//
-					.append("jdbc:")//
-					.append("postgresql")//
-					.append("://")//
-					.append(host)//
-					.append(":")//
-					.append(port)//
-					.append("/")//
-					.append(dbName)//
-					.append("?user=")//
-					.append(userName)//
-					.append("&password=")//
-					.append(pass).toString();
-			Connection result = DriverManager.getConnection(url);
-			result.setAutoCommit(false);
-
-			return result;
-		} catch (Exception ex) {
-			throw new RuntimeException("Error getting DB connection. (91)", ex);
+		try (Connection connection = newConnection()) {
+			Statement statement = connection.createStatement();
+			result = statement.execute("delete from users where id = " + patient.getId());
+			result = statement.execute("delete from patient where user_id = " + patient.getId());
+			connection.commit();
+		} catch (SQLException ex) {
+			throw new RuntimeException("(091) Error deleting user or patient data.", ex);
 		}
-
+		return result;
 	}
 
-	private Appointment extractAppointment(ResultSet rs) throws SQLException {
-		Appointment appointment = new Appointment();
-		// appointment.setId(rs.getLong("id"));
-		// appointment.setFirstName(rs.getString("first_name"));
-		// appointment.setLastName(rs.getString("last_name"));
-		// appointment.setJobTitle(rs.getString("job_title"));
-		// appointment.setBirthDate(new
-		// Date(rs.getTimestamp("birth_date").getTime()));
-		// appointment.setEmploymentDate(new
-		// Date(rs.getTimestamp("employment_date").getTime()));
-		// appointment.setGender(Gender.valueOf(rs.getString("gender")));
-		return appointment;
-
-	}
-
-	@Override
-	public Collection<User> searchById(String query) {
-		// TODO Auto-generated method stub
+	// Still figuring out if needed or not
+	public Collection<Patient> getAllPatients() {
 		return null;
+	}
+
+	private Patient extractPatient(ResultSet rs) throws SQLException {
+		Patient patient = new Patient();
+
+		patient.setUserName(rs.getString("user_name"));
+		patient.setFirstName(rs.getString("first_name"));
+		patient.setLastName(rs.getString("last_name"));
+		patient.setPassword(rs.getString("password"));
+		patient.setId(rs.getLong("id"));
+		patient.setAddress(rs.getString("address"));
+		patient.setPhone(rs.getString("phone"));
+		patient.setEmail(rs.getString("email"));
+		patient.setRole(Role.valueOf(rs.getString("role")));
+		patient.setDateOfBirth(new Date(rs.getTimestamp("date_of_birth").getTime()));
+		patient.setGender(Gender.valueOf(rs.getString("gender")));
+		patient.setMedicalBackground(rs.getString("medical_background"));
+		patient.setBloodType(Blood.valueOf(rs.getString("blood_type")));
+
+		// After JDBCDoctorDAO is operational, this line needs to be updated.
+		Long retrievedDoctorId = rs.getLong("id");
+		Doctor retrievedDoctor = new Doctor(); // will be replaced by
+												// doctorDAO.getDoctor(retrievedDoctorId);
+		retrievedDoctor.setId(retrievedDoctorId);
+
+		patient.setDoctor(retrievedDoctor);
+
+		return patient;
 	}
 
 }

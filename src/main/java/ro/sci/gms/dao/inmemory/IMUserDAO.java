@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import ro.sci.gms.dao.UserDAO;
-import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.User;
 
 @Repository

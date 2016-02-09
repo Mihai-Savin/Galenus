@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+	<title>Galenus - Discussions</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<link
+		href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+		rel="stylesheet" media="screen" />
+	
+</head>
+<body>	
+	<div class="container">
+		<a href="/"> <img
+			src="http://www.3quarksdaily.com/.a/6a00d8341c562c53ef0120a896d16a970b-250wi"
+			width="100" /> <!--	th:src="@{images/logo.png}" / -->
+		</a>
+
+		<ol class="breadcrumb">
+			<li><a href="/">Home</a></li>
+		</ol>
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="collapse navbar-collapse">
+					<form class="navbar-form navbar-left" action="/discussions/search" method="GET">
+						<input type="hidden" name="userId" th:value="${loggedUserId}"></input>
+						<div class="form-group">
+							<input type="text" class="form-control" name="token" th:value="${searchToken}" placeholder="Search"></input>
+						</div>
+						<button type="submit" class="btn btn-default">Search</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a th:href="@{/discussions/search(userId=${loggedUserId},token=${searchToken})}">
+          						<span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Refresh
+        					</a>
+        				</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		
+		<div>
+			<div class="panel-group">
+				<div class="panel panel-default" th:each="message : ${discussion.messages}">
+					<div class="panel-heading">
+						<span><b th:text="${message.sender.firstName}"></b>&nbsp;<b th:text="${message.sender.lastName}"></b></span>
+						<span class="pull-right"><b th:text="${#dates.format(message.date, 'dd/MM/yyyy HH:mm')}"></b></span>
+				  	</div>
+				  	<div class="panel-body" th:text="${message.content}"></div>
+				</div>
+			</div>
+			<form action="/discussions/message" method="POST">
+				<input type="hidden" name="userId" th:value="${loggedUserId}"></input>
+				<input type="hidden" name="receiverId" th:value="${receiverId}"></input>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-11"><input class="form-control" type="text" name="content" placeholder="Enter your message..."></input></div>
+						<div class="col-md-1"><button type="submit" class="btn btn-primary">Send</button></div>
+					</div>
+				</div>
+			</form>
+		</div>
+			
+	</div>
+	
+	<div class="footer" id="footer">		
+	</div>
+</body>
+</html>

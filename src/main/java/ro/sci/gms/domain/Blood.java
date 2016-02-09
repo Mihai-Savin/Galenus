@@ -6,4 +6,5 @@ public enum Blood {
 	AB,
 	O,
 	unspecified
+
 }

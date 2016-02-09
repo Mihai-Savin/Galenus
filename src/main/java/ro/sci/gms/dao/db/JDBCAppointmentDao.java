@@ -15,10 +15,9 @@
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 //
-//import ro.sci.gms.dao.AppointmentDAO;
-//import ro.sci.gms.domain.Appointment;
-//import ro.sci.gms.domain.Gender;
-//import ro.sci.gms.domain.User;
+//import ro.sci.ems.dao.EmployeeDAO;
+//import ro.sci.ems.domain.Employee;
+//import ro.sci.ems.domain.Gender;
 //
 ///**
 // * Pure JDBC implementation for {@link EmployeeDAO}.
@@ -115,12 +114,12 @@
 //								+ "values (?, ?, ?, ?, ?, ?) returning id");
 //
 //			}
-////			ps.setString(1, model.getFirstName());
-////			ps.setString(2, model.getLastName());
-////			ps.setString(3, model.getJobTitle());
-////			ps.setTimestamp(4, new Timestamp(model.getBirthDate().getTime()));
-////			ps.setTimestamp(5, new Timestamp(model.getEmploymentDate().getTime()));
-////			ps.setString(6, model.getGender().name());
+//			ps.setString(1, model.getFirstName());
+//			ps.setString(2, model.getLastName());
+//			ps.setString(3, model.getJobTitle());
+//			ps.setTimestamp(4, new Timestamp(model.getBirthDate().getTime()));
+//			ps.setTimestamp(5, new Timestamp(model.getEmploymentDate().getTime()));
+//			ps.setString(6, model.getGender().name());
 //
 //			if (model.getId() > 0) {
 //				ps.setLong(7, model.getId());
@@ -170,33 +169,33 @@
 //
 //	}
 //
-////	@Override
-////	public Collection<Appointment> searchByName(String query) {
-////		if (query == null) {
-////			query = "";
-////		} else {
-////			query = query.trim();
-////		}
-////
-////		Connection connection = newConnection();
-////
-////		Collection<Employee> result = new LinkedList<>();
-////
-////		try (ResultSet rs = connection.createStatement()
-////				.executeQuery("select * from employee where lower(first_name || ' ' || last_name) like '%"
-////						+ query.toLowerCase() + "%'")) {
-////
-////			while (rs.next()) {
-////				result.add(extractAppointment(rs));
-////			}
-////			connection.commit();
-////		} catch (SQLException ex) {
-////
-////			throw new RuntimeException("Error getting employees.", ex);
-////		}
-////
-////		return result;
-////	}
+//	@Override
+//	public Collection<Appointment> searchByName(String query) {
+//		if (query == null) {
+//			query = "";
+//		} else {
+//			query = query.trim();
+//		}
+//
+//		Connection connection = newConnection();
+//
+//		Collection<Employee> result = new LinkedList<>();
+//
+//		try (ResultSet rs = connection.createStatement()
+//				.executeQuery("select * from employee where lower(first_name || ' ' || last_name) like '%"
+//						+ query.toLowerCase() + "%'")) {
+//
+//			while (rs.next()) {
+//				result.add(extractAppointment(rs));
+//			}
+//			connection.commit();
+//		} catch (SQLException ex) {
+//
+//			throw new RuntimeException("Error getting employees.", ex);
+//		}
+//
+//		return result;
+//	}
 //
 //	protected Connection newConnection() {
 //		try {
@@ -227,33 +226,15 @@
 //
 //	private Appointment extractAppointment(ResultSet rs) throws SQLException {
 //		Appointment appointment = new Appointment();
-////		appointment.setId(rs.getLong("id"));
-////		appointment.setFirstName(rs.getString("first_name"));
-////		appointment.setLastName(rs.getString("last_name"));
-////		appointment.setJobTitle(rs.getString("job_title"));
-////		appointment.setBirthDate(new Date(rs.getTimestamp("birth_date").getTime()));
-////		appointment.setEmploymentDate(new Date(rs.getTimestamp("employment_date").getTime()));
-////		appointment.setGender(Gender.valueOf(rs.getString("gender")));
+//		appointment.setId(rs.getLong("id"));
+//		appointment.setFirstName(rs.getString("first_name"));
+//		appointment.setLastName(rs.getString("last_name"));
+//		appointment.setJobTitle(rs.getString("job_title"));
+//		appointment.setBirthDate(new Date(rs.getTimestamp("birth_date").getTime()));
+//		appointment.setEmploymentDate(new Date(rs.getTimestamp("employment_date").getTime()));
+//		appointment.setGender(Gender.valueOf(rs.getString("gender")));
 //		return appointment;
 //
-//	}
-//
-//	@Override
-//	public Collection<Appointment> searchById(String query) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public Collection<Appointment> getAll(User user) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public Collection<Appointment> search(String query) {
-//		// TODO Auto-generated method stub
-//		return null;
 //	}
 //
 //}

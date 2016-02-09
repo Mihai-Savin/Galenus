@@ -81,7 +81,7 @@ public class GalenusApp {
 		patient.setFirstName("Angela");
 		patient.setLastName("Merkel");
 		patient.setDoctor(doctor);
-		patient.setUserName("angela.merkel");
+		patient.setUsername("angela.merkel");
 		patient.setEmail("angela.merkel@bundesregierung.de");
 		patient.setPhone("+49 89 636 48018");
 		patient.setMedicalBackground("Loves to cuddle with muslim alien citizens.");

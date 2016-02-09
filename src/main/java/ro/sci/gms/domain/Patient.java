@@ -54,7 +54,7 @@ public class Patient extends User {
 	public String see() {
 		String output = "Patient [dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", medicalBackground="
 				+ medicalBackground + ", bloodType=" + bloodType + ", doctor=" + doctor + ", getPassword()="
-				+ getPassword() + ", getUserName()=" + getUserName() + ", getFullName()=" + getFullName()
+				+ getPassword() + ", getUserName()=" + getUsername() + ", getFullName()=" + getFullName()
 				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getAdress()="
 				+ getAddress() + ", getPhone()=" + getPhone() + ", getEmail()=" + getEmail() + ", getRole()=" + getRole()
 				+ ", hashCode()=" + hashCode() + ", getId()=" + getId() + ", getClass()=" + getClass() + ", toString()="

@@ -35,7 +35,7 @@ public class UserService {
 
 		validate(user);
 		userDAO.update(user);
-		Li.st(user.getId() + "$" + user.getUserName());
+		Li.st(user.getId() + "$" + user.getUsername());
 	}
 
 	public User get(Long id) {

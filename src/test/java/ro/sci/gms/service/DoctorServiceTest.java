@@ -40,7 +40,7 @@ public class DoctorServiceTest {
 
 	@Before
 	public void setup() {
-		doctor.setUserName("lidia.buble");
+		doctor.setUsername("lidia.buble");
 		doctor.setPassword("cantFrumos2016");
 		doctor.setFirstName("Lidia");
 		doctor.setLastName("Buble");

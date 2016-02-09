@@ -2,7 +2,7 @@ package ro.sci.gms.domain;
 
 public class User extends AbstractModel {
 
-	private String userName;
+	private String username;
 	private String password;
 	public String getPassword() {
 		return password;
@@ -17,11 +17,11 @@ public class User extends AbstractModel {
 	private String email;
 	private Role role;
 	
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public String getFullName() {
@@ -70,7 +70,7 @@ public class User extends AbstractModel {
 		int result = super.hashCode();
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 	@Override
@@ -92,10 +92,10 @@ public class User extends AbstractModel {
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (userName == null) {
-			if (other.userName != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!userName.equals(other.userName))
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}

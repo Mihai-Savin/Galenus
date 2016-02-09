@@ -25,10 +25,8 @@ public class UserController {
 	@RequestMapping("")
 	public ModelAndView index() {
 
-		Collection<User> allUsers = userService.getAll();
-
-		ModelAndView modelAndView = new ModelAndView("user_list");
-		modelAndView.addObject("allUsers", allUsers);
+		ModelAndView modelAndView = new ModelAndView("user");
+		modelAndView.addObject("user", loggedPatient);
 
 		return modelAndView;
 	}
@@ -36,7 +34,7 @@ public class UserController {
 	@RequestMapping("/patient/profile")
 	public ModelAndView editPatient() {
 
-		ModelAndView modelAndView = new ModelAndView("patient_edit");
+		ModelAndView modelAndView = new ModelAndView("patientedit");
 		modelAndView.addObject("patient", loggedPatient);
 
 		return modelAndView;

@@ -117,7 +117,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 
 			ps.setString(1, user.getFirstName());
 			ps.setString(2, user.getLastName());
-			ps.setString(3, user.getUserName());
+			ps.setString(3, user.getUsername());
 			ps.setString(4, user.getPassword());
 			ps.setString(5, user.getAddress());
 			ps.setString(6, user.getPhone());
@@ -209,7 +209,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 	private User extractUser(ResultSet rs) throws SQLException {
 		User user = new User();
 		
-		user.setUserName(rs.getString("user_name"));
+		user.setUsername(rs.getString("user_name"));
 		user.setFirstName(rs.getString("first_name"));
 		user.setLastName(rs.getString("last_name"));
 		user.setPassword(rs.getString("password"));

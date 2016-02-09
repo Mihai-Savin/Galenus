@@ -46,7 +46,7 @@ public class PatientServiceTest {
 
 	@Before
 	public void setup() {
-		patient.setUserName("lidia.buble");
+		patient.setUsername("lidia.buble");
 		patient.setPassword("cantFrumos2016");
 		patient.setFirstName("Lidia");
 		patient.setLastName("Buble");

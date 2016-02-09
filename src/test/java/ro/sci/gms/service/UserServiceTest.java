@@ -41,7 +41,7 @@ public class UserServiceTest {
 
 	@Before
 	public void setup() {
-		user.setUserName("roxana.erdei");
+		user.setUsername("roxana.erdei");
 		user.setPassword("cantFrumos2016");
 		user.setFirstName("Lidia");
 		user.setLastName("Buble");

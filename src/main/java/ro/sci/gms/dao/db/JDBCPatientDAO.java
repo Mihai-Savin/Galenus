@@ -177,7 +177,7 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 	private Patient extractPatient(ResultSet rs) throws SQLException {
 		Patient patient = new Patient();
 
-		patient.setUserName(rs.getString("user_name"));
+		patient.setUsername(rs.getString("user_name"));
 		patient.setFirstName(rs.getString("first_name"));
 		patient.setLastName(rs.getString("last_name"));
 		patient.setPassword(rs.getString("password"));

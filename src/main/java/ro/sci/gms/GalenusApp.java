@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import ro.sci.gms.dao.AppointmentDAO;
-import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.dao.db.JDBCDoctorDAO;
 import ro.sci.gms.dao.db.JDBCPatientDAO;
 import ro.sci.gms.dao.db.JDBCUserDAO;
@@ -53,21 +52,21 @@ public class GalenusApp {
 	}
 
 	@Bean
-	public JDBCUserDAO userDAO() {
-		return new // IMUserDAO();
-		JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
+	public IMUserDAO userDAO() {
+		return new  IMUserDAO();
+		//JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
 	}
 	
 	@Bean
-	public JDBCPatientDAO patientDAO() {
-		return new // IMUserDAO();
-		JDBCPatientDAO("localhost", "5432", "galenus", "postgres", "postgres");
+	public IMUserDAO patientDAO() {
+		return new  IMUserDAO();
+//		JDBCPatientDAO("localhost", "5432", "galenus", "postgres", "postgres");
 	}
 	
 	@Bean
-	public JDBCDoctorDAO doctorDAO() {
-		return new // IMUserDAO();
-		JDBCDoctorDAO("localhost", "5432", "galenus", "postgres", "postgres");
+	public IMUserDAO doctorDAO() {
+		return new  IMUserDAO();
+//		JDBCDoctorDAO("localhost", "5432", "galenus", "postgres", "postgres");
 	}
 	
 	@Bean

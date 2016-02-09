@@ -5,12 +5,12 @@
 
 
 	<groupId>ro.sci</groupId>
-	<artifactId>ems</artifactId>
+	<artifactId>gms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ems</name>
-	<description>Employee Management System</description>
+	<name>gms</name>
+	<description>Galenus Medical Service</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -62,14 +62,23 @@
 			<artifactId>jquery-ui</artifactId>
 			<version>1.11.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901-1.jdbc4</version>
 		</dependency>
-
 		
+		
+		<!-- This enables HTML acceptance instead of requring xHTML -->
+		<dependency>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+			<version>1.9.15</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>

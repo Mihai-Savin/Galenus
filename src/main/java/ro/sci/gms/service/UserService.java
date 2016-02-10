@@ -26,7 +26,7 @@ public class UserService implements UserDetailsService {
 	 * @Autowired was firstly used. After producing more specific classes, this
 	 * annotation was not working anymore. Functional@7.2.16:18.
 	 */
-//	@Resource(name = "userDAO")
+	// @Resource(name = "userDAO")
 	@Autowired
 	@Qualifier("userDAO")
 	private UserDAO<User> userDAO;
@@ -66,9 +66,12 @@ public class UserService implements UserDetailsService {
 		// Minimal validation. Needs extension.
 		if (user == null) {
 			throw new ValidationException("Invalid data. [BETA version err: Not enough data.](091)");
-		} else {
-			System.out.println("Valid data.");
 		}
+		if (user.getId() > 0) {
+			throw new ValidationException("User already exists. [BETA version err: Not enough data.](091)");
+		}
+		System.out.println("Valid data.");
+
 	}
 
 	@Override
@@ -76,15 +79,16 @@ public class UserService implements UserDetailsService {
 		User user = userDAO.findByUsername(username);
 		if (user != null) {
 			System.out.println("Fetching login details for " + user.toString());
-			String role = ""+user.getRole();
-//			List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
-//			gas.add(new GrantedAuthorityImpl(role));
-//			user.setAuthorities(gas);
-//			UserDetails userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(), true, true,
-//					true, true, AuthorityUtils.createAuthorityList(role));
+			String role = "" + user.getRole();
+			// List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
+			// gas.add(new GrantedAuthorityImpl(role));
+			// user.setAuthorities(gas);
+			// UserDetails userDetails = new
+			// org.springframework.security.core.userdetails.User(username,
+			// user.getPassword(), true, true,
+			// true, true, AuthorityUtils.createAuthorityList(role));
 			return user;
-		}
-		else {
+		} else {
 			throw new UsernameNotFoundException("The username was not found");
 		}
 	}

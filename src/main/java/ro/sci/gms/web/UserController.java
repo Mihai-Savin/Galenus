@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ro.sci.gms.domain.Patient;
+import ro.sci.gms.domain.User;
 import ro.sci.gms.service.DoctorService;
 import ro.sci.gms.service.UserService;
+import ro.sci.gms.service.ValidationException;
 
 @Controller
 @RequestMapping("/user")
@@ -21,6 +23,8 @@ public class UserController {
 	private DoctorService doctorService;
 	@Autowired
 	private Patient loggedPatient;
+	@Autowired
+	private User loggedUser;
 
 	@RequestMapping("")
 	public ModelAndView index() {
@@ -45,9 +49,10 @@ public class UserController {
 		return "index_patient";
 	}
 
-	@RequestMapping(method = RequestMethod.GET, params = "action=add")
-	public String add() {
-		return "appointment_edit";
+	@RequestMapping(value="/patient/profile", method = RequestMethod.POST)
+	public String save() throws ValidationException {
+		userService.save(loggedUser);
+		return "patientedit";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, params = "action=edit")

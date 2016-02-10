@@ -30,7 +30,7 @@ public class GalenusApp {
 		SpringApplication.run(GalenusApp.class, args);
 		
 	}
-	
+	/*
 	@Bean
 	public UserService userService() {
 		return new UserService();
@@ -50,15 +50,15 @@ public class GalenusApp {
 	public AppointmentDAO aptDAO() {
 		return new IMAppointmentDAO();
 		// JDBCAppointmentDAO("localhost", "5432", "test", "test", "test");
-	}
+	}*/
 
-	@Bean
-	public JDBCUserDAO userDAO() {
-		return new // IMUserDAO();
-		JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
+/*	@Bean
+	public UserDAO userDAO() {
+		return new  IMUserDAO();
+//		JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
 	}
-	
-	@Bean
+	*/
+/*	@Bean
 	public JDBCPatientDAO patientDAO() {
 		return new // IMUserDAO();
 		JDBCPatientDAO("localhost", "5432", "galenus", "postgres", "postgres");
@@ -68,7 +68,7 @@ public class GalenusApp {
 	public JDBCDoctorDAO doctorDAO() {
 		return new // IMUserDAO();
 		JDBCDoctorDAO("localhost", "5432", "galenus", "postgres", "postgres");
-	}
+	}*/
 	
 	@Bean
 	public Patient loggedPatient() {

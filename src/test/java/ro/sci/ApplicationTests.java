@@ -1,4 +1,4 @@
-package ro.sci;
+/*package ro.sci;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -65,3 +65,4 @@ public class ApplicationTests {
 	
 
 }
+*/

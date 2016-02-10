@@ -7,17 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import ro.sci.gms.dao.UserDAO;
-import ro.sci.gms.domain.Appointment;
-import ro.sci.gms.domain.Gender;
 import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
 import ro.sci.gms.temp.Li;
@@ -29,6 +27,7 @@ import ro.sci.gms.temp.Li;
  *
  */
 @Repository
+@Qualifier("userDAO")
 public class JDBCUserDAO implements UserDAO<User> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCUserDAO.class);
 
@@ -41,7 +40,16 @@ public class JDBCUserDAO implements UserDAO<User> {
 	/*
 	 * This seems to be required. Doesn't work without it.
 	 */
-	public JDBCUserDAO(){}
+	public JDBCUserDAO(){
+/*		this("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com",
+				"5432", "d99d8uvcdiqh5q",
+				"gsmxwxyrbiqutc", 
+				"ifm7QuPfDxj7VYVqReCWKKQp9Z");*/
+		this("ec2-54-83-12-22.compute-1.amazonaws.com",
+				"5432", "d78nunqpo44clm",
+				"zjxfqqjwejqiid", 
+				"UaeRrlUbjmnxBOxp9FOWEKNG7y");
+	}
 
 	public JDBCUserDAO(String host, String port, String dbName, String userName, String pass) {
 		this.host = host;
@@ -235,6 +243,12 @@ public class JDBCUserDAO implements UserDAO<User> {
 	 */
 	@Override
 	public Collection<User> searchById(String query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User findByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}

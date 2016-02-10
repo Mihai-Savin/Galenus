@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import ro.sci.gms.dao.db.JDBCPatientDAO;
 import ro.sci.gms.domain.Patient;
 
-@Service
+//@Service
 public class PatientService extends UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PatientService.class);
 
-	@Resource(name="patientDAO")
+//	@Resource(name="patientDAO")
 	private JDBCPatientDAO patientDAO;
 
 	public void save(Patient patient) throws ValidationException, SQLException {

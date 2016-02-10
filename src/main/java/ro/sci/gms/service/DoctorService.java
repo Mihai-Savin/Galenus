@@ -3,10 +3,9 @@ package ro.sci.gms.service;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ro.sci.gms.dao.db.JDBCDoctorDAO;
@@ -17,7 +16,8 @@ public class DoctorService extends UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DoctorService.class);
 
-	@Resource(name="doctorDAO")
+//	@Resource(name="doctorDAO")
+	@Autowired
 	private JDBCDoctorDAO doctorDAO;
 
 	public void save(Doctor doctor) throws ValidationException, SQLException {

@@ -6,20 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Repository;
 
-import ro.sci.gms.domain.Blood;
 import ro.sci.gms.domain.Doctor;
-import ro.sci.gms.domain.Gender;
-import ro.sci.gms.domain.Role;
 import ro.sci.gms.temp.Li;
 
 /**
@@ -28,7 +25,8 @@ import ro.sci.gms.temp.Li;
  * @author sebi
  *
  */
-@Repository
+@Repository  @DependsOn("JDBCUserDAO")
+@Qualifier("doctorDAO")
 public class JDBCDoctorDAO extends JDBCUserDAO {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCDoctorDAO.class);
 

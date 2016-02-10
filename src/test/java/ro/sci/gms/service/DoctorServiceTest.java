@@ -1,4 +1,4 @@
-package ro.sci.gms.service;
+/*package ro.sci.gms.service;
 
 import static org.junit.Assert.assertTrue;
 
@@ -55,19 +55,19 @@ public class DoctorServiceTest {
 		doctor.setPatient(new Patient());
 		
 		
-		/*doctor.setDateOfBirth(new Date());
+		doctor.setDateOfBirth(new Date());
 		doctor.setGender(Gender.FEMALE);
 		doctor.setMedicalBackground("I www to sing sing. Uuu...");
 		doctor.setBloodType(Blood.A);
-		doctor.setDoctor(new Doctor());*/
+		doctor.setDoctor(new Doctor());
 	}
 
-	/*
+	
 	 * @Test(expected = ValidationException.class) public void
 	 * checkSaveUser_double_save() throws ValidationException {
 	 * userService.save(user); Li.st(user.getId()); userService.save(user);
 	 * Li.st(user.getId()); }
-	 */
+	 
 
 	@Test
 	public void checkSaveDoctor() throws ValidationException, SQLException {
@@ -77,7 +77,7 @@ public class DoctorServiceTest {
 
 		System.out.println(doctor.getId());
 	}
-/*
+
 	@Test
 	public void checkGetPatient_valid() throws SQLException {
 		Patient saved = null;
@@ -119,5 +119,5 @@ public class DoctorServiceTest {
 			System.out.println("Patient was deleted.");
 		}
 	}
-*/
-}
+
+}*/

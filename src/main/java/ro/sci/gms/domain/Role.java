@@ -1,5 +1,5 @@
 package ro.sci.gms.domain;
 
 public enum Role {
-	user, admin;
+	user, admin, PATIENT, DOCTOR, ADMIN;
 }

@@ -30,31 +30,43 @@ public class IMUserDAO<T extends User> extends IMBaseDAO implements UserDAO {
 		Collection<T> all = new LinkedList<>(getAll());
 		Collection<T> usersAppointments = new LinkedList<>();
 
-//		for (User user : all) {
-//			if ((appointment.getDoctor().equals(user)) || (appointment.getPatient().equals(user))) {
-//				usersAppointments.add(appointment);
-//			}
-//		}
+		// for (User user : all) {
+		// if ((appointment.getDoctor().equals(user)) ||
+		// (appointment.getPatient().equals(user))) {
+		// usersAppointments.add(appointment);
+		// }
+		// }
 
 		return usersAppointments;
 	}
-	
+
 	public Collection<User> search(String query) {
 		if (StringUtils.isEmpty(query)) {
 			return getAll();
 		}
-		
+
 		Collection<User> all = new LinkedList<>(getAll());
-//		for (Iterator<User> it = all.iterator(); it.hasNext();) {
-//			User apt = it.next();
-//			String bulkData = apt.getDoctorName() + " " + apt.getPatientName() + //
-//					" " + apt.getDate() + " " + apt.getTime() + " " + apt.getDetails();
-//			if (!bulkData.toLowerCase().contains(query.toLowerCase())) {
-//				it.remove();
-//			}
-//		}
+		// for (Iterator<User> it = all.iterator(); it.hasNext();) {
+		// User apt = it.next();
+		// String bulkData = apt.getDoctorName() + " " + apt.getPatientName() +
+		// //
+		// " " + apt.getDate() + " " + apt.getTime() + " " + apt.getDetails();
+		// if (!bulkData.toLowerCase().contains(query.toLowerCase())) {
+		// it.remove();
+		// }
+		// }
 		return all;
 	}
 
-	
+	@Override
+	public User findByUsername(String username) {
+		Collection<User> users = new LinkedList<User>(getAll());
+		for (User user : users) {
+			if (username.equals(user.getUsername())) {
+				return user;
+			}
+		}
+		return null;
+	}
+
 }

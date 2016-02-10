@@ -1,4 +1,4 @@
-package ro.sci;
+/*package ro.sci;
 
 import java.util.Collection;
 import java.util.Date;
@@ -111,7 +111,7 @@ public class AppTest {
 		System.out.println(aptService.getAvailableHours(doctor, day));
 	}
 
-	/**
+	*//**
 	 * Creates some mock patients, doctors and sets an appointment.
 	 * 
 	 * @Worked for IM context and Agenda object based on HashMap IM
@@ -201,5 +201,6 @@ public class AppTest {
 		System.out.println(theDoctor.getAgenda().getBookedHours(selectedDate));
 
 	}
-*/
+
 }
+*/

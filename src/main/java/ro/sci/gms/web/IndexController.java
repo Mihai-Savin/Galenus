@@ -15,7 +15,7 @@ public class IndexController {
 	
 	@RequestMapping("/")
 	String index() throws ValidationException {
-		aptService.generateSome();
+//		aptService.generateSome();
 		return "index";
 	}
 }

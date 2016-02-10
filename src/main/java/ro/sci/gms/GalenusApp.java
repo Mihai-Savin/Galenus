@@ -9,7 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import ro.sci.gms.dao.AppointmentDAO;
+import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.dao.inmemory.IMAppointmentDAO;
+import ro.sci.gms.dao.inmemory.IMUserDAO;
 import ro.sci.gms.domain.Agenda;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
@@ -28,6 +30,13 @@ public class GalenusApp {
 		return new IMAppointmentDAO();
 				 //JDBCEmployeeDao("localhost", "5432", "test", "test", "test");
 	}
+	
+/*	@Bean
+	public UserDAO userDAO() {
+		return new IMUserDAO();
+				   //JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com", "5432", "d99d8uvcdiqh5q", "gsmxwxyrbiqutc", "ifm7QuPfDxj7VYYqReCWKKQp9Z");
+	}
+*/	
 	
 	@Bean
 	public Patient loggedPatient() {

@@ -1,26 +1,21 @@
 package ro.sci.gms.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
+import javax.annotation.Resource;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import ro.sci.ApplicationTests;
-import ro.sci.gms.domain.Appointment;
-import ro.sci.gms.domain.Doctor;
-import ro.sci.gms.domain.Patient;
+import ro.sci.gms.domain.Role;
+import ro.sci.gms.domain.User;
+import ro.sci.gms.temp.Li;
 
 
 
@@ -29,84 +24,58 @@ import ro.sci.gms.domain.Patient;
 @WebAppConfiguration
 public class UserServiceTest {
 
-	@Autowired
-	AppointmentService aptService;
+//	@Autowired
+	@Resource(name="userService")
+	UserService userService;
 
-	private Patient patient1 = new Patient();
-	private Patient patient2 = new Patient();
-	private Doctor doctor1 = new Doctor();
-	private Doctor doctor2 = new Doctor();
-	private Appointment appointment1 = new Appointment();
-	private Appointment appointment2 = new Appointment();
-	private Appointment appointment3 = new Appointment();
-	private Appointment appointment4 = new Appointment();
-
+	private User user = new User();
+	
 	@After
 	public void tearDown() {
-		Collection<Appointment> appointments = new LinkedList<>(aptService.getAll());
-
-		for (Appointment apt : appointments) {
-			aptService.delete(apt.getId());
-		}
+//		Collection<Appointment> appointments = new LinkedList<>(aptService.getAll());
+//
+//		for (Appointment apt : appointments) {
+//			aptService.delete(apt.getId());
+//		}
 	}
 
 	@Before
 	public void setup() {
-		patient1.setLastName("Lopez");
-		patient1.setFirstName("Jennifer");
-		patient2.setLastName("Salma");
-		patient2.setFirstName("Hayek");
-		doctor1.setLastName("Sigmund");
-		doctor1.setFirstName("Freud");
-		doctor2.setLastName("Albert");
-		doctor2.setFirstName("Adler");
-		Date date = new Date();
-		date.setDate(15);
-		Date time1 = new Date();
-		Date time2 = new Date();
-		date.setHours(0);
-		appointment1.setDate(date);
-		appointment2.setDate(date);
-		appointment3.setDate(date);
-		appointment4.setDate(date);
-		time1.setHours(10);
-		appointment1.setTime(time1);
-		appointment2.setTime(time1);
-		time2.setHours(14);
-		appointment3.setTime(time2);
-		appointment4.setTime(time2);
-		appointment1.createAppointment(patient1, doctor1);
-		appointment2.createAppointment(patient1, doctor2);
-		appointment3.createAppointment(patient2, doctor1);
-		appointment4.createAppointment(patient2, doctor2);
+		user.setUserName("roxana.erdei");
+		user.setPassword("cantFrumos2016");
+		user.setFirstName("Lidia");
+		user.setLastName("Buble");
+		user.setAddress("Stockholm");
+		user.setPhone("+40 744 555 777");
+		user.setEmail("lidia.buble@fantasyWorld.org");
+		user.setRole(Role.user);
 	}
 
 	@Test
-	public void checkSaveAppointment_valid() {
-		try {
-			aptService.save(appointment1);
-		} catch (ValidationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void checkSaveUser_valid() throws ValidationException {
+		userService.save(user);
 
-		assertTrue(appointment1.getId() > 0);
+		assertTrue(user.getId() > 0);
 
-		System.out.println(appointment1.getId());
+		System.out.println(user.getId());
 	}
 
+/*	 
 	@Test(expected = ValidationException.class)
-	public void checkSaveAppointment_double_save() throws ValidationException {
-		aptService.save(appointment1);
-		aptService.save(appointment1);
+	public void checkSaveUser_double_save() throws ValidationException {
+		userService.save(user);
+		Li.st(user.getId());
+		userService.save(user);
+		Li.st(user.getId());
 	}
-
+*/	
+	
 	@Test
-	public void checkGetAppointment_valid() {
-		Appointment saved = null;
+	public void checkGetUser_valid() {
+		User saved = null;
 		try {
-			aptService.save(appointment1);
-			saved = appointment1;
+			userService.save(user);
+			saved = user;
 		} catch (ValidationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -114,14 +83,14 @@ public class UserServiceTest {
 
 		Long id = saved.getId();
 
-		Appointment retrieved = aptService.get(id);
+		User retrieved = userService.get(id);
 
-		assertEquals(appointment1, retrieved);
+		assertEquals(saved.getId(), retrieved.getId());
 
-		System.out.println(retrieved.getDetails());
+		System.out.println(retrieved.getFullName());
 	}
 
-	@Test
+/*	@Test
 	public void checkGetAppointment_noAppointments() {
 
 		Collection<Appointment> all = aptService.getAll(patient1);
@@ -130,8 +99,8 @@ public class UserServiceTest {
 
 		System.out.println(all);
 	}
-
-	@Test
+*/
+/*	@Test
 	public void checkGetAllAppointments_patient_valid() {
 
 		try {
@@ -156,8 +125,8 @@ public class UserServiceTest {
 		assertEquals(2, all.size());
 
 	}
-
-	@Test
+*/
+/*	@Test
 	public void checkGetAllAppointments_doctor_valid() {
 
 		try {
@@ -182,13 +151,13 @@ public class UserServiceTest {
 		assertEquals(2, all.size());
 
 	}
-
+*/
 	@Test
-	public void checkDeleteAppointment_valid() {
-		Appointment saved = null;
+	public void checkDeleteUser_valid() {
+		User saved = null;
 		try {
-			aptService.save(appointment1);
-			saved = appointment1;
+			userService.save(user);
+			saved = user;
 		} catch (ValidationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -196,16 +165,16 @@ public class UserServiceTest {
 
 		Long id = saved.getId();
 
-		aptService.delete(id);
+		userService.delete(id);
 
-		assertNull(aptService.get(id));
+		assertNull(userService.get(id));
 
-		if (null == aptService.get(id)) {
-			System.out.println("Appointment was deleted.");
+		if (null == userService.get(id)) {
+			System.out.println("User was deleted.");
 		}
 	}
 
-	@Test
+/*	@Test
 	public void checkSaveAppointment_saveTwoApts() throws ValidationException {
 
 		aptService.save(appointment1);
@@ -215,5 +184,5 @@ public class UserServiceTest {
 		assertTrue(appointment3.getId() > 0);
 
 	}
-
+*/
 }

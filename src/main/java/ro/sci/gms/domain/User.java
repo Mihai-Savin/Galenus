@@ -12,7 +12,7 @@ public class User extends AbstractModel {
 	}
 	private String firstName;
 	private String lastName;
-	private String adress;
+	private String address;
 	private String phone;
 	private String email;
 	private Role role;
@@ -40,11 +40,11 @@ public class User extends AbstractModel {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getPhone() {
 		return phone;

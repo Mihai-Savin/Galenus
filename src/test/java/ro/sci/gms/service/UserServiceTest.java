@@ -1,4 +1,4 @@
-package ro.sci.gms.service;
+/*package ro.sci.gms.service;
 
 import static org.junit.Assert.*;
 
@@ -60,7 +60,7 @@ public class UserServiceTest {
 		System.out.println(user.getId());
 	}
 
-/*	 
+	 
 	@Test(expected = ValidationException.class)
 	public void checkSaveUser_double_save() throws ValidationException {
 		userService.save(user);
@@ -68,7 +68,7 @@ public class UserServiceTest {
 		userService.save(user);
 		Li.st(user.getId());
 	}
-*/	
+	
 	
 	@Test
 	public void checkGetUser_valid() {
@@ -90,7 +90,7 @@ public class UserServiceTest {
 		System.out.println(retrieved.getFullName());
 	}
 
-/*	@Test
+	@Test
 	public void checkGetAppointment_noAppointments() {
 
 		Collection<Appointment> all = aptService.getAll(patient1);
@@ -99,8 +99,8 @@ public class UserServiceTest {
 
 		System.out.println(all);
 	}
-*/
-/*	@Test
+
+	@Test
 	public void checkGetAllAppointments_patient_valid() {
 
 		try {
@@ -125,8 +125,8 @@ public class UserServiceTest {
 		assertEquals(2, all.size());
 
 	}
-*/
-/*	@Test
+
+	@Test
 	public void checkGetAllAppointments_doctor_valid() {
 
 		try {
@@ -151,7 +151,7 @@ public class UserServiceTest {
 		assertEquals(2, all.size());
 
 	}
-*/
+
 	@Test
 	public void checkDeleteUser_valid() {
 		User saved = null;
@@ -174,7 +174,7 @@ public class UserServiceTest {
 		}
 	}
 
-/*	@Test
+	@Test
 	public void checkSaveAppointment_saveTwoApts() throws ValidationException {
 
 		aptService.save(appointment1);
@@ -184,5 +184,6 @@ public class UserServiceTest {
 		assertTrue(appointment3.getId() > 0);
 
 	}
-*/
+
 }
+*/

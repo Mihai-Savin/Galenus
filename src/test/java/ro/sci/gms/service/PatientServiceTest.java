@@ -1,4 +1,4 @@
-package ro.sci.gms.service;
+/*package ro.sci.gms.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -62,12 +62,12 @@ public class PatientServiceTest {
 		patient.setDoctor(new Doctor());
 	}
 
-	/*
+	
 	 * @Test(expected = ValidationException.class) public void
 	 * checkSaveUser_double_save() throws ValidationException {
 	 * userService.save(user); Li.st(user.getId()); userService.save(user);
 	 * Li.st(user.getId()); }
-	 */
+	 
 
 	@Test
 	public void checkSavePatient_valid() throws ValidationException, SQLException {
@@ -120,4 +120,4 @@ public class PatientServiceTest {
 		}
 	}
 
-}
+}*/

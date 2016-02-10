@@ -1,4 +1,4 @@
-package ro.sci.gms.service;
+/*package ro.sci.gms.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -217,3 +217,4 @@ public class AppointmentServiceTest {
 	}
 
 }
+*/

@@ -10,8 +10,8 @@ import ro.sci.gms.dao.AppointmentDAO;
 import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.dao.db.JDBCDoctorDAO;
 import ro.sci.gms.dao.db.JDBCPatientDAO;
+import ro.sci.gms.dao.db.JDBCUserDAO;
 import ro.sci.gms.dao.inmemory.IMAppointmentDAO;
-import ro.sci.gms.dao.inmemory.IMUserDAO;
 import ro.sci.gms.service.DoctorService;
 import ro.sci.gms.service.PatientService;
 import ro.sci.gms.service.UserService;
@@ -49,8 +49,8 @@ public class ApplicationTests {
 	@Bean
 	public UserDAO userDAO() {
 		return new //
-		IMUserDAO();
-		// JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
+		// IMUserDAO();
+		JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
 		/*JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com",
 				"5432", "d99d8uvcdiqh5q",
 				"gsmxwxyrbiqutc", 

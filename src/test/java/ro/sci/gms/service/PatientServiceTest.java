@@ -1,4 +1,4 @@
-/*package ro.sci.gms.service;
+package ro.sci.gms.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -22,7 +22,6 @@ import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Gender;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.Role;
-import ro.sci.gms.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ApplicationTests.class)
@@ -63,10 +62,10 @@ public class PatientServiceTest {
 	}
 
 	
-	 * @Test(expected = ValidationException.class) public void
-	 * checkSaveUser_double_save() throws ValidationException {
-	 * userService.save(user); Li.st(user.getId()); userService.save(user);
-	 * Li.st(user.getId()); }
+//	  @Test(expected = ValidationException.class) public void
+//	  checkSaveUser_double_save() throws ValidationException {
+//	  userService.save(user); Li.st(user.getId()); userService.save(user);
+//	  Li.st(user.getId()); }
 	 
 
 	@Test
@@ -120,4 +119,4 @@ public class PatientServiceTest {
 		}
 	}
 
-}*/
+}

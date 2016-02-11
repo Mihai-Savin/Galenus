@@ -21,9 +21,8 @@ public class IndexController {
 	
 	@RequestMapping("/")
 	public String index() throws ValidationException {
-		Li.st("I am in index.");
-		userService.save(loggedPatient);
-		userService.get(loggedPatient.getId());
+		Li.st("Index page was served to default VIEW.");
+		
 		return "index";
 	}
 

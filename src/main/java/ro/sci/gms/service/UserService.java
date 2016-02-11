@@ -67,9 +67,6 @@ public class UserService implements UserDetailsService {
 		if (user == null) {
 			throw new ValidationException("Invalid data. [BETA version err: Not enough data.](091)");
 		}
-//		if (user.getId() > 0) {
-//			throw new ValidationException("User already exists. [BETA version err: Not enough data.](091)");
-//		}
 		System.out.println("Valid data.");
 
 	}

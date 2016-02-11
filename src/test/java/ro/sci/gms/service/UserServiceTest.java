@@ -46,10 +46,10 @@ public class UserServiceTest {
 
 	@Before
 	public void setup() {
-		user.setUsername("nora.anghel");
-		user.setPassword("sunt o blonda superba");
-		user.setFirstName("Nora");
-		user.setLastName("Anghel");
+		user.setUsername("nora.anghel.1");
+		user.setPassword("sunt o blondina superba");
+		user.setFirstName("NorA");
+		user.setLastName("AngheL");
 		user.setAddress("Cluj-Napoca");
 		user.setPhone("+40 744 555 777");
 		user.setEmail("nora.anghel@fantasyWorld.org");

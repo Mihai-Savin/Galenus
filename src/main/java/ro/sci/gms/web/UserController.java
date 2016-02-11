@@ -1,6 +1,7 @@
 package ro.sci.gms.web;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ro.sci.gms.domain.Blood;
+import ro.sci.gms.domain.Doctor;
+import ro.sci.gms.domain.Gender;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
@@ -45,7 +49,7 @@ public class UserController {
 	@RequestMapping("/patient/profile")
 	public ModelAndView editPatient() {
 
-		User patient = userService.get(loggedPatient.getId());
+		Patient patient = patientService.getPatient(11226L);
 		
 		ModelAndView modelAndView = new ModelAndView("patientedit");
 		modelAndView.addObject("patient", patient);
@@ -60,12 +64,56 @@ public class UserController {
 
 	@RequestMapping(value="/patient/profile", method = RequestMethod.POST)
 	public String save(@ModelAttribute Patient patient) throws ValidationException, SQLException {
-		patient.setId(loggedPatient.getId());
+		patient.setId(11226L);
 		patient.setRole(Role.user);
-		userService.save(patient);
+		patient.setDateOfBirth(new Date());
+		patient.setGender(Gender.FEMALE);
+		patient.setBloodType(Blood.A);
+		patient.setDoctor(new Doctor());
+		
+		patientService.save(patient);
 		patient.see();
 		return "success";
 	}
+	@RequestMapping(value="/generate")
+	public String generatePatient() throws ValidationException, SQLException {
+		Patient patient = new Patient();
+		patient.setFirstName("Angela");
+		patient.setLastName("Merkel");
+		patient.setUsername("angela.merkel");
+		patient.setPassword("DeutschLand");
+		patient.setEmail("angela.merkel@bundesregierung.de");
+		patient.setAddress("Lichtenstein");
+		patient.setPhone("+49 89 636 48018");
+		patient.setRole(Role.user);
+		
+		patient.setDateOfBirth(new Date());
+		patient.setGender(Gender.FEMALE);
+		patient.setBloodType(Blood.A);
+		patient.setDoctor(new Doctor());
+		patient.setMedicalBackground("Loves to smoke weed.");
+		
+		patientService.save(patient);
+		patient.see();
+		return "success";
+	}
+	
+	
+//	@RequestMapping(value="/doctor/profile", method = RequestMethod.POST)
+//	public String save(@ModelAttribute Doctor doctor) throws ValidationException, SQLException {
+//		patient.setId(11226L);
+//		patient.setRole(Role.user);
+//		patient.setDateOfBirth(new Date());
+//		patient.setGender(Gender.FEMALE);
+//		patient.setBloodType(Blood.A);
+//		patient.setDoctor(new Doctor());
+//		
+//		patientService.save(patient);
+//		patient.see();
+//		return "success";
+//	}
+	
+	
 
 	@RequestMapping(method = RequestMethod.GET, params = "action=edit")
 	public String edit(@RequestParam("id") Long id) {

@@ -16,6 +16,7 @@ import ro.sci.gms.dao.inmemory.IMUserDAO;
 import ro.sci.gms.domain.Agenda;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
+import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
 import ro.sci.gms.service.DoctorService;
 import ro.sci.gms.service.PatientService;
@@ -55,17 +56,30 @@ public class GalenusApp {
 	public UserDAO userDAO() {
 		return new //
 
-		IMUserDAO();
+		// IMUserDAO();
 		//JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
-		//JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com", "5432", "d99d8uvcdiqh5q", "gsmxwxyrbiqutc",
-		//		"ifm7QuPfDxj7VYVqReCWKKQp9Z");
+		JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com",
+		 "5432", "d99d8uvcdiqh5q", "hjgepgsapjoops",
+		 "7wxWIzK0dN6Ea5vkIJ1WYvyT9p");
+	
+		/*Host
+		ec2-79-125-117-94.eu-west-1.compute.amazonaws.com
+		Database
+		d99d8uvcdiqh5q
+		User
+		hjgepgsapjoops
+		Port
+		5432
+		Password
+		Hide 7wxWIzK0dN6Ea5vkIJ1WYvyT9p*/
+	
 	}
 
 	@Bean
-	public IMUserDAO patientDAO() {
-		return new IMUserDAO();
-		// JDBCPatientDAO("localhost", "5432", "galenus", "postgres",
-		// "postgres");
+	public UserDAO patientDAO() {
+		return new //
+		IMUserDAO();
+		//JDBCPatientDAO("localhost", "5432", "galenus", "postgres", "postgres");
 	}
 
 	@Bean
@@ -92,10 +106,11 @@ public class GalenusApp {
 		patient.setMedicalBackground("Loves to cuddle with muslim alien citizens.");
 		patient.setDateOfBirth(new Date());
 		patient.setPassword("1234");
+		patient.setRole(Role.user);
 
 		return patient;
 	}
-	
+
 	@Bean
 	public User loggedUser() {
 		User user = new User();
@@ -107,7 +122,5 @@ public class GalenusApp {
 
 		return user;
 	}
-	
-	
 
 }

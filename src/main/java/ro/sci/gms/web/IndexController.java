@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.service.UserService;
 import ro.sci.gms.service.ValidationException;
+import ro.sci.gms.temp.Li;
 
 @Controller
 public class IndexController {
@@ -20,6 +21,7 @@ public class IndexController {
 	
 	@RequestMapping("/")
 	public String index() throws ValidationException {
+		Li.st("I am in index.");
 		userService.save(loggedPatient);
 		userService.get(loggedPatient.getId());
 		return "index";

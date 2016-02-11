@@ -27,7 +27,6 @@ import ro.sci.gms.temp.Li;
  *
  */
 @Repository
-@Qualifier("userDAO")
 public class JDBCUserDAO implements UserDAO<User> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCUserDAO.class);
 
@@ -40,16 +39,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 	/*
 	 * This seems to be required. Doesn't work without it.
 	 */
-	public JDBCUserDAO(){
-		this("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com",
-				"5432", "d99d8uvcdiqh5q",
-				"gsmxwxyrbiqutc", 
-				"ifm7QuPfDxj7VYYqReCWKKQp9Z");
-/*		this("ec2-54-83-12-22.compute-1.amazonaws.com",
-				"5432", "d78nunqpo44clm",
-				"zjxfqqjwejqiid", 
-				"UaeRrlUbjmnxBOxp9FOWEKNG7y");*/
-	}
+	public JDBCUserDAO(){}
 
 	public JDBCUserDAO(String host, String port, String dbName, String userName, String pass) {
 		this.host = host;

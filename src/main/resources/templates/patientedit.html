@@ -200,22 +200,32 @@
 													<label>Username</label> <input type="text" value=""
 														class="input-xlarge form-control" name="username"
 														placeholder="Username" th:value="${patient.username}"
-														readonly="true" /><br /> <label>First Name</label> <input
+														readonly="true" />
+														
+														
+														<br />
+														
+														 <label>First Name</label> <input
 														type="text" value="" class="input-xlarge form-control"
-														name="firstname" placeholder="firstName"
+														name="firstName" placeholder="firstName"
 														th:value="${patient.firstName}" /><br /> <label>Last
 														Name</label> <input type="text" value=""
-														class="input-xlarge form-control" name="lastname"
+														class="input-xlarge form-control" name="lastName"
 														placeholder="lastName" th:value="${patient.lastName}" /><br />
-													<label>Gender</label><br /> <select name="select-gender"
-														class="input-xlarge form-control" th:value="${patient.gender}">
+													
+													
+<!-- 													<label>Gender</label><br /> <select name="select-gender" -->
+<!-- 														class="input-xlarge form-control" th:value="${patient.gender}"> -->
 
-														<option>- Select your gender -</option>
+<!-- 														<option>- Select your gender -</option> -->
 
-														<option value="male">Male</option>
+<!-- 														<option value="male">Male</option> -->
 
-														<option value="female">Female</option>
-													</select><br /> <label>Date of birth</label> <input type="date"
+<!-- 														<option value="female">Female</option> -->
+<!-- 													</select> -->
+													
+													
+													<br /> <label>Date of birth</label> <input type="date"
 														name="bday" class="input-xlarge form-control" "/><br /> <label>My
 														current doctor</label> <select name="select-doctor"
 														class="input-xlarge form-control">
@@ -232,21 +242,28 @@
 														class="input-xlarge form-control" name="phone" th:value="${patient.phone}"/><br />
 													<label>Email</label> <input type="text" value=""
 														class="input-xlarge form-control" name="email" th:value="${patient.email}"/><br />
-													<label>Blood type</label> <select name="select-blood"
-														class="input-xlarge form-control" th:value="${patient.bloodType}">
+													
+													
+													
+													
+<!-- 													<label>Blood type</label> <select name="select-blood" -->
+<!-- 														class="input-xlarge form-control" th:value="${patient.bloodType}"> -->
 
-														<option>- Select blood type -</option>
+<!-- 														<option>- Select blood type -</option> -->
 
-														<option value="a">A</option>
+<!-- 														<option value="a">A</option> -->
 
-														<option value="b">B</option>
+<!-- 														<option value="b">B</option> -->
 
-														<option value="ab">AB</option>
+<!-- 														<option value="ab">AB</option> -->
 
-														<option value="0">0</option>
-													</select><br /> <label>Medical background</label><br />
-													<textarea value="" rows="3"
-														class="input-xlarge form-control" name="mbackground" th:value="${patient.medicalBackground}">                                    </textarea>
+<!-- 														<option value="0">0</option> -->
+<!-- 													</select><br /> <label>Medical background</label><br /> -->
+<!-- 													<textarea value="" rows="3" -->
+<!-- 														class="input-xlarge form-control" name="mbackground" th:value="${patient.medicalBackground}">   -->
+														
+														
+														                                  </textarea>
 													<br /> <label>Password</label> <input type="password"
 														class="input-xlarge form-control" name="password" th:value="${patient.password}" /><br />
 

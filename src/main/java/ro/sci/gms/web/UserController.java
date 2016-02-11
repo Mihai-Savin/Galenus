@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ro.sci.gms.domain.Patient;
+import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
 import ro.sci.gms.service.DoctorService;
 import ro.sci.gms.service.PatientService;
@@ -44,7 +45,7 @@ public class UserController {
 	@RequestMapping("/patient/profile")
 	public ModelAndView editPatient() {
 
-		Patient patient = (Patient) userService.get(loggedPatient.getId());
+		User patient = userService.get(loggedPatient.getId());
 		
 		ModelAndView modelAndView = new ModelAndView("patientedit");
 		modelAndView.addObject("patient", patient);
@@ -60,6 +61,7 @@ public class UserController {
 	@RequestMapping(value="/patient/profile", method = RequestMethod.POST)
 	public String save(@ModelAttribute Patient patient) throws ValidationException, SQLException {
 		patient.setId(loggedPatient.getId());
+		patient.setRole(Role.user);
 		userService.save(patient);
 		patient.see();
 		return "success";

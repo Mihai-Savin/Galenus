@@ -3,13 +3,11 @@ package ro.sci.gms.service;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import ro.sci.gms.dao.db.JDBCPatientDAO;
+import ro.sci.gms.dao.inmemory.IMPatientDAO;
 import ro.sci.gms.domain.Patient;
 
 //@Service
@@ -18,17 +16,19 @@ public class PatientService extends UserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PatientService.class);
 
 //	@Resource(name="patientDAO")
-	private JDBCPatientDAO patientDAO;
+	private IMPatientDAO patientDAO;
 
 	public void save(Patient patient) throws ValidationException, SQLException {
 		LOGGER.debug("Saving: " + patient);
 		validate(patient);
-		patientDAO.savePatient(patient);
+		patientDAO.update(patient);
 	}
-	
+	@Autowired
+	private UserService userService;
 	public Patient getPatient(Long id) {
-		LOGGER.debug("Getting patient for id: " + id);
-		return patientDAO.findById(id);
+//		LOGGER.debug("Getting patient for id: " + id);
+//		return (Patient) patientDAO.findById(id);
+		return null;
 	}
 
 	public Collection<Patient> getAllPatients() {
@@ -39,12 +39,12 @@ public class PatientService extends UserService {
 
 	public boolean delete(Long id) {
 		LOGGER.debug("Deleting patient for id: " + id);
-		Patient patient = patientDAO.findById(id);
-		
-		if (patient != null) {
-			patientDAO.delete(patient);
-			return true;
-		}
+//		Patient patient = patientDAO.findById(id);
+//		
+//		if (patient != null) {
+//			patientDAO.delete(patient);
+//			return true;
+//		}
 
 		return false;
 	}

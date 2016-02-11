@@ -55,10 +55,10 @@ public class GalenusApp {
 	public UserDAO userDAO() {
 		return new //
 
-		//IMUserDAO();
+		IMUserDAO();
 		//JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
-		JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com", "5432", "d99d8uvcdiqh5q", "gsmxwxyrbiqutc",
-				"ifm7QuPfDxj7VYVqReCWKKQp9Z");
+		//JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com", "5432", "d99d8uvcdiqh5q", "gsmxwxyrbiqutc",
+		//		"ifm7QuPfDxj7VYVqReCWKKQp9Z");
 	}
 
 	@Bean

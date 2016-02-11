@@ -35,7 +35,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		//auth.userDetailsService((UserDetailsService) userService);
 		  auth.inMemoryAuthentication()
 	        .withUser("user")
-	        .password("123")
+	        .password("user")
 	        .authorities("DOCTOR");
 		
 		

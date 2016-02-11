@@ -49,7 +49,7 @@ public class UserController {
 	@RequestMapping("/patient/profile")
 	public ModelAndView editPatient() {
 
-		Patient patient = patientService.getPatient(11226L);
+		Patient patient = patientService.getPatient(10L);
 		
 		ModelAndView modelAndView = new ModelAndView("patientedit");
 		modelAndView.addObject("patient", patient);
@@ -64,7 +64,7 @@ public class UserController {
 
 	@RequestMapping(value="/patient/profile", method = RequestMethod.POST)
 	public String save(@ModelAttribute Patient patient) throws ValidationException, SQLException {
-		patient.setId(11226L);
+		patient.setId(10L);
 		patient.setRole(Role.user);
 		patient.setDateOfBirth(new Date());
 		patient.setGender(Gender.FEMALE);

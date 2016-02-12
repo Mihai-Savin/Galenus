@@ -32,7 +32,7 @@ public class GalenusApp {
 	/**
 	 * 0 = InMemory; 1 = Local DB; 2 = Production DB on Heroku
 	 */
-	private int deployTo = 1 //
+	private int deployTo = 2 //
 	;
 
 	public static void main(String[] args) {

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
+import ro.sci.gms.domain.VerificationToken;
 import ro.sci.gms.temp.Li;
 
 /**
@@ -27,6 +28,7 @@ import ro.sci.gms.temp.Li;
  *
  */
 @Repository
+@Qualifier("userDAO")
 public class JDBCUserDAO implements UserDAO<User> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JDBCUserDAO.class);
 
@@ -39,7 +41,14 @@ public class JDBCUserDAO implements UserDAO<User> {
 	/*
 	 * This seems to be required. Doesn't work without it.
 	 */
-	public JDBCUserDAO(){}
+	public JDBCUserDAO() {
+		this("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com", "5432", "d99d8uvcdiqh5q", "hjgepgsapjoops",
+				"7wxWIzK0dN6Ea5vkIJ1WYvyT9p");
+		/*
+		 * this("ec2-54-83-12-22.compute-1.amazonaws.com", "5432",
+		 * "d78nunqpo44clm", "zjxfqqjwejqiid", "UaeRrlUbjmnxBOxp9FOWEKNG7y");
+		 */
+	}
 
 	public JDBCUserDAO(String host, String port, String dbName, String userName, String pass) {
 		this.host = host;
@@ -53,7 +62,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 	protected Connection newConnection() {
 		try {
 			Class.forName("org.postgresql.Driver").newInstance();
-	
+
 			String url = new StringBuilder()//
 					.append("jdbc:")//
 					.append("postgresql")//
@@ -69,13 +78,13 @@ public class JDBCUserDAO implements UserDAO<User> {
 					.append(pass).toString();
 			Connection result = DriverManager.getConnection(url);
 			result.setAutoCommit(false);
-	
+			Li.st("Connection successful.");
 			return result;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException("Error getting DB connection. (91)", ex);
 		}
-	
+
 	}
 
 	public User update(User user) {
@@ -106,11 +115,13 @@ public class JDBCUserDAO implements UserDAO<User> {
 				ps = connection.prepareStatement(
 						"update users set first_name=?, last_name=?, user_name=?, password=?, address=?, phone= ?, email= ?, role=? "
 								+ "where id = ? returning id");
+				Li.st("Updating userl.");
 			} else {
 
 				ps = connection.prepareStatement(
 						"insert into users (first_name, last_name, user_name, password, address, phone, email, role) "
 								+ "values (?, ?, ?, ?, ?, ?, ?, ?) returning id");
+				Li.st("Inserting user.");
 			}
 
 			ps.setString(1, user.getFirstName());
@@ -128,7 +139,9 @@ public class JDBCUserDAO implements UserDAO<User> {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				user.setId(rs.getLong(1));
+				Long id = rs.getLong(1);
+				user.setId(id);
+				Li.st("User id is:" + id.toString());
 			}
 			rs.close();
 
@@ -206,7 +219,7 @@ public class JDBCUserDAO implements UserDAO<User> {
 
 	private User extractUser(ResultSet rs) throws SQLException {
 		User user = new User();
-		
+
 		user.setUsername(rs.getString("user_name"));
 		user.setFirstName(rs.getString("first_name"));
 		user.setLastName(rs.getString("last_name"));
@@ -216,13 +229,10 @@ public class JDBCUserDAO implements UserDAO<User> {
 		user.setPhone(rs.getString("phone"));
 		user.setEmail(rs.getString("email"));
 		user.setRole(Role.valueOf(rs.getString("role")));
-		
+
 		return user;
 	}
 
-	
-	
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -239,8 +249,36 @@ public class JDBCUserDAO implements UserDAO<User> {
 
 	@Override
 	public User findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> result = new LinkedList<>();
+		try (Connection connection = newConnection();
+				ResultSet rs = connection.createStatement().executeQuery(
+						"select * from users where user_name = '" + username + "' or email ='" + username + "'")) {
+
+			while (rs.next()) {
+				result.add(extractUser(rs));
+			}
+			connection.commit();
+			connection.close();
+		} catch (SQLException ex) {
+			throw new RuntimeException("Error getting User from DB. (091)", ex);
+		}
+
+		if (result.size() > 1) {
+			throw new IllegalStateException("(091) Multiple Users for username or email: " + username);
+		}
+		return result.isEmpty() ? null : result.get(0);
+	}
+	
+	protected void saveVerificationToken(VerificationToken token){
+		
+			try (Connection connection = newConnection();
+				ResultSet rs = connection.createStatement().executeQuery(
+						"insert into tokens (token, user_id) VALUES(" + token.getToken() + ", " + token.getUser().getId() +")") ) {
+				connection.commit();
+				connection.close();
+			} catch (SQLException ex) {
+				throw new RuntimeException("Error saving user to DB. (91)", ex);
+			}
 	}
 
 }

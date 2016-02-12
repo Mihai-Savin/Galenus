@@ -47,15 +47,27 @@ public class UserController {
 	}
 
 	@RequestMapping("/patient/profile")
-	public ModelAndView editPatient() {
+	public ModelAndView editPatientProfile() {
 
-		Patient patient = patientService.getPatient(10L);
+		Patient patient = patientService.getPatient(11226L); //10 on heroku
 		
 		ModelAndView modelAndView = new ModelAndView("patientedit");
 		modelAndView.addObject("patient", patient);
 
 		return modelAndView;
 	}
+	
+	@RequestMapping("/doctor/profile")
+	public ModelAndView editDoctorProfile() {
+
+		Patient doctor = patientService.getPatient(10L); //10L on heroku //11226L on localhost
+		
+		ModelAndView modelAndView = new ModelAndView("patientedit");
+		modelAndView.addObject("patient", doctor);
+
+		return modelAndView;
+	}
+
 
 	@RequestMapping("/patient")
 	public String indexPatient() {
@@ -64,7 +76,7 @@ public class UserController {
 
 	@RequestMapping(value="/patient/profile", method = RequestMethod.POST)
 	public String save(@ModelAttribute Patient patient) throws ValidationException, SQLException {
-		patient.setId(10L);
+		patient.setId(10L); //10L on heroku //11226L on localhost
 		patient.setRole(Role.user);
 		patient.setDateOfBirth(new Date());
 		patient.setGender(Gender.FEMALE);
@@ -75,6 +87,8 @@ public class UserController {
 		patient.see();
 		return "success";
 	}
+	
+	
 	@RequestMapping(value="/generate")
 	public String generatePatient() throws ValidationException, SQLException {
 		Patient patient = new Patient();

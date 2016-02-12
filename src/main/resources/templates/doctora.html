@@ -74,14 +74,15 @@
                         </li>
                         <li><a href="blog.html">Blog</a></li> 
                         <li><a href="contact-us.html">Contact</a></li>  
+                        <li class="logout"><a href="/user/patient">User Profile</a></li>
+                        <li class="session"></li>
                         <li class="logout">
                             <form th:action="@{/logout}" method="post">
                                 <input class="logout-button" type="submit" value="Sign Out" />
                             </form>
                         </li>
-                        <li class="session"></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right session-hide">
                         <li class="dropdown" id="login-icon">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/images/ico/login.png">Register / Login <span class="caret"></span></a>
                             <ul class="dropdown-menu">

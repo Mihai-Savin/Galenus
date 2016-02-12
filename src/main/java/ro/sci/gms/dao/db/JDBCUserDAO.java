@@ -109,13 +109,14 @@ public class JDBCUserDAO implements UserDAO<User> {
 	 * Doctor that is - into the DB in the same transaction.
 	 */
 	protected User update(Connection connection, User user) {
+		Li.st("Saving user to db.");
 		try {
 			PreparedStatement ps = null;
 			if (user.getId() > 0) {
 				ps = connection.prepareStatement(
 						"update users set first_name=?, last_name=?, user_name=?, password=?, address=?, phone= ?, email= ?, role=? "
 								+ "where id = ? returning id");
-				Li.st("Updating userl.");
+				Li.st("Updating user.");
 			} else {
 
 				ps = connection.prepareStatement(

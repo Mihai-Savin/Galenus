@@ -28,9 +28,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/", "/home", "/css/**", "/scss/**", "/images/**", "/js/**", "/webjars/**", "/fonts/**", "/register", "/rest/**",
 						"/rest/register", "/send-mail", "/index.html", "/about-us.html", "/contact-us.html", "/services.html", "/blog.html", "/send-mail", "/register&login.html", "/register&login").permitAll()
-				.antMatchers("/doctor").hasRole("DOCTOR").anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").permitAll().and().logout().permitAll().and().sessionManagement()
-				.maximumSessions(1);
+				.antMatchers("/doctor").hasRole("DOCTOR").anyRequest().authenticated()
+				.and().formLogin().loginPage("/login").permitAll().and().logout().permitAll()
+				.and().formLogin().defaultSuccessUrl("/index.html", true)
+				.and().sessionManagement().maximumSessions(1);
 	}
 
 	@Autowired

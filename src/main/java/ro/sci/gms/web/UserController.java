@@ -88,6 +88,21 @@ public class UserController {
 		return "success";
 	}
 	
+	@RequestMapping(value="/patient/profile", method = RequestMethod.POST)
+	public String saveDoctor_patientStill(@ModelAttribute Patient patient) throws ValidationException, SQLException {
+		patient.setId(10L); //10L on heroku //11226L on localhost
+		patient.setRole(Role.user);
+		patient.setDateOfBirth(new Date());
+		patient.setGender(Gender.FEMALE);
+		patient.setBloodType(Blood.AB);
+		patient.setDoctor(new Doctor());
+		
+		patientService.save(patient);
+		patient.see();
+		return "success";
+	}
+	
+	
 	
 	@RequestMapping(value="/generate")
 	public String generatePatient() throws ValidationException, SQLException {

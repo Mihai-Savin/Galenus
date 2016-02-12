@@ -3069,7 +3069,7 @@ font-size:30px;
 }
 
 .logout-button {
-   padding: 5px 12px;
+  /* padding: 5px 12px;
   margin: 0;
   font-weight:bold;
   border-radius: 3px;
@@ -3078,11 +3078,21 @@ font-size:30px;
   display: inline-block;
   background-color:#849EB6;
   color:white;
-  margin-right:10px;
+  margin-right:10px;*/
+  
+  background:none!important;
+  border:none; 
+  padding:0!important;
+  font: inherit;
+  /*border is optional*/
+  border-bottom:1px solid #444; 
+  cursor: pointer;
 }
 
-/*error page*/
-
-#error {
-  min-height:500px;
+.login-message {
+  margin: 20px 0;
+  font-size: 15px;
+  color: #FF0101;
+  text-align: center;
+  text-shadow: 0 1px #FF9C9C;
 }

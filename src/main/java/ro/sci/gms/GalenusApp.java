@@ -10,12 +10,15 @@ import org.springframework.context.annotation.Configuration;
 
 import ro.sci.gms.dao.AppointmentDAO;
 import ro.sci.gms.dao.UserDAO;
+import ro.sci.gms.dao.db.JDBCDoctorDAO;
+import ro.sci.gms.dao.db.JDBCPatientDAO;
 import ro.sci.gms.dao.db.JDBCUserDAO;
 import ro.sci.gms.dao.inmemory.IMAppointmentDAO;
 import ro.sci.gms.dao.inmemory.IMUserDAO;
 import ro.sci.gms.domain.Agenda;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
+import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
 import ro.sci.gms.service.DoctorService;
 import ro.sci.gms.service.PatientService;
@@ -25,6 +28,13 @@ import ro.sci.gms.service.UserService;
 @EnableAutoConfiguration
 @ComponentScan
 public class GalenusApp {
+
+	/**
+	 * 0 = InMemory; 1 = Local DB; 2 = Production DB on Heroku
+	 */
+	private int deployTo = 2 //
+	;
+
 	public static void main(String[] args) {
 		SpringApplication.run(GalenusApp.class, args);
 
@@ -53,26 +63,38 @@ public class GalenusApp {
 
 	@Bean
 	public UserDAO userDAO() {
-		return new //
-
-		IMUserDAO();
-		//JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
-		//JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com", "5432", "d99d8uvcdiqh5q", "gsmxwxyrbiqutc",
-		//		"ifm7QuPfDxj7VYVqReCWKKQp9Z");
+		switch (deployTo) {
+		case 1:
+			return new JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
+		case 2:
+			return new JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com", "5432", "d99d8uvcdiqh5q",
+					"hjgepgsapjoops", "7wxWIzK0dN6Ea5vkIJ1WYvyT9p");
+		}
+		return new IMUserDAO();
 	}
 
 	@Bean
-	public IMUserDAO patientDAO() {
+	public UserDAO patientDAO() {
+		switch (deployTo) {
+		case 1:
+			return new JDBCPatientDAO("localhost", "5432", "galenus", "postgres", "postgres");
+		case 2:
+			return new JDBCPatientDAO("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com", "5432", "d99d8uvcdiqh5q",
+					"hjgepgsapjoops", "7wxWIzK0dN6Ea5vkIJ1WYvyT9p");
+		}
 		return new IMUserDAO();
-		// JDBCPatientDAO("localhost", "5432", "galenus", "postgres",
-		// "postgres");
 	}
 
 	@Bean
-	public IMUserDAO doctorDAO() {
+	public UserDAO doctorDAO() {
+		switch (deployTo) {
+		case 1:
+			return new JDBCDoctorDAO("localhost", "5432", "galenus", "postgres", "postgres");
+		case 2:
+			return new JDBCDoctorDAO("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com", "5432", "d99d8uvcdiqh5q",
+					"hjgepgsapjoops", "7wxWIzK0dN6Ea5vkIJ1WYvyT9p");
+		}
 		return new IMUserDAO();
-		// JDBCDoctorDAO("localhost", "5432", "galenus", "postgres",
-		// "postgres");
 	}
 
 	@Bean
@@ -92,10 +114,11 @@ public class GalenusApp {
 		patient.setMedicalBackground("Loves to cuddle with muslim alien citizens.");
 		patient.setDateOfBirth(new Date());
 		patient.setPassword("1234");
+		patient.setRole(Role.user);
 
 		return patient;
 	}
-	
+
 	@Bean
 	public User loggedUser() {
 		User user = new User();
@@ -107,7 +130,5 @@ public class GalenusApp {
 
 		return user;
 	}
-	
-	
 
 }

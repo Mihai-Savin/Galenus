@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import ro.sci.gms.dao.AppointmentDAO;
+import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.dao.db.JDBCDoctorDAO;
 import ro.sci.gms.dao.db.JDBCPatientDAO;
 import ro.sci.gms.dao.db.JDBCUserDAO;
@@ -46,9 +47,9 @@ public class ApplicationTests {
 	}
 
 	@Bean
-	public JDBCUserDAO userDAO() {
+	public UserDAO userDAO() {
 		return new //
-		//IMUserDAO();
+		// IMUserDAO();
 		JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
 		/*JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com",
 				"5432", "d99d8uvcdiqh5q",

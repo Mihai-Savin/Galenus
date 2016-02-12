@@ -31,7 +31,7 @@ public class AppointmentController {
 
 		Collection<Appointment> allAppointments = aptService.getAll();
 
-		ModelAndView modelAndView = new ModelAndView("appointment_list");
+		ModelAndView modelAndView = new ModelAndView("appointments_list");
 		modelAndView.addObject("allAppointments", allAppointments);
 
 		return modelAndView;
@@ -45,7 +45,6 @@ public class AppointmentController {
 		return modelAndView;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@RequestMapping(method=RequestMethod.POST)
     public String appointmentSubmit(@ModelAttribute Appointment appointment) throws ValidationException {
 

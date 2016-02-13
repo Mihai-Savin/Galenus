@@ -1,60 +1,261 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
 <html lang="en">
-<!--<![endif]-->
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Login Form</title>
-<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" media="screen" />
-<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-</head>
-<body>
-	<section class="container">
-		<div class="login-message"><span th:if="${param.error}">Invalid username and password.</span></div>
-		<div class="login-message"><span th:if="${param.logout}">You have been logged out.</span></div>
-		<div class="login">
-			<h1>Login to Web App</h1>
-			<form method="post" th:action="@{login}">
-				<p>
-					<input type="text" name="username" value=""
-						placeholder="Username or Email">
-				</p>
-				<p>
-					<input type="password" name="password" value=""
-						placeholder="Password">
-				</p>
-				<p class="remember_me">
-					<label> <input type="checkbox" name="remember_me"
-						id="remember_me"> Remember me on this computer
-					</label>
-				</p>
-				<p class="submit">
-					<input type="submit" name="commit" value="Login">
-				</p>
-			</form>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+	
+	<!-- core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/prettyPhoto.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="/images/ico/favicon2.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+
+<body class="homepage">
+
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-4">
+                        <div class="top-number"><p><i class="fa fa-phone-square"></i>  0040 264 58913455</p></div>
+                    </div>
+                    <div class="col-sm-6 col-xs-8">
+                       <div class="social">
+                            <ul class="social-share">
+                                <li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin"></i></a></li> 
+                                <li><a href="http://www.skype.com/ro/" target="_blank"><i class="fa fa-skype"></i></a></li>
+                            </ul>
+                       </div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
+
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="/images/logo.png" alt="logo"></a>
+                </div>
+				
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle  active" data-toggle="dropdown">Doctors <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="doctora.html">Doctor A</a></li>
+                                <li><a href="doctorb.html">Doctor B</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html">Blog</a></li> 
+                        <li><a href="contact-us.html">Contact</a></li>
+                         <li class="logout"><a href="/user/patient">User Profile</a></li>
+                        <li class="session"></li>
+                        <li class="logout">
+                            <form th:action="@{/logout}" method="post">
+                                <input class="logout-button" type="submit" value="Sign Out" />
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right session-hide">
+                        <li class="dropdown" id="login-icon">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/images/ico/login.png">Register / Login <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="register&login.html">PATIENT - Register/Login</a></li>
+                                <li><a href="login.html">DOCTOR - Login</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+		
+    </header><!--/header-->
+            
+            
+            <!----------------------------------------Register/login PAGE------------------------------------->
+            
+    <div class="container content">
+    	<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-login">
+				<div class="login-message"><span th:if="${param.error}">Invalid username and password.</span></div>
+				<div class="login-message"><span th:if="${param.logout}">You have been logged out.</span></div>
+					<div class="panel-heading">
+						<div class="row">
+							<h2  id="logind">DOCTOR</h2>
+						</div>
+						<div class="row">
+							<ul class="col-xs-12">
+								<li class="active" id="login-form-link"><h2 id="loginh">Login</h2></li>
+							</ul>
+						</div>
+						<hr>
+					</div>
+					
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<form id="login-form" th:action="@{login}" method="post" role="form" style="display: block;">
+									<div class="form-group">
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+									</div>
+									<div class="form-group">
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+									</div>
+									<div class="form-group text-center">
+										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+										<label for="remember"> Remember Me</label>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3">
+												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="text-center">
+													<a href="" tabindex="5" class="forgot-password">Forgot Password?</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="login-help">
-			<p>
-				Forgot your password? <a href="index.html">Click here to reset
-					it</a>.
-			</p>
-		</div>
-	</section>
-	<!--
-  <section class="about">
-    <p class="about-links">
-      <a href="http://www.cssflow.com/snippets/login-form" target="_parent">View Article</a>
-      <a href="http://www.cssflow.com/snippets/login-form.zip" target="_parent">Download</a>
-    </p>
-    <p class="about-author">
-      &copy; 2012&ndash;2013 <a href="http://thibaut.me" target="_blank">Thibaut Courouble</a> -
-      <a href="http://www.cssflow.com/mit-license" target="_blank">MIT License</a><br>
-      Original PSD by <a href="http://www.premiumpixels.com/freebies/clean-simple-login-form-psd/" target="_blank">Orman Clark</a>
-  </section>
-  -->
+	</div>
+            
+
+            
+            <!----FOOTER---->
+            
+        <section id="bottom">
+        <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+            <div class="row">
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Quality Assurance </h3>
+                        <ul>
+                            <li>Sfica Simina</li>
+                            <li>Raul Ciunt</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Java development </h3>
+                        <ul>
+                            <li>Iulian Todor</li>
+                            <li>Mihai Savin</li>
+                            <li>Petru Hangiu</li>
+                            <li>Florin Tompea</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+        
+                
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Project management </h3>
+                        <ul>
+                            <li>Dana Toma</li>
+                            <li>Florin Domuta</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+                
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Web development </h3>
+                        <ul>
+                            <li>Dobri Andras</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+            </div>
+        </div>
+    </section><!--/#bottom-->
+    
+    <a href="#0" class="cd-top">Top</a>
+    
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2016 GALENUS. All Rights Reserved.
+                </div>
+                <div>
+                <ul class="social pull-right">
+                    <li id="facebook"> <a href="https://www.facebook.com" target="_blank"> <i class=" fa fa-facebook">   </i> </a> </li>
+                    <li id="twitter"> <a href="https://twitter.com" target="_blank"> <i class="fa fa-twitter">   </i> </a> </li>
+                    <li id="skype"> <a href="http://www.skype.com/ro/" target="_blank"> <i class="fa fa-skype">   </i> </a> </li>
+                    <li id="linkedin"> <a href="https://www.linkedin.com/" target="_blank"> <i class="fa fa-linkedin">   </i> </a> </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/scroll.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/wow.min.js"></script>
+    <script>
+            $(document).ready(function() {
+                 $(".dropdown-toggle").dropdown();
+                 
+                $('#login-form-link').click(function(e) {
+            		$("#login-form").delay(100).fadeIn(100);
+             		$("#register-form").fadeOut(100);
+            		$('#register-form-link').removeClass('active');
+            		$(this).addClass('active');
+            		e.preventDefault();
+            	});
+            	$('#register-form-link').click(function(e) {
+            		$("#register-form").delay(100).fadeIn(100);
+             		$("#login-form").fadeOut(100);
+            		$('#login-form-link').removeClass('active');
+            		$(this).addClass('active');
+            		e.preventDefault();
+            	});
+            
+            });
+    </script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -11,6 +12,7 @@ import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.domain.User;
 
 @Repository
+@Qualifier("IMUserDAO")
 public class IMUserDAO<T extends User> extends IMBaseDAO implements UserDAO {
 
 	public Collection<T> searchById(String query) {

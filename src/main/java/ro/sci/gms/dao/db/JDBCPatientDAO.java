@@ -86,7 +86,12 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 
 	public Patient savePatient(Patient patient) throws SQLException {
 		Li.st("Saving Patient (user data) to DB.");
-
+		
+		boolean isNewPatient = true;
+		if (patient.getId()>0) {
+			isNewPatient = false;
+		}
+			
 		Connection connection = newConnection();
 		connection.setAutoCommit(false);
 
@@ -97,11 +102,16 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 		Li.st("Saving Patient (patient data) to DB.");
 		try {
 			PreparedStatement ps = null;
+			if (!isNewPatient) {
+				ps = connection.prepareStatement(
+						"update patient set user_id=?, date_of_birth=?, gender=?, medical_background=?, blood_type=?, doctor_id=? "
+								+ "where user_id = ? returning user_id");
 
+			} else {
 			ps = connection.prepareStatement(
 					"insert into patient (user_id, date_of_birth, gender, medical_background, blood_type, doctor_id) "
 							+ "values (?, ?, ?, ?, ?, ?) returning user_id");
-
+			}
 			ps.setLong(1, patient.getId());
 			ps.setTimestamp(2, new Timestamp(patient.getDateOfBirth().getTime()));
 			ps.setString(3, patient.getGender().name());
@@ -109,6 +119,10 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 			ps.setString(5, patient.getBloodType().name());
 			ps.setLong(6, patient.getDoctor().getId());
 
+			if (!isNewPatient) {
+				ps.setLong(7, patient.getId());
+			}
+			
 			ps.executeQuery();
 
 			// View data on console
@@ -162,10 +176,13 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 		boolean result = false;
 		try (Connection connection = newConnection()) {
 			Statement statement = connection.createStatement();
-			result = statement.execute("delete from users where id = " + patient.getId());
+			//first delete from table that has foreign key
 			result = statement.execute("delete from patient where user_id = " + patient.getId());
+			//then delete from table that has primary key
+			result = statement.execute("delete from users where id = " + patient.getId());
 			connection.commit();
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			throw new RuntimeException("(091) Error deleting user or patient data.", ex);
 		}
 		return result;

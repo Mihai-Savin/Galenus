@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ro.sci.gms.dao.db.JDBCPatientDAO;
 import ro.sci.gms.domain.Patient;
@@ -17,7 +17,7 @@ public class PatientService extends UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PatientService.class);
 
-//	@Resource(name="patientDAO")
+	@Resource(name="patientDAO")
 	private JDBCPatientDAO patientDAO;
 
 	public void save(Patient patient) throws ValidationException, SQLException {
@@ -25,10 +25,11 @@ public class PatientService extends UserService {
 		validate(patient);
 		patientDAO.savePatient(patient);
 	}
-	
+	@Autowired
+	private UserService userService;
 	public Patient getPatient(Long id) {
 		LOGGER.debug("Getting patient for id: " + id);
-		return patientDAO.findById(id);
+		return  patientDAO.findById(id);
 	}
 
 	public Collection<Patient> getAllPatients() {

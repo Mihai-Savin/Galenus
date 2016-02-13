@@ -71,7 +71,7 @@ jQuery(function($) {'use strict',
 	/*session json*/
 	
 	var session = function(){
-       $.getJSON('/rest/currentuser', function(response){
+       $.getJSON('json.php', function(response){
             if(response.username) {
             	var session = 'Hello ' + response.username + '!';
             $(".session-hide").hide();

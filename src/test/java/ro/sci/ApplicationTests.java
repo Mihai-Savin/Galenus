@@ -1,4 +1,4 @@
-/*package ro.sci;
+package ro.sci;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import ro.sci.gms.dao.AppointmentDAO;
+import ro.sci.gms.dao.UserDAO;
 import ro.sci.gms.dao.db.JDBCDoctorDAO;
 import ro.sci.gms.dao.db.JDBCPatientDAO;
 import ro.sci.gms.dao.db.JDBCUserDAO;
@@ -33,7 +34,7 @@ public class ApplicationTests {
 	public PatientService patientService() {
 		return new PatientService();
 	}
-	
+
 	@Bean
 	public DoctorService doctorService() {
 		return new DoctorService();
@@ -46,23 +47,31 @@ public class ApplicationTests {
 	}
 
 	@Bean
-	public JDBCUserDAO userDAO() {
-		return new // IMUserDAO();
+	public UserDAO userDAO() {
+		return new //
+		// IMUserDAO();
 		JDBCUserDAO("localhost", "5432", "galenus", "postgres", "postgres");
-	}
+		/*JDBCUserDAO("ec2-79-125-117-94.eu-west-1.compute-1.amazonaws.com",
+				"5432", "d99d8uvcdiqh5q",
+				"gsmxwxyrbiqutc", 
+				"ifm7QuPfDxj7VYVqReCWKKQp9Z");
+	*/
 	
+		
+		
+	
+	}
+
 	@Bean
 	public JDBCPatientDAO patientDAO() {
 		return new // IMUserDAO();
 		JDBCPatientDAO("localhost", "5432", "galenus", "postgres", "postgres");
 	}
-	
+
 	@Bean
 	public JDBCDoctorDAO doctorDAO() {
 		return new // IMUserDAO();
 		JDBCDoctorDAO("localhost", "5432", "galenus", "postgres", "postgres");
 	}
-	
 
 }
-*/

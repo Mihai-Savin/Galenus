@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -18,37 +17,53 @@ import ro.sci.gms.service.UserService;
 import ro.sci.gms.service.ValidationException;
 
 @Controller
-@RequestMapping("/register&login.html")
+@RequestMapping("/register")
 public class RegistrationController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 	@Autowired
 	@Qualifier("userService")
 	UserService userService;
-	@Autowired 
-	PasswordEncoder passwordEncoder;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String save(User user, BindingResult bindingResult) throws ValidationException {
 		LOGGER.debug("Saving: " + user);
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		try {
 			userService.save(user);
 		} catch (Exception e) {
+			// result = renderEditPage(student.getId());
 			bindingResult.addError(new ObjectError("user", e.getMessage()));
 		}
-		return "redirect:/index.html";
+		return "index";
 	}
 
 	@RequestMapping("")
-	public String register(@AuthenticationPrincipal User user) {
+	String register(@AuthenticationPrincipal User user) {
 		if (user==null) {
-			return "register&login";
+			return "register";
 		}
 		else {
-			LOGGER.debug("returning register and login");
-			return "redirect:/index.html";
+			return "index";
 		}
 	}
+	/*
+	 * public ModelAndView index() {
+	 * 
+	 * Collection<Employee> allEmployees = employeeService.listAll();
+	 * 
+	 * ModelAndView modelAndView = new ModelAndView("employee_list");
+	 * modelAndView.addObject("allEmployees", allEmployees);
+	 * 
+	 * return modelAndView; }
+	 */
 
+	@RequestMapping(method = RequestMethod.GET, params = "action=add")
+	public String add() {
+		return "rest/user";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, params = "action=edit")
+	public String edit(@RequestParam("id") Long id) {
+		return "rest/user";
+	}
 }

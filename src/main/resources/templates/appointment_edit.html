@@ -57,15 +57,18 @@
 
 <body>
 	<div class="container">
-		<a href="/"> <img
-			src="http://www.3quarksdaily.com/.a/6a00d8341c562c53ef0120a896d16a970b-250wi"
-			width="100" />
-		</a>
+<!-- 		<a href="/"> <img -->
+<!-- 			src="http://www.3quarksdaily.com/.a/6a00d8341c562c53ef0120a896d16a970b-250wi" -->
+<!-- 			width="100" /> -->
+<!-- 		</a> -->
 
-		<ol class="breadcrumb">
-			<li><a href="/">Home</a></li>
-			<li class="active">Appointment</li>
-		</ol>
+<!-- 		<ol class="breadcrumb"> -->
+<!-- 			<li><a href="/">Home</a></li> -->
+<!-- 			<li class="active">Appointment editor</li> -->
+<!-- 		</ol> -->
+
+<br>
+<br>
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -92,18 +95,14 @@
 
 					<div class="form-group">
 						<label for="date">Appointment Date</label>
-						<div class="form-group">
-							<input type="text" id="date" name="date"
+							<input type="text" class="form-control" id="date" name="date"
 								th:value="${appointment.date}" placeHolder="dd/mm/yyyy" />
-						</div>
 					</div>
 					
 					<div class="form-group">
 						<label for="time">Appointment Time</label>
-						<div class="form-group">
-							<input type="text" id="time" name="time"
+							<input type="text" class="form-control" id="time" name="time"
 								th:value="${appointment.time}" placeHolder="hh:mm" />
-						</div>
 					</div>
 
 					<div class="form-group">
@@ -118,11 +117,11 @@
 					<div class="container-fluid">
 						<div class="collapse navbar-collapse">
 							<ul class="nav navbar-nav navbar-right">
-								<li><button class="btn btn-default"
-										onclick="/appointment_list">Cancel</button></li>
+								<li><button type="submit" class="btn btn-default"
+										formaction="/user/patient">Cancel</button></li>
 								<li>&nbsp;&nbsp;&nbsp;</li>
 								<li><button type="submit" class="btn btn-default">Save
-										appointment</button></li>
+										modifications</button></li>
 										
 										
 										

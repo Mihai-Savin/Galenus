@@ -20,6 +20,7 @@ import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
+import ro.sci.gms.service.AppointmentService;
 import ro.sci.gms.service.DoctorService;
 import ro.sci.gms.service.PatientService;
 import ro.sci.gms.service.UserService;
@@ -32,7 +33,7 @@ public class GalenusApp {
 	/**
 	 * 0 = InMemory; 1 = Local DB; 2 = Production DB on Heroku
 	 */
-	private int deployTo = 1 //
+	private int deployTo = 2 //
 	;
 
 	public static void main(String[] args) {
@@ -55,6 +56,12 @@ public class GalenusApp {
 		return new DoctorService();
 	}
 
+	@Bean
+	public AppointmentService aptService() {
+		return new AppointmentService();
+	}
+	
+	
 	@Bean
 	public AppointmentDAO aptDAO() {
 		return new IMAppointmentDAO();

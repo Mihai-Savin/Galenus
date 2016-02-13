@@ -4,11 +4,11 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ro.sci.gms.domain.Blood;
@@ -17,6 +17,7 @@ import ro.sci.gms.domain.Gender;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.Role;
 import ro.sci.gms.domain.User;
+import ro.sci.gms.service.AppointmentService;
 import ro.sci.gms.service.DoctorService;
 import ro.sci.gms.service.PatientService;
 import ro.sci.gms.service.UserService;
@@ -80,8 +81,11 @@ public class UserController {
 		return modelAndView;
 	}
 	
+	@Autowired
+	AppointmentService aptService;
+	
 	@RequestMapping("/patient")
-	public String patientShow() {
+	public ModelAndView patientShow() throws ValidationException {
 
 		loggedPatient.setId(11226); // 10L on heroku //11226L on localhost
 		loggedPatient.setRole(Role.user);
@@ -89,13 +93,21 @@ public class UserController {
 		loggedPatient.setGender(Gender.FEMALE);
 		loggedPatient.setBloodType(Blood.A);
 		loggedPatient.setDoctor(new Doctor());
+		
+		aptService.generateSome();
 
-		return "patient_index";
+		
+		ModelAndView modelAndView = new ModelAndView("patient_index");
+		modelAndView.addObject("allApointments", aptService.getAll());
+
+		return modelAndView;
 	}
 
 	@RequestMapping("/patient/profile")
-	public ModelAndView patientEdit() {
+	public ModelAndView patientEdit(@AuthenticationPrincipal User user) {
 
+		//loggedPatient.setId(user.getId());
+		
 		Patient patient = patientService.getPatient(loggedPatient.getId()); // 10L on heroku,
 																// 11226L on
 																// localhost
@@ -108,6 +120,12 @@ public class UserController {
 	
 	@RequestMapping(value = "/patient/profile", method = RequestMethod.POST)
 	public String patientSave(@ModelAttribute Patient patient) throws ValidationException, SQLException {
+		patient.setId(11226); // 10L on heroku //11226L on localhost
+		patient.setRole(Role.user);
+		patient.setDateOfBirth(new Date());
+		patient.setGender(Gender.FEMALE);
+		patient.setBloodType(Blood.A);
+		patient.setDoctor(new Doctor());
 		patientService.save(patient);
 		return "success";
 	}

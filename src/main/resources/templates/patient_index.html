@@ -117,15 +117,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="col-md-12">
-                                <p align="center"><a href="edituser.html" class="btn btn-primary btn-block send-msg">Edit my profile</a>
+                                <p align="center"><a href="/user/patient/profile" class="btn btn-primary btn-block send-msg">Edit my profile</a>
                                 <span style="font-family: Monaco, Menlo, Consolas, 'Courier New', monospace; font-size: 13px; line-height: 18px; white-space: pre-wrap; background-color: rgb(255, 255, 255);"></span>
                         </div>
                         <div class="col-md-12">
-                                <p align="center"><a href="" class="btn btn-primary btn-block send-msg">View appoitments</a>
+                                <p align="center"><a href="/appointment" class="btn btn-primary btn-block send-msg">View and edit my appoitments</a>
                                 <span style="font-family: Monaco, Menlo, Consolas, 'Courier New', monospace; font-size: 13px; line-height: 18px; white-space: pre-wrap; background-color: rgb(255, 255, 255);"></span>
                         </div>
                         <div class="col-md-12">
-                                <p align="center"><a class="btn btn-primary btn-block send-msg show-calendar">Make an appoitment</a>
+                                <p align="center"><a class="btn btn-primary btn-block send-msg show-calendar">Make a new appoitment</a>
                                 <span style="font-family: Monaco, Menlo, Consolas, 'Courier New', monospace; font-size: 13px; line-height: 18px; white-space: pre-wrap; background-color: rgb(255, 255, 255);"><div id="calendar"></div></span>
                         </div>
                         
@@ -133,32 +133,26 @@
                             <img class="img-responsive" src="/images/appoitment2.jpg">
                         </div>
                         <div class="col-md-12 messagepop pop">
-                          <form method="post" id="new_message" action="#">
+                          <form method="post" id="new_message" action="/success.html">
                             <h3>Available hours</h3>
-                              <label>
-                                <input type="radio" class="radio" value="8" name="time" />8:00 - 9:00</label>
                               
-                              <label>
-                                <input type="radio" class="radio" value="9" name="time" />9:00 - 10:00</label>
                               
-                              <label>
-                                <input type="radio" class="radio" value="10" name="time" />10:00 - 11:00</label>
-                              <label>
-                                <input type="radio" class="radio" value="11" name="time" />11:00 - 12:00</label>
-                              <label>
-                                <input type="radio" class="radio" value="12" name="time" />12:00 - 13:00</label>
-                              <label>
-                                <input type="radio" class="radio" value="13" name="time" />13:00 - 14:00</label>
-                              <label>
-                                <input type="radio" class="radio" value="14" name="time" />14:00 - 15:00</label>
-                              <label>
-                                <input type="radio" class="radio" value="15" name="time" />15:00 - 16:00</label>
-                              <label>
-                                <input type="radio" class="radio" value="16" name="time" />16:00 - 17:00</label>
-                              <label>
+                              
+                                <input type="radio" class="radio" value="8" name="time" />8:00<br>
+                              
+                                <input type="radio" class="radio" value="9" name="time" />9:00</br>
+                              
+                                <input type="radio" class="radio" value="11" name="time" />11:00<br>
+                                <input type="radio" class="radio" value="12" name="time" />12:00<br>
+                                <input type="radio" class="radio" value="13" name="time" />13:00<br>
+                                <input type="radio" class="radio" value="15" name="time" />15:00<br>
+                                <input type="radio" class="radio" value="16" name="time" />16:00<br>
+
+                                <p>
+                                <input type="submit" value="Save" formaction="/user/patient" name="commit" class="btn-primary" id="message_submit"/>
+                                <input type="submit" value="Cancel" formaction="/user/patient" name="commit" class="btn-primary" id="message_submit"/>
+                                </p>
                                 
-                                <input type="radio" class="radio" value="2.3" name="time" />16:30 AM - 17:00AM</label>  
-                                <p><input type="submit" value="Finish appoitment!" name="commit" class="btn-primary" id="message_submit"/> or <a class="close" href="/">Cancel</a></p>
                           </form>
                         </div>
 

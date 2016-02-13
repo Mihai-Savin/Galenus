@@ -150,8 +150,8 @@ public class AppointmentService {
 		date.setDate(22);
 		date.setHours(0);
 
-		time1.setHours(9);
-		time2.setHours(13);
+		time1.setHours(10);
+		time2.setHours(14);
 
 		Appointment appointment1 = new Appointment();
 		Appointment appointment2 = new Appointment();
@@ -159,13 +159,16 @@ public class AppointmentService {
 		// Appointment appointment3 = new Appointment(patient2, doctor1);
 		// Appointment appointment4 = new Appointment(patient2, doctor2);
 		appointment1.createAppointment(patient1, doctor1);
-		appointment2.createAppointment(patient2, doctor2);
+		appointment2.createAppointment(patient2, doctor1);
 
 		appointment1.setDate(date);
 		appointment1.setTime(time1);
 
 		appointment2.setDate(date);
 		appointment2.setTime(time2);
+		
+		appointment1.setDetails("I already have some infection going on.");
+		appointment2.setDetails("Please have your assistent prepare some herbal tea for me.");
 
 		// appointment2.setTime(new Date());
 		// appointment3.setTime(new Date());

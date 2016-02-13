@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +27,7 @@ public class AppointmentController {
 	private Patient loggedPatient;
 	
 	@RequestMapping("")
-	public ModelAndView showAllAppointments() {
+	public ModelAndView showAllAppointments() throws ValidationException {
 
 		Collection<Appointment> allAppointments = aptService.getAll();
 
@@ -58,24 +57,27 @@ public class AppointmentController {
 		return result;
 	}
 		
+	
+	
 	@RequestMapping(method=RequestMethod.POST)
-    public String appointmentSubmit(@ModelAttribute Appointment appointment) throws ValidationException {
+    public String appointmentSave(@ModelAttribute Appointment appointment) throws ValidationException {
 
-		// Should come from FORM or from USER contextual data - logged in
-		// Will be removed
-		Date date = new Date();
-		Date time = new Date();
-		date.setDate(15);
-		time.setHours(11);
-		appointment.setPatient(loggedPatient);
-		appointment.setDoctor(loggedPatient.getDoctor());
-		appointment.setDate(date);
-		appointment.setTime(time);
-		// Should come from FORM or from USER contextual data - logged in
-		
-		
-		aptService.save(appointment);
-		System.out.println(appointment.list());
+		Li.st("Saving appointment.");
+//		// Should come from FORM or from USER contextual data - logged in
+//		// Will be removed
+//		Date date = new Date();
+//		Date time = new Date();
+//		date.setDate(15);
+//		time.setHours(11);
+//		appointment.setPatient(loggedPatient);
+//		appointment.setDoctor(loggedPatient.getDoctor());
+//		appointment.setDate(date);
+//		appointment.setTime(time);
+//		// Should come from FORM or from USER contextual data - logged in
+//		
+//		
+//		aptService.save(appointment);
+//		System.out.println(appointment.list());
 		
 		return "success";
     }

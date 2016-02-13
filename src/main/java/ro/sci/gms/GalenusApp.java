@@ -112,6 +112,7 @@ public class GalenusApp {
 		doctor.setFirstName("Arnold");
 		doctor.setLastName("Schwarzenegger");
 		doctor.setAgenda(agenda);
+		patient.setId(11226L);
 		patient.setFirstName("Angela");
 		patient.setLastName("Merkel");
 		patient.setDoctor(doctor);

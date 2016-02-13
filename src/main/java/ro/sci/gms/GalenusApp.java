@@ -32,7 +32,7 @@ public class GalenusApp {
 	/**
 	 * 0 = InMemory; 1 = Local DB; 2 = Production DB on Heroku
 	 */
-	private int deployTo = 2 //
+	private int deployTo = 1 //
 	;
 
 	public static void main(String[] args) {
@@ -119,6 +119,11 @@ public class GalenusApp {
 		return patient;
 	}
 
+	@Bean
+	public Doctor loggedDoctor() {
+		return new Doctor();
+	}
+	
 	@Bean
 	public User loggedUser() {
 		User user = new User();

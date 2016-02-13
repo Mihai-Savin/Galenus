@@ -1,28 +1,19 @@
 package ro.sci.gms.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ro.sci.gms.domain.Patient;
-import ro.sci.gms.service.UserService;
 import ro.sci.gms.service.ValidationException;
 import ro.sci.gms.temp.Li;
 
 @Controller
 public class IndexController {
-
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	Patient loggedPatient;
-	
 	
 	@RequestMapping("/")
 	public String index() throws ValidationException {
-		Li.st("Index page was served to default VIEW.");
-		
+		Li.st("Website accessed @ " + new Date() + " Index page served to default VIEW.");
 		return "index";
 	}
 

@@ -1,141 +1,419 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>User page</title>
+	
+	<!-- core CSS -->
+	<link href="/css/blue.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/zabuto_calendar.min.css">
+    <link href="/css/prettyPhoto.css" rel="stylesheet">
+    <link href="/css/responsive.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="/images/ico/favicon2.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
 
-<title>Edit Patient Profile</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<body class="homepage">
 
-<link
-	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
-	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
-	rel="stylesheet" media="screen" />
-<link
-	href="http://cdn.jsdelivr.net/webjars/jquery-ui/1.11.4/jquery-ui.min.css"
-	th:href="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.css}"
-	rel="stylesheet" media="screen" />
+    <header id="header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-4">
+                        <div class="top-number"><p><i class="fa fa-phone-square"></i>  0040 264 58913455</p></div>
+                    </div>
+                    <div class="col-sm-6 col-xs-8">
+                       <div class="social">
+                            <ul class="social-share">
+                                <li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin"></i></a></li> 
+                                <li><a href="http://www.skype.com/ro/" target="_blank"><i class="fa fa-skype"></i></a></li>
+                            </ul>
+                       </div>
+                    </div>
+                </div>
+            </div><!--/.container-->
+        </div><!--/.top-bar-->
 
-
-<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
-	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
-
-
-<script
-	src="http://cdn.jsdelivr.net/webjars/jquery-ui/1.11.4/jquery-ui.min.js"
-	th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
-
-<script
-	src="http://cdn.jsdelivr.net/webjars/jquery-tmpl/beta1.0.0/jquery.tmpl.min.js"
-	th:src="@{/webjars/jquery-tmpl/beta1.0.0/jquery.tmpl.min.js}"></script>
-
-
-
-
-<script src="../static/js/common.js" th:src="@{js/common.js}"></script>
-
-<script src="../static/js/jquery.validate.min"
-	th:src="@{js/jquery.validate.min.js}"></script>
-
-<script>
-
-    $().ready(function() {
-    	$( "#dateOfBirth" ).datepicker({
-  			dateFormat: "dd/mm/yy"
-		});
-	});
-    
-</script>
-
-</head>
-<body>
-
-
-	<div class="container">
-		<a href="/"> <img src="http://www.3quarksdaily.com/.a/6a00d8341c562c53ef0120a896d16a970b-250wi" width="100"
-			 />
-		</a>
-
-		<ol class="breadcrumb">
-			<li><a href="/">Home</a></li>
-			<li class="active">Edit</li>
-		</ol>
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/index.html"><img src="/images/logo.png" alt="logo"></a>
+                </div>
+				
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/index.html">Home</a></li>
+                        <li><a href="/about-us.html">About Us</a></li>
+                        <li><a href="/services.html">Services</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Doctors <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/doctora.html">Doctor A</a></li>
+                                <li><a href="/doctorb.html">Doctor B</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html">Blog</a></li> 
+                        <li><a href="/contact-us.html">Contact</a></li> 
+                        <li class="logout">
+                            <form th:action="@{/logout}" method="post">
+                                <input class="logout-button" type="submit" value="Sign Out" />
+                            </form>
+                        </li>
+                        <li class="session"></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right session-hide">
+                            <li class="dropdown" id="login-icon">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/images/ico/login.png">Register / Login <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="register&login.html">PATIENT - Register/Login</a></li>
+                                    <li><a href="login.html">DOCTOR - Login</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
 		
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Edit my Profile</h3>
-			</div>
+    </header><!--/header-->
+    
 
-			<div class="alert alert-danger" role="alert" id="error" name="error"
-				style="display: none;"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+                <!-- Begin Wrapper -->
+            <div id="wrapper">
+              <div class="wrapper-top"></div>
+              <div class="wrapper-mid">
+                <!-- Begin Paper -->
+                <div id="paper">
+                  <div class="paper-top"></div>
+                  <div id="paper-mid">
+                    <!-- Begin paper -->
+                        
+                    <!--<div class="container">-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="userh">My profile <input type="text" th:value="${patient.fullName}" readonly="true" /></h2>
+							
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="well col-md-8">
+                            <div class="tab-content col-md-10">
+                              <div id="home">
+                                <form id="edit" method="post">
+													<label>Username</label> <input type="text" value=""
+														class="input-xlarge form-control" name="username"
+														placeholder="Username" th:value="${patient.username}"
+														readonly="true" />
+														
+														
+														<br />
+														
+														 <label>First Name</label> <input
+														type="text" value="" class="input-xlarge form-control"
+														name="firstName" placeholder="firstName"
+														th:value="${patient.firstName}" /><br /> <label>Last
+														Name</label> <input type="text" value=""
+														class="input-xlarge form-control" name="lastName"
+														placeholder="lastName" th:value="${patient.lastName}" /><br />
+													
+													
+													<label>Gender</label><br /> <select name="select-gender"
+														class="input-xlarge form-control" >
 
-			<div class="panel-body">
-				<form method="POST" action="/user/patient" id="createForm">
+														<option>- Select your gender -</option>
 
+														<option value="male">Male</option>
 
-					<div class="form-group">
-						<label for="userName">Username</label> <input type="text"
-							class="form-control" id="userName" name="userName"
-							placeHolder="Username" th:value="${patient.userName}" readonly="true"/>
-					</div>
+														<option value="female">Female</option>
+													</select>
+													
+													
+													<br />
+													
+													
+													
+<!-- 													 <label>Date of birth</label> <input type="date" -->
+<!-- 														name="dateOfBirth" class="input-xlarge form-control" th:value="${patient.dateOfBirth}"/><br /> -->
+														
+														
+														
+														 <label>My
+														current doctor</label> <select name="select-doctor"
+														class="input-xlarge form-control">
 
-					<div class="form-group">
-						<label for="firstName">First name</label>
-							<input type="text" class="form-control" id="firstName" name="firstName"
-								placeHolder="My Name" th:value="${patient.fullName}" readonly="true" data-tip="You can change your Doctor from you home page"/>
-					</div>
+														<option>- Doctor to be registered with -</option>
 
-					
-					<div class="form-group">
-						<label for="dateOfBirth">Date of birth</label>
-							<input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth"
-								placeHolder="24/01/1859" th:value="${patient.dateOfBirth}" readonly="true"/>
-					</div>
-					
-					<div class="form-group">
-						<label for="doctor">My current doctor</label>
-							<input type="text" class="form-control" id="doctor" name="doctor"
-								 th:value="${patient.doctor.fullName}" readonly="true"/>
-					</div>
-					
-					
-					<div class="form-group">
-						<label for="phone">Phone number</label>
-							<input type="text" class="form-control" id="phone" name="phone"
-								placeHolder="+40 744 123 456" th:value="${patient.phone}" />
-					</div>
-					
-					<div class="form-group">
-						<label for="email">Email</label>
-							<input type="email" class="form-control" id="email" name="email"
-								placeHolder="Email adress" th:value="${patient.email}" />
-					</div>
+														<option value="doctora">Doctor A</option>
 
-					<div class="form-group">
-						<label for="medicalBackground">Medical background</label>
-							<textarea type="text" class="form-control" id="medicalBackground" name="medicalBackground"
-								placeHolder="Previous known medical conditions" th:text="${patient.medicalBackground}" ></textarea>
-					</div>
-					
-					<div class="form-group">
-						<label for="password">Password</label>
-							<input type="password" class="form-control" id="password" name="password"
-								placeHolder="Password" th:value="${patient.password}" />
-					</div>
+														<option value="doctorb">Doctor B</option>
+													</select><br />
+													
+													
+													 <label>Address</label><br />
+													<textarea value="" rows="3"
+														class="input-xlarge form-control" name="address" th:field="${patient.address}">                                    </textarea>
+													<br /> 
+													
+													
+													<label>Phone</label> <input type="text" value=""
+														class="input-xlarge form-control" name="phone" th:value="${patient.phone}"/><br />
+													<label>Email</label> <input type="text" value=""
+														class="input-xlarge form-control" name="email" th:value="${patient.email}"/><br />
+													
+													
+													
+													
+													<label>Blood type</label> <select name="select-blood"
+														class="input-xlarge form-control" >
 
-					<div class="container-fluid">
-						<div class="collapse navbar-collapse">
-							<ul class="nav navbar-nav navbar-right">
-								<li><button type="submit" class="btn btn-default"
-										onclick="javascript:goToAppointmentList();return false">Cancel</button></li>
-								<li>&nbsp;&nbsp;&nbsp;</li>
-								<li><button type="submit" class="btn btn-default">Save</button></li>
-							</ul>
-						</div>
-					</div>
-					<br /> <input type="hidden" class="form-control" id="id" th:value="${patient.id}" />
-				</form>
-			</div>
-		</div>
-	</div>
+														<option>- Select blood type -</option>
 
+														<option value="a">A</option>
+
+														<option value="b">B</option>
+
+														<option value="ab">AB</option>
+
+														<option value="o">0</option>
+													</select><br /> 
+
+ 													
+ 													<label>Medical background</label><br />
+													<textarea value="" rows="5"
+														class="input-xlarge form-control" name="medicalBackground" th:field="${patient.medicalBackground}">  </textarea>
+<!-- 														 th:value="${patient.medicalBackground}" -->
+														 
+<!-- 														th:field="*{ipFilter}" -->
+														
+														                                
+													<br /> <label>Password</label> <input type="password"
+														class="input-xlarge form-control" name="password" th:value="${patient.password}" /><br />
+
+													<div class="pull-right">
+														<button class="btn btn-primary">Cancel</button>
+														<button class="btn btn-primary">SAVE</button>
+													</div>
+												</form>
+                              </div>
+                           </div>
+                       </div>
+                   </div> 
+               <!--</div> -->
+                        
+                    <!-- End paper -->
+                  </div>
+                  <div class="clear"></div>
+                  <div class="paper-bottom"></div>
+                </div>
+                <!-- End Paper -->
+              </div>
+              <div class="wrapper-bottom"></div>
+            </div>
+        </div>    
+    </div>    
+</div>    
+    
+    
+    
+    
+    
+                
+            <!----FOOTER---->
+            
+<section id="bottom">
+        <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+            <div class="row">
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Quality Assurance </h3>
+                        <ul>
+                            <li>Sfica Simina</li>
+                            <li>Raul Ciunt</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Java development </h3>
+                        <ul>
+                            <li>Iulian Todor</li>
+                            <li>Mihai Savin</li>
+                            <li>Petru Hangiu</li>
+                            <li>Florin Tompea</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+        
+                
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Project management </h3>
+                        <ul>
+                            <li>Dana Toma</li>
+                            <li>Florin Domuta</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+                
+                <div class="col-md-3 footer-text col-sm-6">
+                    <div class="widget">
+                        <h3> Web development </h3>
+                        <ul>
+                            <li>Dobri Andras</li>
+                        </ul>
+                    </div>    
+                </div><!--/.col-md-3-->
+            </div>
+        </div>
+    </section><!--/#bottom-->
+    
+    <a href="#0" class="cd-top">Top</a>
+    
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2016 GALENUS. All Rights Reserved.
+                </div>
+                <div>
+                <ul class="social pull-right">
+                    <li id="facebook"> <a href="https://www.facebook.com" target="_blank"> <i class=" fa fa-facebook">   </i> </a> </li>
+                    <li id="twitter"> <a href="https://twitter.com" target="_blank"> <i class="fa fa-twitter">   </i> </a> </li>
+                    <li id="skype"> <a href="http://www.skype.com/ro/" target="_blank"> <i class="fa fa-skype">   </i> </a> </li>
+                    <li id="linkedin"> <a href="https://www.linkedin.com/" target="_blank"> <i class="fa fa-linkedin">   </i> </a> </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.prettyPhoto.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/scroll.js"></script>
+    <script src="/js/zabuto_calendar.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/wow.min.js"></script>
+    <script>
+            $(document).ready(function() {
+                
+                $("#calendar").zabuto_calendar();
+                
+                $(".zabuto_calendar").css("display", "none");
+                $(".show-calendar").click(function(){
+                    $(".zabuto_calendar").toggle("slow");
+                    $(".hide-photo").toggle("slow");
+                    $(".show-calendar").hide();
+                });
+                
+                /*pop-up function after click*/ 
+                function deselect(e) {
+                  $('.pop').slideFadeToggle(function() {
+                    e.removeClass('selected');
+                  });    
+                }
+                
+                
+                  $('.calendar-dow td:nth-child(-n+5)').on('click', function() {
+                    if($(this).hasClass('selected')) {
+                      deselect($(this));               
+                    } else {
+                      $(this).addClass('selected');
+                      $('.pop').slideFadeToggle();
+                    }
+                    return false;
+                  });
+                
+                  $('.close').on('click', function() {
+                    deselect($('.calendar-dow td'));
+                    return false;
+                  });
+                
+                
+                $.fn.slideFadeToggle = function(easing, callback) {
+                  return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
+                };
+                
+                
+        /*        var now = new Date();
+                var year = now.getFullYear();
+                var month = now.getMonth() + 1;
+                var settings = {
+                    language: false,
+                    year: year,
+                    month: month,
+                    show_previous: true,
+                    show_next: true,
+                    cell_border: true,
+                    today: true,
+                    show_days: true,
+                    weekstartson: 1,
+                    nav_icon: false, // object: prev: string, next: string
+                    data: true,
+                    ajax: {
+                        url: "user.html",
+                        modal: true,
+                    }, // object: url: string, modal: boolean,
+                    legend:false
+                        , // object array, [{type: string, label: string, classname: string}]
+                    action: function () {
+                         return myDateFunction(this.id, true);
+                    },
+                    action_nav: function () {
+                        return myNavFunction(this.id);
+                    },
+                };
+                
+                
+                
+                function myDateFunction(id, fromModal) {
+                    $("#date-popover").hide();
+                    if (fromModal) {
+                        $("#" + id + "_modal").modal("hide");
+                    }
+                    var date = $("#" + id).data("date");
+                    var hasEvent = $("#" + id).data("hasEvent");
+                    if (hasEvent && !fromModal) {
+                        return false;
+                    }
+                    $("#date-popover-content").html('You clicked on date ' + date);
+                    $("#date-popover").show();
+                    return true;
+                }
+
+                function myNavFunction(id) {
+                    $("#date-popover").hide();
+                    var nav = $("#" + id).data("navigation");
+                    var to = $("#" + id).data("to");
+                    console.log('nav ' + nav + ' to: \ ' + to.month + '/' + to.year);
+                }*/
+                });
+                </script>
 </body>
 </html>

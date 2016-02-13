@@ -16,6 +16,7 @@ import ro.sci.gms.domain.Appointment;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.service.AppointmentService;
 import ro.sci.gms.service.ValidationException;
+import ro.sci.gms.temp.Li;
 
 @Controller
 @RequestMapping("/appointment")
@@ -27,24 +28,36 @@ public class AppointmentController {
 	private Patient loggedPatient;
 	
 	@RequestMapping("")
-	public ModelAndView index() {
+	public ModelAndView showAllAppointments() {
 
 		Collection<Appointment> allAppointments = aptService.getAll();
 
 		ModelAndView modelAndView = new ModelAndView("appointments_list");
 		modelAndView.addObject("allAppointments", allAppointments);
 
+		Li.st("Showed all appointments.");
 		return modelAndView;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, params = "action=add")
-	public ModelAndView createAppointmentForm() {
+	public ModelAndView createAppointment() {
 		ModelAndView modelAndView = new ModelAndView("appointment_create");
 		
 		modelAndView.addObject("appointment", new Appointment());
 		return modelAndView;
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, params = "action=edit")
+	public ModelAndView editAppointment(@RequestParam("id") Long id) {
+		ModelAndView result = new ModelAndView("appointment_edit");
+		Appointment apt = new Appointment();
+		if (id != null) {
+			apt = aptService.get(id);
+		}
+		result.addObject("appointment", apt);
+		return result;
+	}
+		
 	@RequestMapping(method=RequestMethod.POST)
     public String appointmentSubmit(@ModelAttribute Appointment appointment) throws ValidationException {
 
@@ -67,17 +80,6 @@ public class AppointmentController {
 		return "success";
     }
 
-	@RequestMapping(method = RequestMethod.GET, params = "action=edit")
-	public ModelAndView edit(@RequestParam("id") Long id) {
-		ModelAndView result = new ModelAndView("appointment_edit");
-		Appointment apt = new Appointment();
-		if (id != null) {
-			apt = aptService.get(id);
-		}
-		result.addObject("appointment", apt);
-		return result;
-	}
-
 	@RequestMapping(method = RequestMethod.GET, params = "action=delete")
 	public String delete(@RequestParam("id") Long id) {
 		aptService.delete(id);
@@ -85,23 +87,11 @@ public class AppointmentController {
 	}
 
 	
-
-
-
-	@RequestMapping("/test")
-	public String testForm(Model model) {
-		model.addAttribute("appointment", new Appointment());
-		return "test_edit";
-	}
-	
-	
-	
 	@RequestMapping("/generate")
 	public String generate() throws ValidationException {
 
 		aptService.generateSome();
 
 		return "success";
-
 	}
 }

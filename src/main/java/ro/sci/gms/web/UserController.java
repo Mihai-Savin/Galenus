@@ -108,7 +108,7 @@ public class UserController {
 
 		//loggedPatient.setId(user.getId());
 		
-		Patient patient = patientService.getPatient(loggedPatient.getId()); // 10L on heroku,
+		Patient patient = patientService.getPatient(10L); // 10L on heroku,
 																// 11226L on
 																// localhost
 
@@ -120,7 +120,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/patient/profile", method = RequestMethod.POST)
 	public String patientSave(@ModelAttribute Patient patient) throws ValidationException, SQLException {
-		patient.setId(11226); // 10L on heroku //11226L on localhost
+		patient.setId(10L); // 10L on heroku //11226L on localhost
 		patient.setRole(Role.user);
 		patient.setDateOfBirth(new Date());
 		patient.setGender(Gender.FEMALE);

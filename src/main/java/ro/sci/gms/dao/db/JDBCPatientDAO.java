@@ -190,7 +190,26 @@ public class JDBCPatientDAO extends JDBCUserDAO {
 
 	// Still figuring out if needed or not
 	public Collection<Patient> getAllPatients() {
-		return null;
+		Connection connection = newConnection();
+
+		Collection<Patient> result = new LinkedList<>();
+
+		try (ResultSet rs = connection.createStatement().executeQuery("select * from users, patient where id=user_id")) {
+			while (rs.next()) {
+				result.add(extractPatient(rs));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+			throw new RuntimeException("(091) Error getting patients.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 
 	private Patient extractPatient(ResultSet rs) throws SQLException {

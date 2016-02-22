@@ -63,9 +63,8 @@ public class UserService implements UserDetailsService {
 	}
 
 	private void validate(User user) throws ValidationException {
-		// Minimal validation. Needs extension.
-		if (user == null) {
-			throw new ValidationException("Invalid data. [BETA version err: Not enough data.](091)");
+		if ((user == null) || user.getUsername() == null || user.getPassword() == null ){
+			throw new ValidationException("Invalid data. [Not enough user data.](091)");
 		}
 		System.out.println("Valid data.");
 

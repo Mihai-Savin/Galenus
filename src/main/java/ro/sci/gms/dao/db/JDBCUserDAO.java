@@ -42,8 +42,9 @@ public class JDBCUserDAO implements UserDAO<User> {
 	 * This seems to be required. Doesn't work without it.
 	 */
 	public JDBCUserDAO() {
-		this("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com", "5432", "d99d8uvcdiqh5q", "hjgepgsapjoops",
-				"7wxWIzK0dN6Ea5vkIJ1WYvyT9p");
+		// this("ec2-79-125-117-94.eu-west-1.compute.amazonaws.com", "5432",
+		// "d99d8uvcdiqh5q", "hjgepgsapjoops",
+		// "7wxWIzK0dN6Ea5vkIJ1WYvyT9p");
 		/*
 		 * this("ec2-54-83-12-22.compute-1.amazonaws.com", "5432",
 		 * "d78nunqpo44clm", "zjxfqqjwejqiid", "UaeRrlUbjmnxBOxp9FOWEKNG7y");
@@ -161,24 +162,21 @@ public class JDBCUserDAO implements UserDAO<User> {
 
 		Collection<User> result = new LinkedList<>();
 
-		// try (ResultSet rs = connection.createStatement().executeQuery("select
-		// * from employee")) {
-		//
-		// while (rs.next()) {
-		// result.add(extractAppointment(rs));
-		// }
-		// connection.commit();
-		// } catch (SQLException ex) {
-		//
-		// throw new RuntimeException("Error getting employees.", ex);
-		// } finally {
-		// try {
-		// connection.close();
-		// } catch (Exception ex) {
-		//
-		// }
-		// }
-
+		try (ResultSet rs = connection.createStatement().executeQuery("select * from users")) {
+			while (rs.next()) {
+				result.add(extractUser(rs));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+			throw new RuntimeException("Error getting users.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
 		return result;
 	}
 
@@ -269,17 +267,17 @@ public class JDBCUserDAO implements UserDAO<User> {
 		}
 		return result.isEmpty() ? null : result.get(0);
 	}
-	
-	protected void saveVerificationToken(VerificationToken token){
-		
-			try (Connection connection = newConnection();
-				ResultSet rs = connection.createStatement().executeQuery(
-						"insert into tokens (token, user_id) VALUES(" + token.getToken() + ", " + token.getUser().getId() +")") ) {
-				connection.commit();
-				connection.close();
-			} catch (SQLException ex) {
-				throw new RuntimeException("Error saving user to DB. (91)", ex);
-			}
+
+	protected void saveVerificationToken(VerificationToken token) {
+
+		try (Connection connection = newConnection();
+				ResultSet rs = connection.createStatement().executeQuery("insert into tokens (token, user_id) VALUES("
+						+ token.getToken() + ", " + token.getUser().getId() + ")")) {
+			connection.commit();
+			connection.close();
+		} catch (SQLException ex) {
+			throw new RuntimeException("Error saving user to DB. (91)", ex);
+		}
 	}
 
 }

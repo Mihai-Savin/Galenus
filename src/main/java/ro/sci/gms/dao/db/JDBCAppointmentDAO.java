@@ -1,3 +1,4 @@
+package ro.sci.gms.dao.db;
 //package ro.sci.gms.dao.db;
 //
 //import java.sql.Connection;

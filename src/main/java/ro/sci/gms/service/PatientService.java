@@ -51,7 +51,7 @@ public class PatientService extends UserService {
 	}
 
 	private void validate(Patient patient) throws ValidationException {
-		if (patient == null) {
+		if ((patient == null) || patient.getUsername() == null || patient.getPassword() == null ){
 			throw new ValidationException("Invalid data. [BETA version err: Not enough data.]");
 		} else {
 			System.out.println("Valid data.");

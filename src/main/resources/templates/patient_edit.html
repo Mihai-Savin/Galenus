@@ -213,6 +213,8 @@
 													<br /> <label>Password</label> <input type="password"
 														class="input-xlarge form-control" name="password" th:value="${patient.password}" /><br />
 
+													<input type="hidden" id="id" th:value="${patient.id}" />
+													
 													<div class="pull-right">
 														<button class="btn btn-primary">Cancel</button>
 														<button class="btn btn-primary">SAVE</button>

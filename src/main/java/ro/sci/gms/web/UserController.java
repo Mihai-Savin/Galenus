@@ -72,18 +72,18 @@ public class UserController {
 	@RequestMapping("")
 	public ModelAndView userShow() {
 
-		//temporary
+		// temporary
 		loggedUser = loggedPatient;
-		
+
 		ModelAndView modelAndView = new ModelAndView("user");
 		modelAndView.addObject("user", loggedUser);
 
 		return modelAndView;
 	}
-	
+
 	@Autowired
 	AppointmentService aptService;
-	
+
 	@RequestMapping("/patient")
 	public ModelAndView patientShow() throws ValidationException {
 
@@ -93,10 +93,9 @@ public class UserController {
 		loggedPatient.setGender(Gender.FEMALE);
 		loggedPatient.setBloodType(Blood.A);
 		loggedPatient.setDoctor(new Doctor());
-		
+
 		aptService.generateSome();
 
-		
 		ModelAndView modelAndView = new ModelAndView("patient_index");
 		modelAndView.addObject("allApointments", aptService.getAll());
 
@@ -106,20 +105,21 @@ public class UserController {
 	@RequestMapping("/patient/profile")
 	public ModelAndView patientEdit(@AuthenticationPrincipal User user) {
 
-		//loggedPatient.setId(user.getId());
-		
+		// loggedPatient.setId(user.getId());
+
 		Patient patient = patientService.getPatient(10L); // 10L on heroku,
-																// 11226L on
-																// localhost
+															// 11226L on
+															// localhost
 
 		ModelAndView modelAndView = new ModelAndView("patient_edit");
 		modelAndView.addObject("patient", patient);
 
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/patient/profile", method = RequestMethod.POST)
 	public String patientSave(@ModelAttribute Patient patient) throws ValidationException, SQLException {
+
 		patient.setId(10L); // 10L on heroku //11226L on localhost
 		patient.setRole(Role.user);
 		patient.setDateOfBirth(new Date());
@@ -127,21 +127,23 @@ public class UserController {
 		patient.setBloodType(Blood.A);
 		patient.setDoctor(new Doctor());
 		patientService.save(patient);
+
 		return "success";
 	}
 
 	@RequestMapping("/doctor")
 	public String doctorShow() {
-		loggedDoctor.setAddress("Malysia");
+		loggedDoctor.setAddress("Malaysia");
 		return "doctor_index";
 	}
-	
+
 	@RequestMapping("/doctor/profile")
 	public ModelAndView doctorEdit() {
 
-		Doctor doctor = doctorService.getDoctor(loggedDoctor.getId()); // 10L on heroku,
-															// 11226L on
-															// localhost
+		Doctor doctor = doctorService.getDoctor(loggedDoctor.getId()); // 10L on
+																		// heroku,
+		// 11226L on
+		// localhost
 
 		ModelAndView modelAndView = new ModelAndView("doctor_edit");
 		modelAndView.addObject("doctor", doctor);
@@ -152,12 +154,21 @@ public class UserController {
 	@RequestMapping(value = "/doctor/profile", method = RequestMethod.POST)
 	public String doctorSave(Doctor doctor) throws ValidationException, SQLException {
 		doctor.setId(11226); // 10L on heroku //11226L on localhost
-		doctor.setRole(Role.user);doctorService.save(doctor);
+		doctor.setRole(Role.user);
+		doctorService.save(doctor);
 		return "success";
 	}
 
+	/**
+	 * Just for testing purposes.s
+	 * 
+	 * @return
+	 * @throws ValidationException
+	 * @throws SQLException
+	 */
 	@RequestMapping(value = "/generate")
-	public String generatePatient() throws ValidationException, SQLException {
+	public String patientGenerate() throws ValidationException, SQLException {
+
 		Patient patient = new Patient();
 		patient.setFirstName("Angela");
 		patient.setLastName("Merkel");

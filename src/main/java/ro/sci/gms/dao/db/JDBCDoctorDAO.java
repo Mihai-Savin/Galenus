@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +17,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Repository;
 
+import ro.sci.gms.domain.Blood;
 import ro.sci.gms.domain.Doctor;
+import ro.sci.gms.domain.Gender;
+import ro.sci.gms.domain.Role;
 import ro.sci.gms.temp.Li;
 
 /**
@@ -154,8 +158,8 @@ public class JDBCDoctorDAO extends JDBCUserDAO {
 		boolean result = false;
 		try (Connection connection = newConnection()) {
 			Statement statement = connection.createStatement();
-			result = statement.execute("delete from users where id = " + doctor.getId());
 			result = statement.execute("delete from doctor where user_id = " + doctor.getId());
+			result = statement.execute("delete from users where id = " + doctor.getId());
 			connection.commit();
 		} catch (SQLException ex) {
 			throw new RuntimeException("(091) Error deleting user or doctor data.", ex);
@@ -165,13 +169,32 @@ public class JDBCDoctorDAO extends JDBCUserDAO {
 
 	// Still figuring out if needed or not
 	public Collection<Doctor> getAllDoctors() {
-		return null;
+		Connection connection = newConnection();
+
+		Collection<Doctor> result = new LinkedList<>();
+
+		try (ResultSet rs = connection.createStatement().executeQuery("select * from users, doctor where id=user_id")) {
+			while (rs.next()) {
+				result.add(extractDoctor(rs));
+			}
+			connection.commit();
+		} catch (SQLException ex) {
+			throw new RuntimeException("(091) Error getting doctors.", ex);
+		} finally {
+			try {
+				connection.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 
 	private Doctor extractDoctor(ResultSet rs) throws SQLException {
 		Doctor doctor = new Doctor();
 
-		/*doctor.setUserName(rs.getString("user_name"));
+		doctor.setUsername(rs.getString("user_name"));
 		doctor.setFirstName(rs.getString("first_name"));
 		doctor.setLastName(rs.getString("last_name"));
 		doctor.setPassword(rs.getString("password"));
@@ -180,19 +203,11 @@ public class JDBCDoctorDAO extends JDBCUserDAO {
 		doctor.setPhone(rs.getString("phone"));
 		doctor.setEmail(rs.getString("email"));
 		doctor.setRole(Role.valueOf(rs.getString("role")));
-		doctor.setDateOfBirth(new Date(rs.getTimestamp("date_of_birth").getTime()));
-		doctor.setGender(Gender.valueOf(rs.getString("gender")));
-		doctor.setMedicalBackground(rs.getString("medical_background"));
-		doctor.setBloodType(Blood.valueOf(rs.getString("blood_type")));
+		
+		doctor.setSpecialty(rs.getString("specialty"));
+		doctor.setTitle(rs.getString("title"));
+		doctor.setYearsOfExperience((int) rs.getLong("years_of_experience"));
 
-		// After JDBCDoctorDAO is operational, this line needs to be updated.
-		Long retrievedDoctorId = rs.getLong("id");
-		Doctor retrievedDoctor = new Doctor(); // will be replaced by
-												// doctorDAO.getDoctor(retrievedDoctorId);
-		retrievedDoctor.setId(retrievedDoctorId);
-
-		doctor.setDoctor(retrievedDoctor);
-*/
 		return doctor;
 	}
 

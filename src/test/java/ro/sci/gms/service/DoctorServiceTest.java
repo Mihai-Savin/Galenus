@@ -1,8 +1,10 @@
-/*package ro.sci.gms.service;
+package ro.sci.gms.service;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.LinkedList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +19,7 @@ import ro.sci.ApplicationTests;
 import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.Role;
+import ro.sci.gms.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ApplicationTests.class)
@@ -30,12 +33,11 @@ public class DoctorServiceTest {
 
 	@After
 	public void tearDown() {
-		// Collection<Appointment> appointments = new
-		// LinkedList<>(aptService.getAll());
-		//
-		// for (Appointment apt : appointments) {
-		// aptService.delete(apt.getId());
-		// }
+		Collection<Doctor> doctorsList = new LinkedList<>(doctorService.getAllDoctors());
+
+		for (User user : doctorsList) {
+			doctorService.delete(user.getId());
+		}
 	}
 
 	@Before
@@ -49,28 +51,14 @@ public class DoctorServiceTest {
 		doctor.setEmail("lidia.buble@fantasyWorld.org");
 		doctor.setRole(Role.user);
 
-		doctor.setTitle("");
-		doctor.setSpecialty("");
+		doctor.setTitle("dr.");
+		doctor.setSpecialty("ORL");
 		doctor.setYearsOfExperience(10);
 		doctor.setPatient(new Patient());
-		
-		
-		doctor.setDateOfBirth(new Date());
-		doctor.setGender(Gender.FEMALE);
-		doctor.setMedicalBackground("I www to sing sing. Uuu...");
-		doctor.setBloodType(Blood.A);
-		doctor.setDoctor(new Doctor());
 	}
 
-	
-	 * @Test(expected = ValidationException.class) public void
-	 * checkSaveUser_double_save() throws ValidationException {
-	 * userService.save(user); Li.st(user.getId()); userService.save(user);
-	 * Li.st(user.getId()); }
-	 
-
 	@Test
-	public void checkSaveDoctor() throws ValidationException, SQLException {
+	public void checkSaveDoctor_valid() throws ValidationException, SQLException {
 		doctorService.save(doctor);
 
 		assertTrue(doctor.getId() > 0);
@@ -78,11 +66,23 @@ public class DoctorServiceTest {
 		System.out.println(doctor.getId());
 	}
 
+	@Test(expected = ValidationException.class)
+	public void checkSaveDoctor_invalid_noUsername() throws ValidationException, SQLException {
+		doctor.setUsername(null);
+		doctorService.save(doctor);
+	}
+	
+	@Test(expected = ValidationException.class)
+	public void checkSaveDoctor_invalid_noPassword() throws ValidationException, SQLException {
+		doctor.setPassword(null);
+		doctorService.save(doctor);
+	}
+	
 	@Test
-	public void checkGetPatient_valid() throws SQLException {
-		Patient saved = null;
+	public void checkGetDoctor_valid() throws SQLException {
+		Doctor saved = null;
 		try {
-			patientService.save(doctor);
+			doctorService.save(doctor);
 			saved = doctor;
 		} catch (ValidationException e1) {
 			// TODO Auto-generated catch block
@@ -91,7 +91,7 @@ public class DoctorServiceTest {
 
 		Long id = saved.getId();
 
-		Patient retrieved = patientService.getPatient(id);
+		Doctor retrieved = doctorService.getDoctor(id);
 
 		assertEquals(saved.getId(), retrieved.getId());
 
@@ -99,10 +99,30 @@ public class DoctorServiceTest {
 	}
 
 	@Test
-	public void checkDeletePatient_valid() throws SQLException {
-		Patient saved = null;
+	public void checkGetDoctor_invalid() {
+		Long dubiousId = 6789L; 
+		Doctor retrieved = doctorService.getDoctor(dubiousId);
+		assertNull(retrieved);
+	}
+	
+	@Test
+	public void checkGetAllDoctors_valid() throws ValidationException, SQLException {
+		doctorService.save(doctor);
+		Collection<Doctor> usersList = new LinkedList<>(doctorService.getAllDoctors());
+		assertTrue(usersList.size() > 0);
+	}
+	
+	@Test
+	public void checkGetAllDoctors_invalid() throws ValidationException {
+		Collection<Doctor> usersList = new LinkedList<>(doctorService.getAllDoctors());
+		assertEquals(0, usersList.size());
+	}
+	
+	@Test
+	public void checkDeleteDoctor_valid() throws SQLException {
+		Doctor saved = null;
 		try {
-			patientService.save(doctor);
+			doctorService.save(doctor);
 			saved = doctor;
 		} catch (ValidationException e1) {
 			// TODO Auto-generated catch block
@@ -111,13 +131,29 @@ public class DoctorServiceTest {
 
 		Long id = saved.getId();
 
-		patientService.delete(id);
+		doctorService.delete(id);
 
-		assertNull(patientService.get(id));
+		assertNull(doctorService.get(id));
 
-		if (null == patientService.get(id)) {
+		if (null == doctorService.get(id)) {
 			System.out.println("Patient was deleted.");
 		}
 	}
+	
+	@Test
+	public void checkDeleteDoctor_invalid() {
+		Long dubiousId = 6789L;
+		
+		boolean result = doctorService.delete(dubiousId);
+	
+		assertTrue(!result);
+	}
 
-}*/
+	@Test
+	public void checkGetDeletedDoctor() throws ValidationException, SQLException {
+		doctorService.save(doctor);
+		doctorService.delete(doctor.getId());
+		Doctor retrieved = doctorService.getDoctor(doctor.getId());
+		assertNull(retrieved);
+	}
+}

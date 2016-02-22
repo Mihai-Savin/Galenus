@@ -5,7 +5,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +24,7 @@ import ro.sci.gms.domain.Doctor;
 import ro.sci.gms.domain.Gender;
 import ro.sci.gms.domain.Patient;
 import ro.sci.gms.domain.Role;
+import ro.sci.gms.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ApplicationTests.class)
@@ -35,12 +38,11 @@ public class PatientServiceTest {
 
 	@After
 	public void tearDown() {
-		// Collection<Appointment> appointments = new
-		// LinkedList<>(aptService.getAll());
-		//
-		// for (Appointment apt : appointments) {
-		// aptService.delete(apt.getId());
-		// }
+		Collection<Patient> patientsList = new LinkedList<>(patientService.getAllPatients());
+
+		for (User user : patientsList) {
+			patientService.delete(user.getId());
+		}
 	}
 
 	@Before
@@ -61,13 +63,6 @@ public class PatientServiceTest {
 		patient.setDoctor(new Doctor());
 	}
 
-	
-//	  @Test(expected = ValidationException.class) public void
-//	  checkSaveUser_double_save() throws ValidationException {
-//	  userService.save(user); Li.st(user.getId()); userService.save(user);
-//	  Li.st(user.getId()); }
-	 
-
 	@Test
 	public void checkSavePatient_valid() throws ValidationException, SQLException {
 		patientService.save(patient);
@@ -76,7 +71,20 @@ public class PatientServiceTest {
 
 		System.out.println(patient.getId());
 	}
+	
+	@Test(expected = ValidationException.class)
+	public void checkSavePatient_invalid_noUsername() throws ValidationException, SQLException {
+		patient.setUsername(null);
+		patientService.save(patient);
+	}
+	
+	@Test(expected = ValidationException.class)
+	public void checkSavePatient_invalid_noPassword() throws ValidationException, SQLException {
+		patient.setPassword(null);
+		patientService.save(patient);
+	}
 
+	
 	@Test
 	public void checkGetPatient_valid() throws SQLException {
 		Patient saved = null;
@@ -97,6 +105,26 @@ public class PatientServiceTest {
 		System.out.println(retrieved.getFullName());
 	}
 
+	@Test
+	public void checkGetPatient_invalid() {
+		Long dubiousId = 6789L; 
+		Patient retrieved = patientService.getPatient(dubiousId);
+		assertNull(retrieved);
+	}
+	
+	@Test
+	public void checkGetAllPatients_valid() throws ValidationException, SQLException {
+		patientService.save(patient);
+		Collection<Patient> usersList = new LinkedList<>(patientService.getAllPatients());
+		assertTrue(usersList.size() > 0);
+	}
+	
+	@Test
+	public void checkGetAllPatients_invalid() throws ValidationException {
+		Collection<Patient> usersList = new LinkedList<>(patientService.getAllPatients());
+		assertEquals(0, usersList.size());
+	}
+	
 	@Test
 	public void checkDeletePatient_valid() throws SQLException {
 		Patient saved = null;
@@ -119,4 +147,20 @@ public class PatientServiceTest {
 		}
 	}
 
+	@Test
+	public void checkDeletePatient_invalid() {
+		Long dubiousId = 6789L;
+		
+		boolean result = patientService.delete(dubiousId);
+	
+		assertTrue(!result);
+	}
+
+	@Test
+	public void checkGetDeletedPatient() throws ValidationException, SQLException {
+		patientService.save(patient);
+		patientService.delete(patient.getId());
+		Patient retrieved = patientService.getPatient(patient.getId());
+		assertNull(retrieved);
+	}
 }

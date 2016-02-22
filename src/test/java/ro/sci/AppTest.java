@@ -27,22 +27,23 @@ public class AppTest {
 
 	@Autowired
 	AppointmentService aptService;
+	
 	@Autowired
 	UserService userService;
 
 	@Test
-	public void seeHours() {
-		// Doctor doctor = new Doctor();
-		// Date day = new Date();
-		// Collection<Integer> availableHours =
-		// aptService.getAvailableHours(doctor, day);
-		// System.out.println("Existent appointment(s) at :");
-		//
-		// for (Integer hour : availableHours) {
-		// System.out.println(hour);
-		// }
-		//
-		// System.out.println();
+	public void showHours() {
+		 Doctor doctor = new Doctor();
+		 Date day = new Date();
+		 Collection<Integer> availableHours =
+		 aptService.getAvailableHours(doctor, day);
+		 System.out.println("Existent appointment(s) at :");
+		
+		 for (Integer hour : availableHours) {
+		 System.out.println(hour);
+		 }
+		
+		 System.out.println();
 	}
 
 	@Test
@@ -88,7 +89,6 @@ public class AppTest {
 	public void checkIndexController() throws ValidationException {
 		IndexController ic = new IndexController();
 		ic.index();
-		
 	}
 	
 	@Test
@@ -125,89 +125,90 @@ public class AppTest {
 	 * @Worked for IM context and Agenda object based on HashMap IM
 	 *         implementation.
 	 */
+	/*
 	@Test
 	public void runAppTest() {
 
-//		StringBuilder output = new StringBuilder();
-//
-//		Patient aPatient = new Patient();
-//		Doctor aDoctor = new Doctor();
-//		Appointment aAppointment = new Appointment();
-//
-//		aPatient.setFirstName("Mihai");
-//		aPatient.setLastName("Savin");
-//
-//		aPatient.setDoctor(aDoctor);
-//
-//		aDoctor.setFirstName("Celia");
-//		aDoctor.setLastName("Cruz");
-//
-//		output.append(aPatient.getDoctor().getFullName());
-//
-//		try {
-//			userService.save(aPatient);
-//			userService.save(aDoctor);
-//		} catch (ValidationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		Collection<User> all = userService.getAll();
-//
-//		output.append(all);
-//		// Assert.assertEquals(2, all.size());
-//
-//		System.out.println(output);
-//
-//		System.out.println("-------------------------------------------");
-//
-//		Long patientID = null;
-//
-//		patientID = aPatient.getId();
-//
-//		// Simultating new appointment request context
-//
-//		Patient thePatient = new Patient();
-//
-//		thePatient = (Patient) userService.get(patientID);
-//		Doctor theDoctor = thePatient.getDoctor();
-//
-//		aAppointment.createAppointment(thePatient, theDoctor);
-//
-//		Date selectedDate = new Date();
-//		selectedDate.setDate(15);
-//		Date selectedTime = new Date();
-//		selectedDate.setHours(0);
-//
-//		aAppointment.setDate(selectedDate);
-//
-//		theDoctor.setAgenda(new Agenda());
-//		Collection<Integer> availableHours = aptService.getAvailableHours(theDoctor, selectedDate);
-//		System.out.println("Available doctor's hours: " + availableHours);
-//
-//		Integer selectedHour = null;
-//
-//		for (Integer hour : availableHours) {
-//			selectedHour = hour;
-//		}
-//
-//		selectedTime.setHours(selectedHour);
-//
-//		aAppointment.setTime(selectedTime);
-//
-//		try {
-//			aptService.save(aAppointment);
-//		} catch (ValidationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		availableHours = aptService.getAvailableHours(theDoctor, selectedDate);
-//		System.out.println("Available doctor's hours: " + availableHours);
-//
-//		System.out.println(thePatient.getDoctor());
-//		System.out.println(theDoctor.getAgenda().getBookedHours(selectedDate));
+		StringBuilder output = new StringBuilder();
+
+		Patient aPatient = new Patient();
+		Doctor aDoctor = new Doctor();
+		Appointment aAppointment = new Appointment();
+
+		aPatient.setFirstName("Mihai");
+		aPatient.setLastName("Savin");
+
+		aPatient.setDoctor(aDoctor);
+
+		aDoctor.setFirstName("Celia");
+		aDoctor.setLastName("Cruz");
+
+		output.append(aPatient.getDoctor().getFullName());
+
+		try {
+			userService.save(aPatient);
+			userService.save(aDoctor);
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Collection<User> all = userService.getAll();
+
+		output.append(all);
+		// Assert.assertEquals(2, all.size());
+
+		System.out.println(output);
+
+		System.out.println("-------------------------------------------");
+
+		Long patientID = null;
+
+		patientID = aPatient.getId();
+
+		// Simultating new appointment request context
+
+		Patient thePatient = new Patient();
+
+		thePatient = (Patient) userService.get(patientID);
+		Doctor theDoctor = thePatient.getDoctor();
+
+		aAppointment.createAppointment(thePatient, theDoctor);
+
+		Date selectedDate = new Date();
+		selectedDate.setDate(15);
+		Date selectedTime = new Date();
+		selectedDate.setHours(0);
+
+		aAppointment.setDate(selectedDate);
+
+		theDoctor.setAgenda(new Agenda());
+		Collection<Integer> availableHours = aptService.getAvailableHours(theDoctor, selectedDate);
+		System.out.println("Available doctor's hours: " + availableHours);
+
+		Integer selectedHour = null;
+
+		for (Integer hour : availableHours) {
+			selectedHour = hour;
+		}
+
+		selectedTime.setHours(selectedHour);
+
+		aAppointment.setTime(selectedTime);
+
+		try {
+			aptService.save(aAppointment);
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		availableHours = aptService.getAvailableHours(theDoctor, selectedDate);
+		System.out.println("Available doctor's hours: " + availableHours);
+
+		System.out.println(thePatient.getDoctor());
+		System.out.println(theDoctor.getAgenda().getBookedHours(selectedDate));
 
 	}
-
+*/
 }

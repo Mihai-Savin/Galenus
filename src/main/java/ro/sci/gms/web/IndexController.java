@@ -13,10 +13,7 @@ public class IndexController {
 	
 	@RequestMapping("/")
 	public String index() throws ValidationException {
-		Li.st("Website accessed @ " + new Date() + " Index page served to default VIEW.");
+		Li.st("Website accessed @ " + new Date() + ". Index page served to default VIEW.");
 		return "index";
 	}
-
-
-
 }

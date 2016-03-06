@@ -1,0 +1,87 @@
+CREATE TABLE users
+(
+  user_name character varying(200) NOT NULL,
+  first_name character varying(200) NOT NULL,
+  last_name character varying(200),
+  password character varying(200) NOT NULL,
+  id integer NOT NULL DEFAULT nextval('user_seq'::regclass),
+  address character varying(100),
+  phone character varying(30),
+  email character varying(50),
+  role character varying(10),
+  CONSTRAINT user_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE users
+  OWNER TO postgres;
+
+
+
+CREATE TABLE patient
+(
+  date_of_birth date,
+  gender character(6),
+  medical_background character varying(1000),
+  blood_type character varying(15),
+  doctor_id numeric(15,0),
+  user_id integer,
+  CONSTRAINT patient_user_id_fkey FOREIGN KEY (user_id)
+      REFERENCES users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE patient
+  OWNER TO postgres;
+
+
+
+CREATE TABLE doctor
+(
+  user_id integer NOT NULL,
+  title character varying(15),
+  specialty character varying(50),
+  years_of_experience numeric(2,0),
+  agenda_id numeric(10,0),
+  picture character varying(50),
+  patient_id numeric(10,0),
+  CONSTRAINT doctor_user_id_fkey FOREIGN KEY (user_id)
+      REFERENCES users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE doctor
+  OWNER TO postgres;
+
+
+
+
+CREATE TABLE appointment
+(
+  id numeric(10,0),
+  patient_id character varying(10),
+  doctor_id character varying(10),
+  date date,
+  "time" time without time zone,
+  details character varying(100)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE appointment
+  OWNER TO postgres;
+
+
+CREATE SEQUENCE user_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 11636
+  CACHE 1;
+ALTER TABLE user_seq
+  OWNER TO postgres;
